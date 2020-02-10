@@ -9,19 +9,19 @@ import { Component } from '@angular/core';
 export class AppComponent {
   public title: string = 'movies'; // marche aussi : " title = 'movies' "
 
-  public defaultCountry: string = 'us';
+  public defaultCountry: string = 'all';
 
   public movies: any[] = [
     {
       title: 'Joker',
       year: 2019,
-      country: this.defaultCountry,
+      country: 'us',
       shown: true
     },
     {
       title: 'Avengers',
       year: 2015,
-      country: this.defaultCountry,
+      country: 'us',
       shown: true
     },
     {
@@ -29,7 +29,13 @@ export class AppComponent {
       year: 1975,
       country: 'it',
       shown: true
-    }      
+    },
+    {
+      title: 'La belle verte',
+      year: 1996,
+      country: 'fr',
+      shown: true
+    }            
   ]
 
   public toggleCountry(): void {
@@ -42,4 +48,14 @@ export class AppComponent {
       })
                            
   }
+
+  public countries: Set<string> = new Set;
+
+  public constructor() {
+    this.movies.forEach(movie=> {
+        this.countries.add(movie.country)
+    });
+  }
+
 }
+
