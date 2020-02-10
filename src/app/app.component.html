@@ -1,0 +1,17 @@
+<p>Hey, I'm AppComponent, my title is {{ title }} and I'm working</p>
+
+<div class=movie *ngFor="let movie of movies">
+    <div *ngIf="movie.country == defaultCountry">
+        <h2 class = "truc title"
+        [ngClass]="{'old': movie.year < 2000, 'title': true }"
+        >
+        {{ movie.title }}
+        </h2>
+        <h3>{{ movie.year }}</h3>
+        <h3>{{ movie.country }}</h3>
+    </div>
+</div>
+<button 
+    (click)="toggleCountry()"
+>
+    Filter</button>
