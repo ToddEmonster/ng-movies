@@ -1,5 +1,17 @@
-.example-card {
+div {
     position: relative;
-    max-width: 400px;
-    max-height: 400px;
+}
+
+.movie {
+    position: relative;
+}
+
+.example-card {
+    // position: inherit;
+    max-width: 300px;
+    max-height: 200px;
+}
+
+#filter {
+    position: relative; 
 }

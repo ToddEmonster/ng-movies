@@ -1,5 +1,24 @@
 <h1>Hey, I'm AppComponent, my title is {{ title | uppercase }}</h1>
 
+<div id="filter">
+  <!-- <select size="1" [(ngModel)]="defaultCountry">
+      <option value="all" selected>All</option>
+      <option *ngFor="let country of countries" value="{{ country }}">
+          {{ country }}</option>
+  </select> -->
+  
+  <mat-form-field>
+      <mat-label>Countries</mat-label>
+      <mat-select size="1" [(ngModel)]="defaultCountry">
+          <mat-option value="all" selected>All</mat-option>
+          <mat-option *ngFor="let country of countries" value="{{ country }}">
+              {{ country }}
+          </mat-option>
+      </mat-select>
+  </mat-form-field>
+  
+</div>
+
 <p>Default country is : {{ defaultCountry }}</p>
 <div class=movie *ngFor="let movie of movies">
     <div *ngIf="(movie.country == defaultCountry) || defaultCountry == 'all'">
@@ -31,21 +50,4 @@
 </div>
 
 
-<div id="filter">
-    <!-- <select size="1" [(ngModel)]="defaultCountry">
-        <option value="all" selected>All</option>
-        <option *ngFor="let country of countries" value="{{ country }}">
-            {{ country }}</option>
-    </select> -->
-    
-    <mat-form-field>
-        <mat-label>Countries</mat-label>
-        <mat-select size="1" [(ngModel)]="defaultCountry">
-            <mat-option value="all" selected>All</mat-option>
-            <mat-option *ngFor="let country of countries" value="{{ country }}">
-                {{ country }}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-    
-</div>
+
