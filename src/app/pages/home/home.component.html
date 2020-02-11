@@ -3,19 +3,49 @@
 <p>Default country is : {{ defaultCountry }}</p>
 <div class=movie *ngFor="let movie of movies">
     <div *ngIf="(movie.country == defaultCountry) || defaultCountry == 'all'">
-        <h2 class = "truc title"
+        <!-- <h2 class = "truc title"
         [ngClass]="{'old': movie.year < 2000, 'title': true }"
         >
         {{ movie.title }}
         </h2>
         <h3>{{ movie.year }}</h3>
-        <h3>{{ movie.country }}</h3>
+        <h3>{{ movie.country }}</h3> -->
+
+        <mat-card class="example-card">
+            <mat-card-header>
+              <div mat-card-avatar class="example-header-image"></div>
+              <mat-card-title class = "truc title"
+              [ngClass]="{'old': movie.year < 2000, 'title': true }">{{ movie.title }}</mat-card-title>
+              <mat-card-subtitle>{{ movie.year }}, {{ movie.country }}</mat-card-subtitle>
+            </mat-card-header>
+            <img mat-card-image src="{{ movie.imgSrc }}" alt="{{ movie.imgAlt }}">
+            <mat-card-content>
+              <p>{{ movie.synopsis}}</p>
+            </mat-card-content>
+            <mat-card-actions>
+              <button mat-button>LIKE</button>
+              <button mat-button>SHARE</button>
+            </mat-card-actions>
+          </mat-card>
     </div>
 </div>
 
+
 <div id="filter">
-    <select size="1" [(ngModel)]="defaultCountry">
+    <!-- <select size="1" [(ngModel)]="defaultCountry">
         <option value="all" selected>All</option>
-        <option *ngFor="let country of countries" value="{{ country }}">{{ country }}</option>
-    </select>
+        <option *ngFor="let country of countries" value="{{ country }}">
+            {{ country }}</option>
+    </select> -->
+    
+    <mat-form-field>
+        <mat-label>Countries</mat-label>
+        <mat-select size="1" [(ngModel)]="defaultCountry">
+            <mat-option value="all" selected>All</mat-option>
+            <mat-option *ngFor="let country of countries" value="{{ country }}">
+                {{ country }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    
 </div>
