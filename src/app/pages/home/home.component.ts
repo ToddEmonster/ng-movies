@@ -12,47 +12,11 @@ import { Movie } from 'src/app/core/models/movie';
 export class HomeComponent implements OnInit {
 
   public title: string = 'movies'; // marche aussi : " title = 'movies' "
-
   public defaultCountry: string = 'all';
-
-  public movies: any[] = [
-    // {
-    //   title: 'Joker',
-    //   year: 2019,
-    //   country: 'us',
-    //   shown: true,
-    //   imgSrc: 'https://m.media-amazon.com/images/M/MV5BNGVjNWI4ZGUtNzE0MS00YTJmLWE0ZDctN2ZiYTk2YmI3NTYyXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SY1000_CR0,0,674,1000_AL_.jpg',
-    //   imgAlt: 'Photo of the movie Joker',
-    //   synopsis: 'This movie is supposed to be an event.'
-    // },
-    // {
-    //   title: 'Avengers',
-    //   year: 2015,
-    //   country: 'us',
-    //   shown: true,
-    //   imgSrc: 'https://m.media-amazon.com/images/M/MV5BNDYxNjQyMjAtNTdiOS00NGYwLWFmNTAtNThmYjU5ZGI2YTI1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SY1000_CR0,0,675,1000_AL_.jpg',
-    //   imgAlt: 'Photo of the movie Avengers',
-    //   synopsis: 'This movie is kinda old now ! Who would have thought ?'
-    // },
-    // {
-    //   title: 'Il était une fois dans l\'ouest',
-    //   year: 1975,
-    //   country: 'it',
-    //   shown: true,
-    //   imgSrc: 'https://m.media-amazon.com/images/M/MV5BZGI5MjBmYzYtMzJhZi00NGI1LTk3MzItYjBjMzcxM2U3MDdiXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SY1000_CR0,0,658,1000_AL_.jpg',
-    //   imgAlt:'Photo of the movie Il était une fois dans l\'ouest',
-    //   synopsis: 'This movie is _really_ old'
-    // },
-    // {
-    //   title: 'La belle verte',
-    //   year: 1996,
-    //   country: 'fr',
-    //   shown: true,
-    //   imgSrc: 'https://m.media-amazon.com/images/M/MV5BYWRkMDRhODQtYjE1YS00ZGQ2LTk4OGQtNmEwMTBjOGYxYjZkXkEyXkFqcGdeQXVyMTY0MTAxMjY@._V1_.jpg',
-    //   imgAlt:'Photo of the movie La belle verte',
-    //   synopsis: 'A cute French alternative movie.'
-    // }            
-  ]
+  public year: number = 0;
+  public movies: any[] = []
+  public countries: Set<string> = new Set;
+  public years: number[] = [];
 
   public toggleCountry(): void {
     this.defaultCountry =
@@ -63,31 +27,26 @@ export class HomeComponent implements OnInit {
       })                     
   }
 
-  public countries: Set<string> = new Set;
-
   constructor(
     private movieService: MovieService
     ) {   }
 
   ngOnInit(): void {
 
+    const years: Set<number> = new Set<number>();
+
     this.movieService.all()
       .pipe(take(1)) // take the only response of the observable
       .subscribe((response:any[]) => {
-        console.log(`Response: ${JSON.stringify(response)}`);
 
-        this.movies = response.map((movie: Movie) =>{return new Movie().deserialize(movie)});
-
-        console.log(`Response: ${JSON.stringify(response)}`)
-       });
-
-    // this.movies.forEach(movie=> {
-    //   this.countries.add(movie.country)
-    //   });
-    // this.movieService.all().subscribe((response: any[]) => {
-    //   console.log(`Response: ${JSON.stringify(response)}`);
-    // });
-
+        this.movies = response.map((movie: Movie) => {
+          // Add year to set for further filter
+          years.add(movie.year);
+          return new Movie().deserialize(movie)
+          // console.log(`Response: ${JSON.stringify(response)}`);
+        });
+        this.years = Array.from(years).sort().reverse();
+      });     
   }
 
 }
