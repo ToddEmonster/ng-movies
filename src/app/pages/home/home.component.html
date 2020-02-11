@@ -1,0 +1,21 @@
+<h1>Hey, I'm AppComponent, my title is {{ title | uppercase }}</h1>
+
+<p>Default country is : {{ defaultCountry }}</p>
+<div class=movie *ngFor="let movie of movies">
+    <div *ngIf="(movie.country == defaultCountry) || defaultCountry == 'all'">
+        <h2 class = "truc title"
+        [ngClass]="{'old': movie.year < 2000, 'title': true }"
+        >
+        {{ movie.title }}
+        </h2>
+        <h3>{{ movie.year }}</h3>
+        <h3>{{ movie.country }}</h3>
+    </div>
+</div>
+
+<div id="filter">
+    <select size="1" [(ngModel)]="defaultCountry">
+        <option value="all" selected>All</option>
+        <option *ngFor="let country of countries" value="{{ country }}">{{ country }}</option>
+    </select>
+</div>
