@@ -12,4 +12,9 @@ export class SearchComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  public validateSearch() {
+    if (this.value.length) {
+      console.log("The user typed something !!")
+    }
+  }
 }

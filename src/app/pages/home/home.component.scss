@@ -1,6 +1,12 @@
 .content {
-    max-width: 960px;
     margin: auto;
+    width: 50%;
+    padding: 10px;
+    text-align: center;
+
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 div {
@@ -8,7 +14,11 @@ div {
 }
 
 .movie {
-    position: relative;
+    margin: inherit;
+    position: inherit;
+    width: inherit;
+    // width: 50%;
+    // position: relative;
 }
 
 .example-card {

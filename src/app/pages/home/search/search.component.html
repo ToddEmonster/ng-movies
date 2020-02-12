@@ -1,13 +1,16 @@
 <!-- <p>SEARCH COMPONENT BEGINS HERE</p> -->
 
-<mat-form-field class="example-form-field">
-    <mat-label>Search a movie, actress...</mat-label>
-    <input matInput type="text" [(ngModel)]="value">
-    <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
-      <mat-icon>close</mat-icon>
-    </button>
-</mat-form-field>
-  
-<button mat-raised-button>OK</button>
+<div id="search-bar">
+    <mat-form-field class="example-form-field">
+        <mat-label>Search a movie, actress...</mat-label>
+        <input matInput type="text" [(ngModel)]="value">
+        <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+        <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+</div>
 
+<div id="search-button">
+    <button mat-raised-button (click)="validateSearch()">OK</button>
+</div>  
 <!-- <p>SEARCH COMPONENT ENDS HERE</p> -->

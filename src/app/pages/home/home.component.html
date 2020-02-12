@@ -1,7 +1,8 @@
-<div class="home content">
-  <h1>Hey, I'm AppComponent, my title is {{ title | uppercase }}</h1>
+<div class="content">
 
-  <div>
+  <h1>Homepage : {{ title | uppercase }}</h1>
+
+  <div id="search-component">
     <app-search></app-search>
   </div>
 
@@ -20,6 +21,7 @@
 
   <p>Default country is : {{ defaultCountry }}</p>
   <p>Default year is : {{ year }}</p>
+
   <div class=movie *ngFor="let movie of movies">
       <div *ngIf="movie.year == year || year == 0">
 
