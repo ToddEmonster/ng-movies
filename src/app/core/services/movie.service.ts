@@ -32,4 +32,12 @@ export class MovieService {
     )
   }
 
+  public byTitle(value: string): Observable<Movie[]> {
+    const apiRoute: string = `${environment.apiRoot}/movie/byTitle?t=${value}`;
+    console.log("If you see this message, it means byTitle() has been called")
+    // console.log(`Movies : ${JSON.stringify(movies)}`);
+    return this.httpClient.get<Movie[]>(
+      apiRoute
+    )
+  }
 }
