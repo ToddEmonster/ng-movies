@@ -6,6 +6,7 @@
             type="search"
             placeholder="Ex. Joker"
             formControlName="searchTerm"
+            (change)="reload()"
         >
         <button 
             mat-button 
@@ -20,7 +21,7 @@
     </mat-form-field>
     <button 
     mat-raised-button 
-    (click)="validateSearch()"
+    (click)="searchByTitle()"
     [disabled]="searchForm.invalid"
     >OK</button>    
 </form>

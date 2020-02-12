@@ -31,7 +31,15 @@ export class SearchComponent implements OnInit {
 
   public reload(): void {
     if (this.searchTerm.value.trim().length == 0) {
-      console.log('Have to reload all movies')
+      let allMovies: Movie[] = [];
+      this.movieService.all()
+        .pipe(take(1))
+        .subscribe((response:Movie[]) => {
+            allMovies = response.map((movie: Movie) => {
+            return new Movie().deserialize(movie);
+          });
+        this.moviesEvent.emit(allMovies);
+      });
     }
   }
 
@@ -47,18 +55,24 @@ export class SearchComponent implements OnInit {
     });
   }
 
-  public validateSearch() {
-    let moviesbyTitle: Movie[] = [];
-    this.movieService.byTitle(this.searchTerm.value.trim())
-      .pipe(take(1)) // take the only response of the observable
-      .subscribe((response:Movie[]) => {
+  public searchByTitle() {
+   
+    if (this.searchTerm.value.trim().length > 0) { 
 
-          moviesbyTitle = response.map((movie: Movie) => {
-            return new Movie().deserialize(movie);
-          });
+      let moviesbyTitle: Movie[] = [];
+      this.movieService.byTitle(this.searchTerm.value.trim())
+        .pipe(take(1)) // take the only response of the observable
+        .subscribe((response:Movie[]) => {
+
+            moviesbyTitle = response.map((movie: Movie) => {
+              return new Movie().deserialize(movie);
+            });
+        console.log(`Emit : ${JSON.stringify(moviesbyTitle)}`);
+        this.moviesEvent.emit(moviesbyTitle);
       });
-    console.log(`Emit : ${JSON.stringify(moviesbyTitle)}`);
-    this.moviesEvent.emit(moviesbyTitle);
+      
+    }
+
   }
 
 }
