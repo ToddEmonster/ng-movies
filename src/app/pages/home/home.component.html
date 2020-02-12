@@ -1,41 +1,45 @@
-<h1>Hey, I'm AppComponent, my title is {{ title | uppercase }}</h1>
+<div class="home content">
+  <h1>Hey, I'm AppComponent, my title is {{ title | uppercase }}</h1>
 
-<div id="filter">
-  <mat-form-field>
-      <mat-label>Years</mat-label>
-      <mat-select size="1" [(ngModel)]="year">
-          <mat-option [value]="0" selected>All</mat-option>
-          <mat-option *ngFor="let year of years" [value]="year">
-              {{ year }}
-          </mat-option>
-      </mat-select>
-  </mat-form-field>
-  
+  <div>
+    <app-search></app-search>
+  </div>
+
+  <div id="filter">
+    <mat-form-field>
+        <mat-label>Years</mat-label>
+        <mat-select size="1" [(ngModel)]="year">
+            <mat-option [value]="0" selected>All</mat-option>
+            <mat-option *ngFor="let year of years" [value]="year">
+                {{ year }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    
+  </div>
+
+  <p>Default country is : {{ defaultCountry }}</p>
+  <p>Default year is : {{ year }}</p>
+  <div class=movie *ngFor="let movie of movies">
+      <div *ngIf="movie.year == year || year == 0">
+
+          <mat-card class="example-card">
+              <mat-card-header>
+                <div mat-card-avatar class="example-header-image"></div>
+                <mat-card-title class = "truc title"
+                [ngClass]="{'old': movie.year < 2000, 'title': true }">{{ movie.title }}</mat-card-title>
+                <mat-card-subtitle>{{ movie.year }} ({{ movie.country }})</mat-card-subtitle>
+              </mat-card-header>
+              <img mat-card-image src="{{ movie.imgSrc }}" alt="{{ movie.imgAlt }}">
+              <mat-card-content>
+                <p>{{ movie.synopsis}}</p>
+              </mat-card-content>
+              <mat-card-actions>
+                <button mat-button>LIKE</button>
+                <button mat-button>SHARE</button>
+              </mat-card-actions>
+            </mat-card>
+      </div>
+  </div>
+
 </div>
-
-<p>Default country is : {{ defaultCountry }}</p>
-<p>Default year is : {{ year }}</p>
-<div class=movie *ngFor="let movie of movies">
-    <div *ngIf="movie.year == year || year == 0">
-
-        <mat-card class="example-card">
-            <mat-card-header>
-              <div mat-card-avatar class="example-header-image"></div>
-              <mat-card-title class = "truc title"
-              [ngClass]="{'old': movie.year < 2000, 'title': true }">{{ movie.title }}</mat-card-title>
-              <mat-card-subtitle>{{ movie.year }}, {{ movie.country }}</mat-card-subtitle>
-            </mat-card-header>
-            <img mat-card-image src="{{ movie.imgSrc }}" alt="{{ movie.imgAlt }}">
-            <mat-card-content>
-              <p>{{ movie.synopsis}}</p>
-            </mat-card-content>
-            <mat-card-actions>
-              <button mat-button>LIKE</button>
-              <button mat-button>SHARE</button>
-            </mat-card-actions>
-          </mat-card>
-    </div>
-</div>
-
-
-
