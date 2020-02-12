@@ -3,7 +3,7 @@
   <h1>Homepage : {{ title | uppercase }}</h1>
 
   <div id="search-component">
-    <app-search></app-search>
+    <app-search (moviesEvent)="receiveMoviesEvent($event)"></app-search>
   </div>
 
   <div id="filter">

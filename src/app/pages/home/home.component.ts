@@ -49,4 +49,8 @@ export class HomeComponent implements OnInit {
       });     
   }
 
+  public receiveMoviesEvent($event): void {
+    this.movies = $event;
+    console.log(`Received ${JSON.stringify(this.movies)}`);
+  }
 }
