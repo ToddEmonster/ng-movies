@@ -25,13 +25,15 @@
   <div class=movie *ngFor="let movie of movies">
       <div *ngIf="movie.year == year || year == 0">
 
-          <mat-card class="example-card">
-              <mat-card-header>
-                <div mat-card-avatar class="example-header-image"></div>
-                <mat-card-title class = "truc title"
-                [ngClass]="{'old': movie.year < 2000, 'title': true }">{{ movie.title }}</mat-card-title>
+          <mat-card class="movie-card">
+              <mat-card-header class="movie-header">
+                <mat-card-title 
+                  class = "movie-title"
+                  [ngClass]="{'old': movie.year < 2000, 'title': true }">{{ movie.title }}
+                </mat-card-title>
                 <mat-card-subtitle>{{ movie.year }} ({{ movie.country }})</mat-card-subtitle>
               </mat-card-header>
+
               <img mat-card-image src="{{ movie.imgSrc }}" alt="{{ movie.imgAlt }}">
               <mat-card-content>
                 <p>{{ movie.synopsis}}</p>
