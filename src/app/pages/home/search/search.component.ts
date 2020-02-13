@@ -1,9 +1,10 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { MovieService } from 'src/app/core/services/movie.service';
-import { take } from 'rxjs/operators';
+import { distinctUntilChanged, debounceTime, map } from 'rxjs/operators';
 import { Movie } from 'src/app/core/models/movie';
 import { EventEmitter} from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -13,7 +14,7 @@ import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/fo
 })
 export class SearchComponent implements OnInit {
 
-  @Output() moviesEvent: EventEmitter<Movie[]> = new EventEmitter<Movie[]>();
+  @Output() moviesEvent: EventEmitter<Observable<Movie[]>> = new EventEmitter<Observable<Movie[]>>();
 
   public searchForm: FormGroup; // Groupement de contrôles de formulaires (= champs)
 
@@ -31,15 +32,9 @@ export class SearchComponent implements OnInit {
 
   public reload(): void {
     if (this.searchTerm.value.trim().length == 0) {
-      let allMovies: Movie[] = [];
-      this.movieService.all()
-        .pipe(take(1))
-        .subscribe((response:Movie[]) => {
-            allMovies = response.map((movie: Movie) => {
-            return new Movie().deserialize(movie);
-          });
-        this.moviesEvent.emit(allMovies);
-      });
+      this.moviesEvent.emit(
+        this.movieService.all()
+      );
     }
   }
 
@@ -53,21 +48,23 @@ export class SearchComponent implements OnInit {
         ])
       ]
     });
+    this.searchTerm.valueChanges
+      .pipe(
+        debounceTime(400),
+        distinctUntilChanged(),
+        map(() => {
+          console.log('Value of searchTerm : ' + this.searchTerm.value);
+          this.searchByTitle();
+        })
+      ).subscribe();
   }
 
   public searchByTitle() {
    
     if (this.searchTerm.value.trim().length > 0) { 
-
-      let moviesbyTitle: Movie[] = [];
-      this.movieService.byTitle(this.searchTerm.value.trim())
-        .pipe(
-          take(1) // take the only response of the observable
-        ) 
-        .subscribe((response:Movie[]) => {
-          console.log(`Emit : ${JSON.stringify(response)}`);
-          this.moviesEvent.emit(response);
-      });
+      this.moviesEvent.emit(
+        this.movieService.byTitle(this.searchTerm.value.trim())
+      );
     }
   }
 

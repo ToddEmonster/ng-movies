@@ -1,8 +1,9 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { MovieService } from 'src/app/core/services/movie.service';
 
-import { take } from 'rxjs/operators';
+import { take, map } from 'rxjs/operators';
 import { Movie } from 'src/app/core/models/movie';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -13,11 +14,15 @@ export class HomeComponent implements OnInit {
  
   public title: string = 'movies'; // marche aussi : " title = 'movies' "
   public defaultCountry: string = 'all';
-  public year: number = 0;
-  public movies: any[] = []
   public countries: Set<string> = new Set;
+
+  public year: number = 0;
   public years: number[] = [];
 
+  public movies: Observable<Movie[]>;
+
+
+  // Deprecated button method... FOR NOW
   public toggleCountry(): void {
     this.defaultCountry =
       (this.defaultCountry == 'us') ? this.defaultCountry = 'it'
@@ -32,23 +37,8 @@ export class HomeComponent implements OnInit {
     ) {   }
 
   ngOnInit(): void {
+    this.movies = this.movieService.all()
 
-    const years: Set<number> = new Set<number>();
-
-    this.movieService.all()
-      .pipe(
-        take(1) // take the only response of the observable
-      ) 
-      
-      // nouveau
-      .subscribe((response:Movie[]) => {
-        this.movies = response;
-        this.movies.map((movie: Movie) => {
-          // Add year to set for further filter
-          years.add(movie.year);
-        });
-        this.years = Array.from(years).sort().reverse();
-      });     
   }
 
   public receiveMoviesEvent($event): void {
