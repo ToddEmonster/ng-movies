@@ -22,22 +22,6 @@ export class SearchComponent implements OnInit {
     private movieService: MovieService,
     private formBuilder: FormBuilder) { }
 
-  public clearSearchTerm() {
-    this.searchForm.controls.searchTerm.setValue('');
-  }  
-
-  public get searchTerm(): AbstractControl {
-    return this.searchForm.controls.searchTerm;
-  }
-
-  public reload(): void {
-    if (this.searchTerm.value.trim().length == 0) {
-      this.moviesEvent.emit(
-        this.movieService.all()
-      );
-    }
-  }
-
   ngOnInit(): void {
     this.searchForm = this.formBuilder.group({
       searchTerm: [
@@ -57,6 +41,22 @@ export class SearchComponent implements OnInit {
           this.searchByTitle();
         })
       ).subscribe();
+  }
+
+  public clearSearchTerm() {
+    this.searchForm.controls.searchTerm.setValue('');
+  }  
+
+  public get searchTerm(): AbstractControl {
+    return this.searchForm.controls.searchTerm;
+  }
+
+  public reload(): void {
+    if (this.searchTerm.value.trim().length == 0) {
+      this.moviesEvent.emit(
+        this.movieService.all()
+      );
+    }
   }
 
   public searchByTitle() {
