@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { MovieService } from 'src/app/core/services/movie.service';
 
 import { take } from 'rxjs/operators';
@@ -10,7 +10,7 @@ import { Movie } from 'src/app/core/models/movie';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-
+ 
   public title: string = 'movies'; // marche aussi : " title = 'movies' "
   public defaultCountry: string = 'all';
   public year: number = 0;
@@ -36,14 +36,16 @@ export class HomeComponent implements OnInit {
     const years: Set<number> = new Set<number>();
 
     this.movieService.all()
-      .pipe(take(1)) // take the only response of the observable
-      .subscribe((response:any[]) => {
-
-        this.movies = response.map((movie: Movie) => {
+      .pipe(
+        take(1) // take the only response of the observable
+      ) 
+      
+      // nouveau
+      .subscribe((response:Movie[]) => {
+        this.movies = response;
+        this.movies.map((movie: Movie) => {
           // Add year to set for further filter
           years.add(movie.year);
-          return new Movie().deserialize(movie)
-          // console.log(`Response: ${JSON.stringify(response)}`);
         });
         this.years = Array.from(years).sort().reverse();
       });     
