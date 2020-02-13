@@ -3,7 +3,7 @@ import { MovieService } from 'src/app/core/services/movie.service';
 
 import { take, map } from 'rxjs/operators';
 import { Movie } from 'src/app/core/models/movie';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit {
 
   public year: number = 0;
   public years: number[] = [];
+  public yearSubscription: Subscription;
 
   public movies: Observable<Movie[]>;
 
@@ -37,8 +38,18 @@ export class HomeComponent implements OnInit {
     ) {   }
 
   ngOnInit(): void {
-    this.movies = this.movieService.all()
+    this.movies = this.movieService.all();
 
+
+    this.yearSubscription = this.movieService.years$
+      .subscribe((_years) => {
+        console.log('Years was updated : ' + JSON.stringify(_years));
+        this.years = _years;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.yearSubscription.unsubscribe();
   }
 
   public receiveMoviesEvent($event): void {
