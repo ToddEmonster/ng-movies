@@ -61,18 +61,14 @@ export class SearchComponent implements OnInit {
 
       let moviesbyTitle: Movie[] = [];
       this.movieService.byTitle(this.searchTerm.value.trim())
-        .pipe(take(1)) // take the only response of the observable
+        .pipe(
+          take(1) // take the only response of the observable
+        ) 
         .subscribe((response:Movie[]) => {
-
-            moviesbyTitle = response.map((movie: Movie) => {
-              return new Movie().deserialize(movie);
-            });
-        console.log(`Emit : ${JSON.stringify(moviesbyTitle)}`);
-        this.moviesEvent.emit(moviesbyTitle);
+          console.log(`Emit : ${JSON.stringify(response)}`);
+          this.moviesEvent.emit(response);
       });
-      
     }
-
   }
 
 }
