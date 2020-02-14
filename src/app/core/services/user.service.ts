@@ -15,6 +15,14 @@ export class UserService {
         password: 'totototo'
       }
     );
+    const userAsString: string = localStorage.getItem('user');
+    if (userAsString !== null) {
+      this.isAuthenticated = true;
+    }
+  }
+
+  public ngOnInit() {
+
   }
 
   public authenticate(user: any): boolean {
