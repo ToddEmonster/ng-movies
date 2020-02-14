@@ -15,4 +15,8 @@ export class TopMenuComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  public doLogout(): void {
+    this.userService.logout();
+  }
+
 }

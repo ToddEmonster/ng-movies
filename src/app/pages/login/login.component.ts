@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private userservice: UserService) { }
+    private userService: UserService) { }
 
   public get login(): AbstractControl {
     return this.loginForm.controls.login;
@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
 
   public doLogin(): void {
     // Local persistence
-    if (this.userservice.authenticate(this.loginForm.value)) {
+    if (this.userService.authenticate(this.loginForm.value)) {
       // Road to home
     this.router.navigate(['home']);
     } else {

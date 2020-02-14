@@ -12,7 +12,8 @@
                 </a>
             </li>
             <li *ngIf="userService.isAuthenticated">
-                <a [routerLink]="['login']">
+                <a (click)="doLogout()"
+                   [routerLink]="['home']">
                     Logout
                 </a>
             </li>            

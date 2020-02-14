@@ -32,5 +32,9 @@ export class UserService {
     return false;
   }
 
+  public logout(): void {
+    localStorage.removeItem('user');
+    this.isAuthenticated=false;
+  }
 
 }
