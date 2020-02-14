@@ -1,3 +1,5 @@
 <footer>
-    Here my footer
+    <span *ngIf="user">
+        <em>You are connected as {{ user.login }}</em>
+    </span>
 </footer>
