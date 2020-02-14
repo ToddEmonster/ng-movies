@@ -8,13 +8,13 @@
                     Home
                 </a>
             </li>
-            <li *ngIf="!userService.isAuthenticated">
+            <li *ngIf="!userService.user">
                 <a [routerLink]="['login']">
                     <mat-icon class="my-icons">lock</mat-icon>
                     Login
                 </a>
             </li>
-            <li *ngIf="userService.isAuthenticated">
+            <li *ngIf="userService.user">
                 <a (click)="doLogout()"
                    [routerLink]="['home']">
                    <mat-icon class="my-icons">lock_open</mat-icon>
@@ -22,7 +22,5 @@
                 </a>
             </li>            
         </ul>
-        <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" 
-              rel="stylesheet"> -->
     </nav>
 </header>
