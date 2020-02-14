@@ -6,11 +6,16 @@
                     Home
                 </a>
             </li>
-            <li>
+            <li *ngIf="!userService.isAuthenticated">
                 <a [routerLink]="['login']">
                     Login
                 </a>
             </li>
+            <li *ngIf="userService.isAuthenticated">
+                <a [routerLink]="['login']">
+                    Logout
+                </a>
+            </li>            
         </ul>
     </nav>
 </header>
