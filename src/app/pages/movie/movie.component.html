@@ -1,1 +1,36 @@
 <p>{{ movie | json }}</p>
+
+
+<!-- I'll put the form here -->
+
+<form [formGroup]="synopsisForm">
+    <mat-form-field class="form-field">
+        <!-- <mat-label>Search a movie, actress, director...</mat-label> -->
+        <mat-label>Modify the synopsis</mat-label>
+        <textarea 
+            class="synopsis-input"
+            matInput 
+            type="synopsis"
+            placeholder="Type the synopsis here..."
+            formControlName="synopsisTerm"
+        ></textarea>
+        <button 
+            mat-button 
+            *ngIf="synopsisTerm" 
+            matSuffix 
+            mat-icon-button 
+            aria-label="Clear" 
+            (click)="clearSynopsisTerm()"
+        >
+        <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+
+    <!-- Bouton de validation -->
+    <button 
+    mat-raised-button 
+    (click)="modifySynopsis()"
+    [disabled]="synopsisForm.invalid"
+    >Validate synopsis input</button>    
+
+</form>
