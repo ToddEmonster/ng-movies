@@ -4,6 +4,10 @@
 <!-- I'll put the form here -->
 
 <form [formGroup]="movieForm">
+    <!-- // TODO : other movie attributes -->
+
+
+    <!-- SYNOPSIS -->
     <mat-form-field class="form-field">
         <!-- <mat-label>Search a movie, actress, director...</mat-label> -->
         <mat-label>Modify the synopsis</mat-label>
@@ -25,12 +29,10 @@
         <mat-icon>close</mat-icon>
         </button>
     </mat-form-field>
-
-    <!-- Bouton de validation -->
     <button 
-    mat-raised-button 
-    (click)="modifySynopsis()"
-    [disabled]="movieForm.invalid"
-    >Validate synopsis input</button>    
+        mat-raised-button 
+        (click)="updateSynopsis()"
+        [disabled]="movieForm.invalid"
+        >Update synopsis</button>    
 
 </form>

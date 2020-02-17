@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MovieService } from 'src/app/core/services/movie.service';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { HttpResponse } from '@angular/common/http';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-movie',
@@ -12,9 +14,9 @@ export class MovieComponent implements OnInit {
   public movie: any;
   public movieForm: FormGroup;
 
-
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private movieService: MovieService,
     private formBuilder: FormBuilder) { }
 
@@ -45,8 +47,22 @@ export class MovieComponent implements OnInit {
     return this.movieForm.controls.synopsis;
   }
 
-  public modifySynopsis(): void {
-    console.log(`Congrats, you changed the synopsis :) it reads like this: ${this.synopsis.value}`);
+  public updateSynopsis(): void {
+    this.movie.synopsis = this.synopsis.value;
+
+    // THen call the service to update
+
+    this.movieService.update(this.movie)
+    .pipe(take(1))
+    .subscribe((response: HttpResponse<any>)=> {
+        return response;
+      });
+
+    this.router.navigate(['../','movie', this.movie.idMovie]);
+    console.log('Congrats, you changed the synopsis :)');
+
+    
+
   }
 
 }

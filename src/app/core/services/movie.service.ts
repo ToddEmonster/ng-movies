@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from './../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Movie } from '../models/movie';
 import { take, map } from 'rxjs/operators';
@@ -70,10 +70,10 @@ export class MovieService {
   }
 
   public byId(id: number): Observable<any> {
-    const apiRoute: string = `${environment.apiRoot}/movie/${id}`;
+    const apiRoot: string = `${environment.apiRoot}movie/${id}`;
     console.log(`byId() has been called, the route is: ${environment.apiRoot}/movie/${id}`)
     return this.httpClient.get<any>(
-      apiRoute
+      apiRoot
     )
     .pipe(
       take(1),
@@ -83,5 +83,21 @@ export class MovieService {
     );
   }
 
+  public update(movie: any): Observable<HttpResponse<any>> {
+    const apiRoot: string = `${environment.apiRoot}movie/modify`;
+
+    return this.httpClient.put(
+      apiRoot,
+      movie,
+      {
+        observe: 'response' // c'est la reponse du back qui nous interesse
+      }
+    ).pipe(
+      take(1),
+      map((response: HttpResponse<any>)=> {
+        return response;
+      })
+    );
+  }
   
 }
