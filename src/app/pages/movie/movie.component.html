@@ -3,7 +3,7 @@
 
 <!-- I'll put the form here -->
 
-<form [formGroup]="synopsisForm">
+<form [formGroup]="movieForm">
     <mat-form-field class="form-field">
         <!-- <mat-label>Search a movie, actress, director...</mat-label> -->
         <mat-label>Modify the synopsis</mat-label>
@@ -30,7 +30,7 @@
     <button 
     mat-raised-button 
     (click)="modifySynopsis()"
-    [disabled]="synopsisForm.invalid"
+    [disabled]="movieForm.invalid"
     >Validate synopsis input</button>    
 
 </form>

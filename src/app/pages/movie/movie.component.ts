@@ -10,7 +10,7 @@ import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/fo
 })
 export class MovieComponent implements OnInit {
   public movie: any;
-  public synopsisForm: FormGroup;
+  public movieForm: FormGroup;
 
 
   constructor(
@@ -19,15 +19,17 @@ export class MovieComponent implements OnInit {
     private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+
     this.route.paramMap.subscribe((paramMap: any) => {
       console.log(`params: ${paramMap.params.id}`);
       this.movieService.byId(paramMap.params.id).subscribe((movie: any) => {
         console.log(`And the winner is : ${JSON.stringify(movie)}`)
         this.movie = movie;
+        this.synopsisTerm.setValue(movie.synopsis);
       })
     });
 
-    this.synopsisForm = this.formBuilder.group({
+    this.movieForm = this.formBuilder.group({
       synopsisTerm: [
         '', // Default value for the control
         Validators.compose([
@@ -39,15 +41,15 @@ export class MovieComponent implements OnInit {
   }
 
   public clearSynopsisTerm() {
-    this.synopsisForm.controls.synopsisTerm.setValue('');
+    this.movieForm.controls.synopsisTerm.setValue('');
   }  
 
   public get synopsisTerm(): AbstractControl {
-    return this.synopsisForm.controls.synopsisTerm;
+    return this.movieForm.controls.synopsisTerm;
   }
 
   public modifySynopsis(): void {
-    console.log('Congrats, you changed the synopsis :)');
+    console.log(`Congrats, you changed the synopsis :) it reads like this: ${this.synopsisTerm.value}`);
   }
 
 }
