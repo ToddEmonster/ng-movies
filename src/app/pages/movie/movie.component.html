@@ -12,15 +12,15 @@
             matInput 
             type="synopsis"
             placeholder="Type the synopsis here..."
-            formControlName="synopsisTerm"
+            formControlName="synopsis"
         ></textarea>
         <button 
             mat-button 
-            *ngIf="synopsisTerm" 
+            *ngIf="synopsis" 
             matSuffix 
             mat-icon-button 
             aria-label="Clear" 
-            (click)="clearSynopsisTerm()"
+            (click)="clearSynopsis()"
         >
         <mat-icon>close</mat-icon>
         </button>

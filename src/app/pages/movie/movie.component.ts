@@ -25,31 +25,28 @@ export class MovieComponent implements OnInit {
       this.movieService.byId(paramMap.params.id).subscribe((movie: any) => {
         console.log(`And the winner is : ${JSON.stringify(movie)}`)
         this.movie = movie;
-        this.synopsisTerm.setValue(movie.synopsis);
+        this.synopsis.setValue(movie.synopsis);
       })
     });
 
     this.movieForm = this.formBuilder.group({
-      synopsisTerm: [
+      synopsis: [
         '', // Default value for the control
-        Validators.compose([
-          Validators.required,
-          Validators.minLength(2)
-        ])
+        Validators.required
       ]
     });
   }
 
-  public clearSynopsisTerm() {
-    this.movieForm.controls.synopsisTerm.setValue('');
+  public clearSynopsis() {
+    this.movieForm.controls.synopsis.setValue('');
   }  
 
-  public get synopsisTerm(): AbstractControl {
-    return this.movieForm.controls.synopsisTerm;
+  public get synopsis(): AbstractControl {
+    return this.movieForm.controls.synopsis;
   }
 
   public modifySynopsis(): void {
-    console.log(`Congrats, you changed the synopsis :) it reads like this: ${this.synopsisTerm.value}`);
+    console.log(`Congrats, you changed the synopsis :) it reads like this: ${this.synopsis.value}`);
   }
 
 }
