@@ -4,6 +4,7 @@ import { MovieService } from 'src/app/core/services/movie.service';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { HttpResponse } from '@angular/common/http';
 import { take } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-movie',
@@ -18,7 +19,8 @@ export class MovieComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private movieService: MovieService,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder,
+    private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
 
@@ -50,8 +52,7 @@ export class MovieComponent implements OnInit {
   public updateSynopsis(): void {
     this.movie.synopsis = this.synopsis.value;
 
-    // THen call the service to update
-
+    // Then call the service to update
     this.movieService.update(this.movie)
     .pipe(take(1))
     .subscribe((response: HttpResponse<any>)=> {
@@ -59,9 +60,7 @@ export class MovieComponent implements OnInit {
       });
 
     this.router.navigate(['../','movie', this.movie.idMovie]);
-    console.log('Congrats, you changed the synopsis :)');
-
-    
+    this._snackBar.open('Congrats, you changed the synopsis :)', '', {duration: 5000});
 
   }
 
