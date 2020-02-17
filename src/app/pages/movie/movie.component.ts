@@ -5,6 +5,8 @@ import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/fo
 import { HttpResponse } from '@angular/common/http';
 import { take } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { DeleteComponent } from './delete/delete.component';
 
 @Component({
   selector: 'app-movie',
@@ -20,7 +22,9 @@ export class MovieComponent implements OnInit {
     private router: Router,
     private movieService: MovieService,
     private formBuilder: FormBuilder,
-    private _snackBar: MatSnackBar) { }
+    private _snackBar: MatSnackBar,
+    private _bottomSheet: MatBottomSheet
+    ) { }
 
   ngOnInit(): void {
 
@@ -61,7 +65,11 @@ export class MovieComponent implements OnInit {
 
     this.router.navigate(['../','movie', this.movie.idMovie]);
     this._snackBar.open('Congrats, you changed the synopsis :)', '', {duration: 5000});
-
   }
+
+  public validateDelete(): void {
+    this._bottomSheet.open(DeleteComponent);
+  }
+
 
 }

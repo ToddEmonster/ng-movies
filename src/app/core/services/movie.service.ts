@@ -71,7 +71,6 @@ export class MovieService {
 
   public byId(id: number): Observable<any> {
     const apiRoot: string = `${environment.apiRoot}movie/${id}`;
-    console.log(`byId() has been called, the route is: ${environment.apiRoot}/movie/${id}`)
     return this.httpClient.get<any>(
       apiRoot
     )
@@ -100,4 +99,22 @@ export class MovieService {
     );
   }
   
+  public delete(id: number): Observable<HttpResponse<any>> {
+    const apiRoot: string = `${environment.apiRoot}movie/${id}`;
+
+    return this.httpClient.delete(
+      apiRoot,
+      {
+        observe: 'response' // c'est la reponse du back qui nous interesse
+      }
+    ).pipe(
+      take(1),
+      map((response: HttpResponse<any>)=> {
+        return response;
+      })
+    );
+
+  }
+
+
 }
