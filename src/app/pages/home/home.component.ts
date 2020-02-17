@@ -4,6 +4,10 @@ import { MovieService } from 'src/app/core/services/movie.service';
 import { take, map } from 'rxjs/operators';
 import { Movie } from 'src/app/core/models/movie';
 import { Observable, Subscription } from 'rxjs';
+import { Router } from '@angular/router';
+import { MovieComponent } from '../movie/movie.component';
+import { UserService } from 'src/app/core/services/user.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-home',
@@ -19,9 +23,8 @@ export class HomeComponent implements OnInit {
   public year: number = 0;
   public years: number[] = [];
   public yearSubscription: Subscription;
-
+  
   public movies: Observable<Movie[]>;
-
 
   // Deprecated button method... FOR NOW
   public toggleCountry(): void {
@@ -34,7 +37,10 @@ export class HomeComponent implements OnInit {
   }
 
   constructor(
-    private movieService: MovieService
+    private movieService: MovieService,
+    private userService: UserService,
+    private router: Router,
+    private _snackBar: MatSnackBar
     ) {   }
 
   ngOnInit(): void {
@@ -57,5 +63,19 @@ export class HomeComponent implements OnInit {
     console.log(`Received ${JSON.stringify(this.movies)}`);
   }
 
-  
+  public doDetails(idMovie: number): void {
+    console.log('You clicked on Details, the id of the movie is: ' + idMovie);
+    if (this.userService.user && this.userService.user !== null) {
+      this.router.navigate(['../','movie', idMovie ]);
+    } else {
+      this.router.navigate(['../','login']);
+      this._snackBar.open('Log in to see the movie details !', '', {duration: 5000});
+    }
+   
+  }
+
+  // TODO, but not now
+  public doFavorite(): void {
+    console.log('You clicked on "Fav it"');
+  }
 }

@@ -71,7 +71,7 @@ export class MovieService {
 
   public byId(id: number): Observable<any> {
     const apiRoute: string = `${environment.apiRoot}/movie/${id}`;
-    console.log("byId() has been called")
+    console.log(`byId() has been called, the route is: ${environment.apiRoot}/movie/${id}`)
     return this.httpClient.get<any>(
       apiRoute
     )
