@@ -10,7 +10,7 @@ import { take, map } from 'rxjs/operators';
 })
 export class MovieService {
 
-  private _years: Set<number>;
+  private _years: Set<number> = new Set<number>();
   public years$ : BehaviorSubject<number[]> =
             new BehaviorSubject<number[]>(Array.from(this._years).sort());
 
