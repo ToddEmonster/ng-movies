@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
  
   public title: string = 'movies'; // marche aussi : " title = 'movies' "
   public defaultCountry: string = 'all';
-  public countries: Set<string> = new Set;
+  //public countries: Set<string> = new Set;
 
   public year: number = 0;
   public years: number[] = [];

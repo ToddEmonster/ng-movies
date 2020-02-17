@@ -47,7 +47,9 @@ export class UserService {
     if (this._user !== undefined) {
       localStorage.setItem(
         'user',
-        this._user.token
+        JSON.stringify(
+          {token: this._user.token}
+        )
       ); 
       this._user.isAuthenticated=true;
       this.userSubject$.next(this._user);

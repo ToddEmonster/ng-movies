@@ -10,7 +10,7 @@ import { take, map } from 'rxjs/operators';
 })
 export class MovieService {
 
-  private _years: Set<number> = new Set<number>();
+  private _years: Set<number>;
   public years$ : BehaviorSubject<number[]> =
             new BehaviorSubject<number[]>(Array.from(this._years).sort());
 
@@ -50,6 +50,7 @@ export class MovieService {
   }
 
   public byTitle(title: string): Observable<Movie[]> {
+    this._years = new Set<number>();
     const apiRoute: string = `${environment.apiRoot}/movie/byTitle?t=${title}`;
     console.log("byTitle() has been called")
     // console.log(`Movies : ${JSON.stringify(movies)}`);
@@ -59,12 +60,28 @@ export class MovieService {
     .pipe(
       take(1),
       map((response)=> {
-        return response.map((item) => new Movie().deserialize(item))
+        return response.map((item) => {
+          this._years.add(item.year);
+          this.years$.next(Array.from(this._years).sort());
+          return new Movie().deserialize(item)
+        });
       })
     );
   }
 
-
+  public byId(id: number): Observable<any> {
+    const apiRoute: string = `${environment.apiRoot}/movie/${id}`;
+    console.log("byId() has been called")
+    return this.httpClient.get<any>(
+      apiRoute
+    )
+    .pipe(
+      take(1),
+      map((response)=> {
+        return response;
+      })
+    );
+  }
 
   
 }
