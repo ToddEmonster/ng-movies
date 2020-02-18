@@ -68,7 +68,9 @@ export class MovieComponent implements OnInit {
   }
 
   public validateDelete(): void {
-    this._bottomSheet.open(DeleteComponent);
+    this._bottomSheet.open(DeleteComponent, {
+      data: {movie: this.movie}
+    });
   }
 
 
