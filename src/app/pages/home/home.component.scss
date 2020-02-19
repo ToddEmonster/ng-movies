@@ -29,17 +29,17 @@ div {
         // position: inherit;
         max-width: 300px;
         max-height: 200px;
-        background-color: indianred;
+        background-color: lightblue;
         margin-left: auto;
         margin-right: auto;
     
         & .movie-header {
-            background-color: yellow;
+            // background-color: yellow;
             margin-left: auto;
             margin-right: auto;
 
             & .movie-title {
-                background-color: green;
+                // background-color: green;
                 text-align: center;
                 margin-left: auto;
                 margin-right: auto;

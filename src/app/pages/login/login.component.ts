@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
     }
     console.log(`Extras state : ${this._idMovie}`);
 
-    this.loginForm =  this.formBuilder.group({
+    this.loginForm = this.formBuilder.group({
       login: [
         '', 
         Validators.compose(
