@@ -28,21 +28,18 @@ export class MovieComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.route.paramMap.subscribe((paramMap: any) => {
-      console.log(`params: ${paramMap.params.id}`);
-      this.movieService.byId(paramMap.params.id).subscribe((movie: any) => {
-        console.log(`And the winner is : ${JSON.stringify(movie)}`)
-        this.movie = movie;
-        this.synopsis.setValue(movie.synopsis);
-      })
-    });
-
     this.movieForm = this.formBuilder.group({
       synopsis: [
         '', // Default value for the control
         Validators.required
       ]
     });
+
+
+    this.route.data.subscribe((data: {movie: any}) => {
+      this.movie = data.movie;
+      this.synopsis.setValue(this.movie.synopsis)
+    })
   }
 
   public clearSynopsis() {

@@ -4,10 +4,10 @@ import { MovieService } from 'src/app/core/services/movie.service';
 import { take, map } from 'rxjs/operators';
 import { Movie } from 'src/app/core/models/movie';
 import { Observable, Subscription } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { MovieComponent } from '../movie/movie.component';
 import { UserService } from 'src/app/core/services/user.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-home',
@@ -40,12 +40,12 @@ export class HomeComponent implements OnInit {
     private movieService: MovieService,
     private userService: UserService,
     private router: Router,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private snackBar: MatSnackBar
     ) {   }
 
   ngOnInit(): void {
     this.movies = this.movieService.all();
-
 
     this.yearSubscription = this.movieService.years$
       .subscribe((_years) => {
@@ -78,4 +78,47 @@ export class HomeComponent implements OnInit {
   public doFavorite(): void {
     console.log('You clicked on "Fav it"');
   }
+
+
+  public toastLoginMust(idMovie: number): void {
+    if(!this.userService.user) {
+      this.snackBar.open(
+        'You have to login in order to see the details !',
+        '',
+        {
+          duration: 2500,
+          verticalPosition: 'top'
+        })
+        setTimeout(() => {
+          this.router.navigate(['login']); }
+          , 2600)
+        } else {
+          this.router.navigate(['movie',idMovie]);
+        }
+  
+  }
+
+  // public moveTo(): void {
+  //   if (this.userService) {
+  //     // A COMPLETER
+  //   } else {
+  //     // Load a toast route to login
+  //     const snack: MatSnackBarRef<SimpleSnackBar> = this.snackBar.open(
+  //       'You have to login or create an account before',
+  //       null,
+  //       {
+  //         duration: 2500
+  //       }
+  //     );
+  //       snack.afterDismissed().subscribe((status: any) => {
+  //         const navigationExtras: NavigationExtras = {state: {movie: idMovie}};
+  //         this.router.navigate(['../', 'login'], navigationExtras):
+  //       })
+  
+  
+  //   }
+  // }
+
 }
+
+
