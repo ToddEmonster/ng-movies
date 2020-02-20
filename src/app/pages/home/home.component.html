@@ -54,13 +54,10 @@
                       matBadge="{{ movie.likes }}"
                       matBadgeColor="warn"
                     >
-                    </mat-icon> 
+                    favorite</mat-icon> 
 
-                    <mat-icon
-                    >favorite</mat-icon> 
-                
                 <button mat-stroked-button 
-                        (click)="detailFilm( movie.idMovie )">
+                        (click)="moveTo( movie.idMovie )">
                   Details
                   <mat-icon>add</mat-icon>
                 </button>

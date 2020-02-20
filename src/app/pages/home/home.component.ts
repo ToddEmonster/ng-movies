@@ -51,16 +51,37 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.socket$ = new WebSocketSubject<any>(environment.wssAddress);
     this.socket$.subscribe((socketMessage: any) => {
-      console.log(`Something came from wsServer : ${JSON.stringify(socketMessage)}`)
-    }),
-    this.socket$.next('Ping(u)');
+
+      if (socketMessage._message === 'like') {
+        // Update interface for this movie
+        let movie: Movie = new Movie().deserialize(socketMessage._data);
+        console.log(`Update comes from wsServer : ${JSON.stringify(movie)}`);
+
+        // Update movies from observable
+        this.movies = this.movies.pipe(
+          map((movies: Movie[]): Movie[] => {
+            let movieIndex: number = movies.findIndex(
+              (obj: Movie, index: number) => obj.idMovie === movie.idMovie
+            );
+            console.log(`Replace movie at row ${movieIndex}`);
+            movies[movieIndex] = movie;
+            return movies;
+          })
+        );
+      }
+    },
+    (err) => console.error('Exception raised : ' + JSON.stringify(err)),
+    () => console.warn('Completed!')
+    );
+
+
 
     this.movies = this.movieService.all();                 
 
 
     this.yearSubscription = this.movieService.years$
       .subscribe((_years) => {
-        console.log('Years was updated : ' + JSON.stringify(_years));
+        // console.log('Years was updated : ' + JSON.stringify(_years));
         this.years = _years;
     });
 
@@ -76,6 +97,7 @@ export class HomeComponent implements OnInit {
     console.log(`Received ${JSON.stringify(this.movies)}`);
   }
 
+  
   public doDetails(idMovie: number): void {
     console.log('You clicked on Details, the id of the movie is: ' + idMovie);
     if (this.userService.user && this.userService.user !== null) {
@@ -87,76 +109,50 @@ export class HomeComponent implements OnInit {
    
   }
 
-  // TODO, right now
   public likeIt(movie: Movie): void {
-    console.log(`You clicked on "Fav it" : `);
     movie.likes+= 1;
 
+    console.log(`You liked the movie: ${JSON.stringify(movie)}`);
     // Emit a new update to ws...
-    
+    const message: any = {
+      message: 'like',
+      data: movie
+    };
+    this.socket$.next(message);
 
-
+    // Update the observable (retains values)
+    this.movies = this.movies.pipe(
+      map((movies: Movie[]): Movie[] => {
+        let movieIndex: number = movies.findIndex(
+          (obj: Movie, index: number) => obj.idMovie == movie.idMovie
+        );
+        movies[movieIndex] = movie;
+        return movies;
+      })
+    );
   }
 
-  // Simon version
-  public toastLoginMust(idMovie: number): void {
-    if(!this.userService.user) {
-      this.snackBar.open(
-        'You have to login in order to see the details !',
-        '',
-        {
-          duration: 2500,
-          verticalPosition: 'top'
-        })
-        setTimeout(() => {
-          this.router.navigate(['login']); }
-          , 2600)
-        } else {
-          this.router.navigate(['movie',idMovie]);
-        }
-  
-  }
-
-  // Renaud version
-  public detailFilm(idMovie: number): void {
-    if (this.userService.user) {
-      this.router.navigate(['../', 'movie', idMovie])
+  // Jean-luc version
+  public moveTo(idMovie: number): void {
+    if( this.userService.user && this.userService.user !== null) {
+      this.router.navigate(['../','movie', idMovie]);
     } else {
+      // Load a toast and route to login
       const snack: MatSnackBarRef<SimpleSnackBar> = this.snackBar.open(
-        'Sorry, need to be login',
+        'You have to login or create an account before',
         null,
         {
-          duration: 2000,
+          duration: 2500
         }
       );
       snack.afterDismissed().subscribe((status: any) => {
-        const navigationExtras: NavigationExtras = { state: { movie: idMovie } };
-        this.router.navigate(['login'], navigationExtras);
+        const navigationExtras: NavigationExtras = {state: {movie: idMovie}};
+        this.router.navigate(['../', 'login'], navigationExtras);
       });
+      
     }
   }
 
-    // Unfinished Jean-luc version
-  // public moveTo(): void {
-  //   if (this.userService) {
-  //     // A COMPLETER
-  //   } else {
-  //     // Load a toast route to login
-  //     const snack: MatSnackBarRef<SimpleSnackBar> = this.snackBar.open(
-  //       'You have to login or create an account before',
-  //       null,
-  //       {
-  //         duration: 2500
-  //       }
-  //     );
-  //       snack.afterDismissed().subscribe((status: any) => {
-  //         const navigationExtras: NavigationExtras = {state: {movie: idMovie}};
-  //         this.router.navigate(['../', 'login'], navigationExtras):
-  //       })
-  
-  
-  //   }
-  // }
 
 }
 

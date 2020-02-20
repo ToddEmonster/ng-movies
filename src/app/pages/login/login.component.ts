@@ -49,32 +49,35 @@ export class LoginComponent implements OnInit {
       ],
       password: [
         '',
-        Validators.compose(
-          [Validators.required, Validators.minLength(8)]
-        )
+        Validators.compose([
+          Validators.required, 
+          Validators.minLength(8)
+        ])
       ]
-    })
+    });
   }
 
 
   public doLogin(): void {
-    // Local persistence
+    // Local persistence of user
     if (this.userService.authenticate(this.loginForm.value)) {
       if (this._idMovie === undefined) {
         // Road to home
         this.router.navigate(['home']);
       } else {
         this.router.navigate(['../', 'movie', this._idMovie]);
-        
       }
     } else {
-      // TODO : some snackbar to keep user informed
+      // Snackbar to keep user informed
       this.snackBar.open(
         'Sorry, your identification failed !',
-        ''
-      )
-
-      // TODO : redraw form with empty values
+        '',
+        {
+          duration: 2500,
+          verticalPosition: 'top'
+        }
+      );
+      // Redraw form with empty values
       this.login.setValue('');
       this.password.setValue('');
     };
