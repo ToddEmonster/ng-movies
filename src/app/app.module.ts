@@ -22,8 +22,7 @@ import { DeleteComponent } from './pages/movie/delete/delete.component'
     LoginComponent,
     SearchComponent,
     MovieComponent,
-    DeleteComponent,
-    
+    DeleteComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +32,8 @@ import { DeleteComponent } from './pages/movie/delete/delete.component'
     BrowserAnimationsModule,
     MaterialModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

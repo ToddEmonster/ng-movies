@@ -47,12 +47,14 @@
                     <mat-icon 
                       (click)="likeIt(movie)"
                       *ngIf="movie.likes == 0"
+                      [@heartGrowing]='movie.animationState'
                     >
                     favorite_border</mat-icon> 
                     <mat-icon
                       *ngIf="movie.likes > 0"
                       matBadge="{{ movie.likes }}"
                       matBadgeColor="warn"
+                      [@heartSmalling]='movie.animationState'
                     >
                     favorite</mat-icon> 
 
