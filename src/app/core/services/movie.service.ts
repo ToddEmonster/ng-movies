@@ -12,7 +12,7 @@ export class MovieService {
 
   private _years: Set<number> = new Set<number>();
   public years$ : BehaviorSubject<number[]> =
-            new BehaviorSubject<number[]>(Array.from(this._years).sort());
+    new BehaviorSubject<number[]>(Array.from(this._years).sort());
 
   constructor(
     private httpClient: HttpClient
@@ -23,11 +23,11 @@ export class MovieService {
     let movies;
     try {
       const movies = await fetch(apiRoute);
+      console.log(`Movies : ${JSON.stringify(movies.body)}}`);
     } catch(error) {
       // If something went wrong
+      console.log('Something went wrong : ' + error);
     }
-    console.log(`Movies : ${JSON.stringify(movies)}`);
-    
   }
 
   public all(): Observable<Movie[]> {
@@ -39,21 +39,20 @@ export class MovieService {
     .pipe(
       take(1),
       map((response)=> {
-        return response.map((item) => {
+        return response.map((item) => 
+        {
           this._years.add(item.year);
           this.years$.next(Array.from(this._years).sort());
           return new Movie().deserialize(item);
-          }
-        );
+        });
       })
     );
   }
 
   public byTitle(title: string): Observable<Movie[]> {
-    this._years = new Set<number>();
     const apiRoute: string = `${environment.apiRoot}/movie/byTitle?t=${title}`;
-    console.log("byTitle() has been called")
-    // console.log(`Movies : ${JSON.stringify(movies)}`);
+    this._years = new Set<number>();
+    
     return this.httpClient.get<Movie[]>(
       apiRoute
     )
@@ -63,8 +62,9 @@ export class MovieService {
         return response.map((item) => {
           this._years.add(item.year);
           this.years$.next(Array.from(this._years).sort());
-          return new Movie().deserialize(item)
-        });
+            return new Movie().deserialize(item)
+          }
+        );
       })
     );
   }
@@ -106,6 +106,7 @@ export class MovieService {
     );
   }
   
+  // DOESN'T WORK. NEED WORK ON IT (given up in class)
   public delete(id: number): Observable<HttpResponse<any>> {
     const apiRoot: string = `${environment.apiRoot}movie/${id}`;
 
