@@ -32,14 +32,16 @@ export class LoginComponent implements OnInit {
     return this.loginForm.controls.password;
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     // How to access to the navigation state ?
-    const state = this._navigation.extras.state as {movie: number};
-    if (state.hasOwnProperty('movie')) {
-      this._idMovie = state.movie;
+    if (this._navigation.extras && this._navigation.extras.state) {
+      const state = this._navigation.extras.state as {movie: number};
+      if (state.hasOwnProperty('movie')) {
+        this._idMovie = state.movie;
+      }
+      console.log(`Extras state : ${this._idMovie}`);
     }
-    console.log(`Extras state : ${this._idMovie}`);
-
+    
     this.loginForm = this.formBuilder.group({
       login: [
         '', 
@@ -60,28 +62,29 @@ export class LoginComponent implements OnInit {
 
   public doLogin(): void {
     // Local persistence of user
-    if (this.userService.authenticate(this.loginForm.value)) {
-      if (this._idMovie === undefined) {
-        // Road to home
-        this.router.navigate(['home']);
-      } else {
-        this.router.navigate(['../', 'movie', this._idMovie]);
-      }
-    } else {
-      // Snackbar to keep user informed
-      this.snackBar.open(
-        'Sorry, your identification failed !',
-        '',
-        {
-          duration: 2500,
-          verticalPosition: 'top'
-        }
-      );
-      // Redraw form with empty values
-      this.login.setValue('');
-      this.password.setValue('');
-    };
 
+    this.userService.authenticate(this.loginForm.value).then((status: boolean) => {
+      if (status) {
+        if (this._idMovie === undefined) {
+          // Road to home
+          this.router.navigate(['home']);
+        } else {
+          this.router.navigate(['../', 'movie', this._idMovie]);
+        }
+      } else {
+        this.snackBar.open(
+          'Sorry, your identification failed !',
+          '',
+          {
+            duration: 2500,
+            verticalPosition: 'top'
+          }
+        );
+        // Redraw form with empty values
+        this.login.setValue('');
+        this.password.setValue('');
+      };
+    }); 
   }
 
 }
