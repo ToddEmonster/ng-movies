@@ -1,15 +1,35 @@
 import { Injectable, Injector } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { LOCATION_INITIALIZED } from '@angular/common';
+import { Observable } from 'rxjs';
 
+/**
+ * @name TranslationService
+ * @author Aélion - March 2020
+ * @version 1.0.1
+ *  Update to permit language selection
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class TranslationService {
 
   private _language: string;
+  private _translateService: TranslateService;
 
   constructor() { }
+
+  public set language(language: string) {
+    this._language = language;
+    // Hmmmm, and what next ?
+    console.log(`How to switch to new ${this._language} ?`);
+    // Maybe using the _switch() method
+    this._switch();
+  } 
+
+  public get language(): string {
+    return this._language;
+  }
 
   public init(
     translateService: TranslateService,
@@ -24,14 +44,20 @@ export class TranslationService {
         // Check for userLanguage against our known languages
         this._language = /(fr|en)/gi.test(userLanguage) ? userLanguage : 'en';
 
+        // Store TranslateService for next us
+        this._translateService = translateService;
+
         // We can now load translations... using TranslateService param
-        translateService
-          .use(this._language) // Tell the service to use the current language as Observable
+        this._switch()
           .subscribe(() => {
-            console.log(`Translation loaded from ${this._language}`);
-            resolve(null); // Promise must be taken
-          });
+              console.log(`Translation loaded from ${this._language}`);
+              resolve(null); // Promise must be taken
+            });
       })
     });
+  }
+
+  private _switch(): Observable<any> {
+    return this._translateService.use(this._language);
   }
 }

@@ -24,7 +24,7 @@
 
   <div class=movie *ngFor="let movie of movies | async">
       <div *ngIf="movie.year == year || year == 0">
-
+     
           <mat-card class="movie-card">
               <mat-card-header class="movie-header">
                 <mat-card-title 

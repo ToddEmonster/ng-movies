@@ -4,20 +4,30 @@ import { TopMenuComponent } from './top-menu/top-menu.component';
 import { FooterComponent } from './footer/footer.component';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
+import { MaterialModule } from '../material/material.module';
+import { LanguageSwitcherComponent } from './language-switcher/language-switcher.component';
 
 
 
 @NgModule({
-  declarations: [TopMenuComponent, FooterComponent],
+  declarations: [TopMenuComponent, FooterComponent, LanguageSwitcherComponent],
   imports: [
     CommonModule,
     RouterModule,
-    MatIconModule
+    TranslateModule,
+    MaterialModule
   ],
   exports: [
     TopMenuComponent,
     FooterComponent,
-    MatIconModule
+    LanguageSwitcherComponent
   ]
 })
-export class UiModule { }
+export class UiModule {
+  constructor() {
+    console.log('UI was loaded');
+  }
+ }
