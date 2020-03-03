@@ -1,5 +1,10 @@
 {
-    "global:": {
+    "global": {
         "title": "Shitty Movies"
+    },
+    "home": {
+        "yearsSelectorLabel": "By yeare",
+        "allYears": "All",
+        "searchTerm": "Search a movie, actress, director..."
     }
 }

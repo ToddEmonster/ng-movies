@@ -1,6 +1,6 @@
 <div class="content">
 
-  <h1>Homepage : {{ title | uppercase }}</h1>
+  <h1>Homepage : {{ 'global.title' | translate | uppercase }}</h1>
 
   <div id="search-component">
     <app-search (moviesEvent)="receiveMoviesEvent($event)"></app-search>
@@ -8,9 +8,9 @@
 
   <div id="filter">
     <mat-form-field>
-        <mat-label>Years</mat-label>
+        <mat-label>{{ 'home.yearsSelectorLabel' | translate }} </mat-label>
         <mat-select size="1" [(ngModel)]="year">
-            <mat-option [value]="0" selected>All</mat-option>
+            <mat-option [value]="0" selected>{{ 'home.allYears' | translate }} </mat-option>
             <mat-option *ngFor="let year of years" [value]="year">
                 {{ year }}
             </mat-option>

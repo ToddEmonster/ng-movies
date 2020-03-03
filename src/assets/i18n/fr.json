@@ -1,5 +1,10 @@
 {
-    "global:": {
+    "global": {
         "title": "Films qui détestent le Front"
+    },
+    "home": {
+        "yearsSelectorLabel": "Par année",
+        "allYears": "Toutes",
+        "searchTerm": "Trouve un film, un·e acteurice, un·e réalisateurice..."
     }
 }

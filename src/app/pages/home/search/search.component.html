@@ -1,6 +1,6 @@
 <form [formGroup]="searchForm">
     <mat-form-field class="form-field">
-        <mat-label>Search a movie, actress, director...</mat-label>
+        <mat-label>{{ 'home.searchTerm' | translate }}</mat-label>
         <input 
             matInput 
             type="search"
