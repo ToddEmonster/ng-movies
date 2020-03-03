@@ -1,0 +1,37 @@
+import { Injectable, Injector } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { LOCATION_INITIALIZED } from '@angular/common';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class TranslationService {
+
+  private _language: string;
+
+  constructor() { }
+
+  public init(
+    translateService: TranslateService,
+    injector: Injector
+  ): Promise<void> {
+    return new Promise<void>((resolve: any) => {
+      // Get the LOCATION_INITIALIZER token
+      injector.get(LOCATION_INITIALIZED, Promise.resolve(null)).then(() => {
+        // Promise taken... so... let's get the current language
+        const navigatorLanguage: string = window.navigator.language;
+        const userLanguage: string = navigatorLanguage.split('-')[0];
+        // Check for userLanguage against our known languages
+        this._language = /(fr|en)/gi.test(userLanguage) ? userLanguage : 'en';
+
+        // We can now load translations... using TranslateService param
+        translateService
+          .use(this._language) // Tell the service to use the current language as Observable
+          .subscribe(() => {
+            console.log(`Translation loaded from ${this._language}`);
+            resolve(null); // Promise must be taken
+          });
+      })
+    });
+  }
+}
