@@ -53,7 +53,7 @@ export class HomeComponent implements OnInit {
   public years: number[] = [];
   public yearSubscription: Subscription;
   
-  public movies: Observable<Movie[]>;
+  public moviesOb: Observable<Movie[]>;
 
   private socket$: WebSocketSubject<any>;
 
@@ -62,13 +62,13 @@ export class HomeComponent implements OnInit {
     this.defaultCountry =
       (this.defaultCountry == 'us') ? this.defaultCountry = 'it'
                                     : this.defaultCountry = 'us';
-      this.movies.forEach((movie:any) => {
+      this.moviesOb.forEach((movie:any) => {
         movie.shown = movie.country == this.defaultCountry ? true : false;
       })                     
   }
 
   constructor(
-    private movieService: MovieService,
+    public movieService: MovieService,
     private userService: UserService,
     private router: Router,
     private _snackBar: MatSnackBar,
@@ -85,7 +85,7 @@ export class HomeComponent implements OnInit {
         console.log(`Update comes from wsServer : ${JSON.stringify(movie)}`);
 
         // Update movies from observable
-        this.movies = this.movies.pipe(
+        this.moviesOb = this.moviesOb.pipe(
           map((movies: Movie[]): Movie[] => {
             let movieIndex: number = movies.findIndex(
               (obj: Movie, index: number) => obj.idMovie === movie.idMovie
@@ -101,10 +101,7 @@ export class HomeComponent implements OnInit {
     () => console.warn('Completed!')
     );
 
-
-
-    this.movies = this.movieService.all();                 
-
+    this.moviesOb = this.movieService.all();            
 
     this.yearSubscription = this.movieService.years$
       .subscribe((_years) => {
@@ -120,8 +117,8 @@ export class HomeComponent implements OnInit {
   }
 
   public receiveMoviesEvent($event): void {
-    this.movies = $event;
-    console.log(`Received ${JSON.stringify(this.movies)}`);
+    this.moviesOb = $event;
+    console.log(`Received ${JSON.stringify(this.moviesOb)}`);
   }
 
   
@@ -151,7 +148,7 @@ export class HomeComponent implements OnInit {
       this.socket$.next(message);
 
       // Update the observable (retains values)
-      this.movies = this.movies.pipe(
+      this.moviesOb = this.moviesOb.pipe(
         map((movies: Movie[]): Movie[] => {
           let movieIndex: number = movies.findIndex(
             (obj: Movie, index: number) => obj.idMovie == movie.idMovie

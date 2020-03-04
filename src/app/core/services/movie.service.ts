@@ -13,6 +13,8 @@ export class MovieService {
   private _years: Set<number> = new Set<number>();
   public years$ : BehaviorSubject<number[]> =
     new BehaviorSubject<number[]>(Array.from(this._years).sort());
+  
+  public movieCounter: number = 0;
 
   constructor(
     private httpClient: HttpClient
@@ -43,6 +45,7 @@ export class MovieService {
         {
           this._years.add(item.year);
           this.years$.next(Array.from(this._years).sort());
+          this.movieCounter = response.length;
           return new Movie().deserialize(item);
         });
       })
@@ -50,7 +53,7 @@ export class MovieService {
   }
 
   public byTitle(title: string): Observable<Movie[]> {
-    const apiRoute: string = `${environment.apiRoot}/movie/byTitle?t=${title}`;
+    const apiRoute: string = `${environment.apiRoot}movie/byTitle?t=${title}`;
     this._years = new Set<number>();
     
     return this.httpClient.get<Movie[]>(
@@ -62,7 +65,8 @@ export class MovieService {
         return response.map((item) => {
           this._years.add(item.year);
           this.years$.next(Array.from(this._years).sort());
-            return new Movie().deserialize(item)
+          this.movieCounter = response.length;
+          return new Movie().deserialize(item)
           }
         );
       })

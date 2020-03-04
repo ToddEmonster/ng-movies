@@ -41,6 +41,7 @@ export class SearchComponent implements OnInit {
           this.searchByTitle();
         })
       ).subscribe();
+  
   }
 
   public clearSearchTerm() {

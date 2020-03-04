@@ -6,5 +6,8 @@
         "yearsSelectorLabel": "By yeare",
         "allYears": "All",
         "searchTerm": "Search a movie, actress, director..."
+    },
+    "moviesListing": {
+        "moviesResult": "movieService.movieCounter, plural, =0 {No movie} =1 {One movie} many { movieService.movieCounter }"
     }
 }
