@@ -22,7 +22,8 @@ import { LOCATION_INITIALIZED } from '@angular/common';
 // Translate module
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core'; 
 import { TranslationService } from './core/services/translation.service';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader'; 
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { ElapsedTimePipe } from './shared/pipes/elapsed-time.pipe'; 
 
 
 // Define a function that invoke TranslationService
@@ -58,7 +59,8 @@ export function initializeApp(appConfig: AppConfig) {
     LoginComponent,
     SearchComponent,
     MovieComponent,
-    DeleteComponent
+    DeleteComponent,
+    ElapsedTimePipe
   ],
   imports: [
     BrowserModule,

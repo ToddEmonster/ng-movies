@@ -11,6 +11,7 @@ import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/s
 import { WebSocketSubject } from 'rxjs/webSocket'
 import { environment } from './../../../environments/environment';
 import { transition, trigger, state, style, animate } from '@angular/animations';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
@@ -48,6 +49,7 @@ export class HomeComponent implements OnInit {
   public title: string = 'movies'; // marche aussi : " title = 'movies' "
   public defaultCountry: string = 'all';
   //public countries: Set<string> = new Set;
+  
 
   public year: number = 0;
   public years: number[] = [];
@@ -72,7 +74,8 @@ export class HomeComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     private _snackBar: MatSnackBar,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private httpClient: HttpClient
     ) {   }
 
   ngOnInit(): void {
@@ -81,7 +84,7 @@ export class HomeComponent implements OnInit {
 
       if (socketMessage._message === 'like') {
         // Update interface for this movie
-        let movie: Movie = new Movie().deserialize(socketMessage._data);
+        let movie: Movie = new Movie(this.httpClient).deserialize(socketMessage._data);
         console.log(`Update comes from wsServer : ${JSON.stringify(movie)}`);
 
         // Update movies from observable
