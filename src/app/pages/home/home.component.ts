@@ -12,6 +12,7 @@ import { WebSocketSubject } from 'rxjs/webSocket'
 import { environment } from './../../../environments/environment';
 import { transition, trigger, state, style, animate } from '@angular/animations';
 import { HttpClient } from '@angular/common/http';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
@@ -58,6 +59,7 @@ export class HomeComponent implements OnInit {
   public moviesOb: Observable<Movie[]>;
 
   private socket$: WebSocketSubject<any>;
+  private translationChange$: any;
 
   // Deprecated button method... FOR NOW
   public toggleCountry(): void {
@@ -75,8 +77,9 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private _snackBar: MatSnackBar,
     private snackBar: MatSnackBar,
-    private httpClient: HttpClient
-    ) {   }
+    private httpClient: HttpClient,
+    private translateService: TranslateService
+    ) { }
 
   ngOnInit(): void {
     this.socket$ = new WebSocketSubject<any>(environment.wssAddress);
@@ -104,6 +107,9 @@ export class HomeComponent implements OnInit {
     () => console.warn('Completed!')
     );
 
+    this.translationChange$ = this.translateService.onTranslationChange;
+    this.translationChange$.subscribe();
+
     this.moviesOb = this.movieService.all();            
 
     this.yearSubscription = this.movieService.years$
@@ -117,6 +123,7 @@ export class HomeComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.yearSubscription.unsubscribe();
+    this.translationChange$.unsubscribe;
   }
 
   public receiveMoviesEvent($event): void {
@@ -160,6 +167,12 @@ export class HomeComponent implements OnInit {
           return movies;
         })
       );
+
+      // Fictional TODO : appeler une méthode movieService.updateLikes() qui
+      //  
+      //
+
+
       movie.animationState = 'initial';
 
       // Then, to the final after 900ms

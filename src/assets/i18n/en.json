@@ -3,11 +3,12 @@
         "title": "Shitty Movies"
     },
     "home": {
-        "yearsSelectorLabel": "By yeare",
+        "yearsSelectorLabel": "By year",
         "allYears": "All",
         "searchTerm": "Search a movie, actress, director..."
     },
     "moviesListing": {
-        "moviesResult": "movieService.movieCounter, plural, =0 {No movie} =1 {One movie} many { movieService.movieCounter }"
+        "moviesResult": "movieService.movieCounter, plural, =0 {No movie} =1 {One movie} many { movieService.movieCounter }",
+        "lessThanOneYear": "One year or less"
     }
 }
