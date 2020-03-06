@@ -3,8 +3,5 @@ export interface NewUserInterface {
     lastName: string,
     email: string,
     username: string,
-    password: string,
-    token?: string, // "?" veut dire "optionnel"
-    alreadyExists: boolean
-
+    password: string
 }

@@ -3,6 +3,7 @@ import { Navigation, Router } from '@angular/router';
 import { FormGroup, FormBuilder, AbstractControl, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { TranslateService } from '@ngx-translate/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-register',
@@ -19,7 +20,8 @@ export class RegisterComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private userService: UserService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private snackBar: MatSnackBar
   ) {
     this._navigation = this.router.getCurrentNavigation();
    }
@@ -87,31 +89,30 @@ export class RegisterComponent implements OnInit {
 
 
   public createAccount(): void {
-    console.log('You did create an account, congrats !')
+    console.log('You did clicked to create an account')
 
-    // this.userService.createNewAccount()
-    // this.userService.authenticate(this.loginForm.value).then((status: boolean) => {
-    //   if (status) {
-    //     if (this._idMovie === undefined) {
-    //       // Road to home
-    //       this.router.navigate(['home']);
-    //     } else {
-    //       this.router.navigate(['../', 'movie', this._idMovie]);
-    //     }
-    //   } else {
-    //     this.snackBar.open(
-    //       'Sorry, your identification failed !',
-    //       '',
-    //       {
-    //         duration: 2500,
-    //         verticalPosition: 'top'
-    //       }
-    //     );
-    //     // Redraw form with empty values
-    //     this.login.setValue('');
-    //     this.password.setValue('');
-    //   };
-    // }); 
-
+    this.userService.createNewAccount(this.registerForm.value).then((status: boolean) => {
+      if (status) {
+        // Road to home
+        this.router.navigate(['home']);
+      } else {
+        this.snackBar.open(
+          'Sorry, the registration failed !',
+          '',
+          {
+            duration: 2500,
+            verticalPosition: 'top'
+          }
+        );
+        // Redraw form with empty values
+        this.firstName.setValue('');
+        this.lastName.setValue('');
+        this.email.setValue('');
+        this.username.setValue('');
+        this.password.setValue('');
+      };
+    });
   }
+
+
 }

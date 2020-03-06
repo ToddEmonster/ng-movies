@@ -36,7 +36,7 @@
         "password": {
             "fieldTitle": "Nouveau mot de passe :",
             "placeholder": "Nouveau mot de passe",
-            "fieldRequired" : "Un mot de passe est obligatoir et doit comporter au minimum 8 caractères"
+            "fieldRequired" : "Un mot de passe est obligatoire et doit comporter au minimum 8 caractères"
         },
         "createAccount": "Créer un compte"
     }
