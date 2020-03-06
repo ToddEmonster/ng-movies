@@ -88,5 +88,30 @@ export class RegisterComponent implements OnInit {
 
   public createAccount(): void {
     console.log('You did create an account, congrats !')
+
+    // this.userService.createNewAccount()
+    // this.userService.authenticate(this.loginForm.value).then((status: boolean) => {
+    //   if (status) {
+    //     if (this._idMovie === undefined) {
+    //       // Road to home
+    //       this.router.navigate(['home']);
+    //     } else {
+    //       this.router.navigate(['../', 'movie', this._idMovie]);
+    //     }
+    //   } else {
+    //     this.snackBar.open(
+    //       'Sorry, your identification failed !',
+    //       '',
+    //       {
+    //         duration: 2500,
+    //         verticalPosition: 'top'
+    //       }
+    //     );
+    //     // Redraw form with empty values
+    //     this.login.setValue('');
+    //     this.password.setValue('');
+    //   };
+    // }); 
+
   }
 }

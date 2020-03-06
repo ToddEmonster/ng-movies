@@ -10,6 +10,7 @@
     "moviesListing": {
         "moviesResult": "`movieService.movieCounter`, plural, =0 {Aucun film} =1 {Un film} many { movieService.movieCounter }"
     },
+    
     "registerForm": {
         "title": "Créer un nouveau compte",
         "firstName": {
