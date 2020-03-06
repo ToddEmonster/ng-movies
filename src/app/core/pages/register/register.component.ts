@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Navigation, Router } from '@angular/router';
 import { FormGroup, FormBuilder, AbstractControl, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-register',
@@ -12,12 +13,13 @@ export class RegisterComponent implements OnInit {
 
   public registerForm: FormGroup;
   private _navigation: Navigation;
-
+  private translationChange$: any;
   
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private translateService: TranslateService
   ) {
     this._navigation = this.router.getCurrentNavigation();
    }
@@ -76,6 +78,11 @@ export class RegisterComponent implements OnInit {
         )
       ]
     });
+
+
+    
+    this.translationChange$ = this.translateService.onTranslationChange;
+    this.translationChange$.subscribe();
   }
 
 

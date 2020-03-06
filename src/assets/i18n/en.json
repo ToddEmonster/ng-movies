@@ -10,5 +10,34 @@
     "moviesListing": {
         "moviesResult": "movieService.movieCounter, plural, =0 {No movie} =1 {One movie} many { movieService.movieCounter }",
         "lessThanOneYear": "One year or less"
+    },
+    "registerForm": {
+        "title": "Register page",
+        "firstName": {
+            "fieldTitle": "First name :",
+            "placeholder": "Your first name",
+            "fieldRequired": "This field is required."
+        },
+        "lastName": {
+            "fieldTitle": "Last name :",
+            "placeholder": "Your last name :",
+            "fieldRequired" : "This field is required."
+        },
+        "email": {
+            "fieldTitle": "Email :",
+            "placeholder": "Your email",
+            "fieldRequired" : "This field is required and must be a valid email."
+        },
+        "username": {
+            "fieldTitle": "New username :",
+            "placeholder": "New username",
+            "fieldRequired" : "A username is required and must have at least 5 characters"
+        },
+        "password": {
+            "fieldTitle": "New password :",
+            "placeholder": "New password",
+            "fieldRequired" : "A password is required and must have at least 8 characters"
+        },
+        "createAccount": "Create account"
     }
 }

@@ -1,4 +1,82 @@
-<h1>Register Page</h1>
+<h1>{{ 'registerForm.title' | translate | uppercase}}</h1>
+
+<form [formGroup]="registerForm">
+    <mat-form-field class=""> 
+        <mat-label>{{ 'registerForm.firstName.fieldTitle' | translate }}</mat-label>
+        <input 
+          matInput 
+          type="text"
+          placeholder="{{ 'registerForm.firstName.placeholder' | translate }}"
+          formControlName="firstName"
+        >
+        <mat-error *ngIf="firstName.invalid">
+          {{ 'registerForm.firstName.fieldRequired' | translate }}
+        </mat-error>
+      </mat-form-field>
+
+    <mat-form-field class=""> 
+    <mat-label>{{ 'registerForm.lastName.fieldTitle' | translate }}</mat-label>
+    <input 
+        matInput 
+        type="text"
+        placeholder="{{ 'registerForm.lastName.placeholder' | translate }}"
+        formControlName="lastName"
+    >
+    <mat-error *ngIf="lastName.invalid">
+      {{ 'registerForm.lastName.fieldRequired' | translate }}
+    </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class=""> 
+    <mat-label>{{ 'registerForm.email.fieldTitle' | translate }}</mat-label>
+    <input 
+        matInput 
+        type="text"
+        placeholder="{{ 'registerForm.email.placeholder' | translate }}"
+        formControlName="email"
+    >
+    <mat-error *ngIf="email.invalid">
+      {{ 'registerForm.email.fieldRequired' | translate }}
+    </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class=""> 
+      <mat-label>{{ 'registerForm.username.fieldTitle' | translate }}</mat-label>
+      <input 
+        matInput 
+        type="text"
+        placeholder="{{ 'registerForm.username.placeholder' | translate }}"
+        formControlName="username"
+      >
+      <mat-error *ngIf="username.invalid">
+        {{ 'registerForm.username.fieldRequired' | translate }}
+      </mat-error>
+    </mat-form-field>
+  
+    <mat-form-field class = "">
+      <mat-label>{{ 'registerForm.password.fieldTitle' | translate }}</mat-label>
+      <input 
+        matInput 
+        type="password"
+        placeholder="{{ 'registerForm.password.placeholder' | translate }}"
+        formControlName="password"
+      >
+      <mat-error *ngIf="password.invalid">
+        {{ 'registerForm.password.fieldRequired' | translate }}
+      </mat-error>
+    </mat-form-field>
+  
+  <button 
+      mat-raised-button 
+      (click)="createAccount()"
+      [disabled]="registerForm.invalid"
+  >{{ 'registerForm.createAccount' | translate }}</button>   
+        
+  </form>
+
+
+<!-- SAUVEGARDE PRE TRADUCTION -->
+<!-- <h1>Register Page</h1>
 
 <form [formGroup]="registerForm">
     <mat-form-field class=""> 
@@ -72,4 +150,4 @@
       [disabled]="registerForm.invalid"
   >Create account</button>   
         
-  </form>
+  </form> -->
