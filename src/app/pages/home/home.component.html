@@ -60,10 +60,19 @@
               <mat-icon>add</mat-icon>
             </button>
 
-            <mat-icon class="favorite" title="Add to favorite" (click)="likeIt(movie)" *ngIf="movie.likes == 0" [@heartGrowing]='movie.animationState'>
-              favorite_border</mat-icon>
-            <mat-icon class="favorite" *ngIf="movie.likes > 0" matBadge="{{ movie.likes }}" matBadgeColor="warn"
-              [@heartSmalling]='movie.animationState'>
+            <mat-icon class="favorite"
+                      title="Add to favorite" 
+                      (click)="likeIt(movie)" 
+                      *ngIf="movie.likes == 0" 
+                      [@heartGrowing]='movie.animationState'>
+              favorite_border
+            </mat-icon>
+            
+            <mat-icon class="favorite" 
+                      *ngIf="movie.likes > 0" 
+                      matBadge="{{ movie.likes }}" 
+                      matBadgeColor="warn"
+                      [@heartSmalling]='movie.animationState'>
               favorite</mat-icon>
 
           </mat-card-actions>
