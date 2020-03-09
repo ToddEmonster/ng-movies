@@ -21,11 +21,11 @@ import { TranslateService } from '@ngx-translate/core';
   animations: [
     trigger('heartGrowing', [
       state('initial', style({
-        transform:'scale(1)', 
-        color:'black' 
+        transform: 'scale(1)',
+        color: 'black'
       })),
       state('final', style({
-        transform:'scale(2.0)',
+        transform: 'scale(2.0)',
         color: 'pink'
       })),
       transition('initial=>final', animate('900ms')),
@@ -33,29 +33,29 @@ import { TranslateService } from '@ngx-translate/core';
     ]),
     trigger('heartSmalling', [
       state('initial', style({
-        transform:'scale(2.0)', 
-        color:'pink' 
+        transform: 'scale(2.0)',
+        color: 'pink'
       })),
       state('final', style({
-        transform:'scale(1)',
+        transform: 'scale(1)',
         color: 'black'
       })),
       transition('initial=>final', animate('900ms')),
       transition('final=>initial', animate('900ms'))
-    ])  
+    ])
   ]
 })
 export class HomeComponent implements OnInit {
- 
+
   public title: string = 'movies'; // marche aussi : " title = 'movies' "
   public defaultCountry: string = 'all';
   //public countries: Set<string> = new Set;
-  
+
 
   public year: number = 0;
   public years: number[] = [];
   public yearSubscription: Subscription;
-  
+
   public moviesOb: Observable<Movie[]>;
 
   private socket$: WebSocketSubject<any>;
@@ -65,10 +65,10 @@ export class HomeComponent implements OnInit {
   public toggleCountry(): void {
     this.defaultCountry =
       (this.defaultCountry == 'us') ? this.defaultCountry = 'it'
-                                    : this.defaultCountry = 'us';
-      this.moviesOb.forEach((movie:any) => {
-        movie.shown = movie.country == this.defaultCountry ? true : false;
-      })                     
+        : this.defaultCountry = 'us';
+    this.moviesOb.forEach((movie: any) => {
+      movie.shown = movie.country == this.defaultCountry ? true : false;
+    })
   }
 
   constructor(
@@ -79,7 +79,7 @@ export class HomeComponent implements OnInit {
     private snackBar: MatSnackBar,
     private httpClient: HttpClient,
     private translateService: TranslateService
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.socket$ = new WebSocketSubject<any>(environment.wssAddress);
@@ -103,20 +103,20 @@ export class HomeComponent implements OnInit {
         );
       }
     },
-    (err) => console.error('Exception raised : ' + JSON.stringify(err)),
-    () => console.warn('Completed!')
+      (err) => console.error('Exception raised : ' + JSON.stringify(err)),
+      () => console.warn('Completed!')
     );
 
     this.translationChange$ = this.translateService.onTranslationChange;
     this.translationChange$.subscribe();
 
-    this.moviesOb = this.movieService.all();            
+    this.moviesOb = this.movieService.all();
 
     this.yearSubscription = this.movieService.years$
       .subscribe((_years) => {
         // console.log('Years was updated : ' + JSON.stringify(_years));
         this.years = _years;
-    });
+      });
 
 
   }
@@ -131,60 +131,73 @@ export class HomeComponent implements OnInit {
     console.log(`Received ${JSON.stringify(this.moviesOb)}`);
   }
 
-  
+
   public doDetails(idMovie: number): void {
     console.log('You clicked on Details, the id of the movie is: ' + idMovie);
     if (this.userService.user && this.userService.user !== null) {
-      this.router.navigate(['../','movie', idMovie ]);
+      this.router.navigate(['../', 'movie', idMovie]);
     } else {
-      this.router.navigate(['../','login']);
-      this._snackBar.open('Log in to see the movie details !', '', {duration: 5000});
+      this.router.navigate(['../', 'login']);
+      this._snackBar.open('Log in to see the movie details !', '', { duration: 5000 });
     }
-   
+
   }
 
   public likeIt(movie: Movie): void {
-    movie.animationState = 'final';
+    if (this.userService.user && this.userService.user !== null) {
+      movie.animationState = 'final';
+      setTimeout(() => {
 
-    setTimeout(() => {
-  
-      movie.likes+= 1;
-      // console.log(`You liked the movie: ${JSON.stringify(movie)}`);
-      // Emit a new update to ws...
-      const message: any = {
-        message: 'like',
-        data: movie
-      };
-      this.socket$.next(message);
+        movie.likes += 1;
+        // console.log(`You liked the movie: ${JSON.stringify(movie)}`);
+        // Emit a new update to ws...
+        const message: any = {
+          message: 'like',
+          data: movie
+        };
+        this.socket$.next(message);
 
-      // Update the observable (retains values)
-      this.moviesOb = this.moviesOb.pipe(
-        map((movies: Movie[]): Movie[] => {
-          let movieIndex: number = movies.findIndex(
-            (obj: Movie, index: number) => obj.idMovie == movie.idMovie
-          );
-          movies[movieIndex] = movie;
-          return movies;
-        })
+        // Update the observable (retains values)
+        this.moviesOb = this.moviesOb.pipe(
+          map((movies: Movie[]): Movie[] => {
+            let movieIndex: number = movies.findIndex(
+              (obj: Movie, index: number) => obj.idMovie == movie.idMovie
+            );
+            movies[movieIndex] = movie;
+            return movies;
+          })
+        );
+        // Fictional TODO : appeler une méthode movieService.updateLikes() qui
+        //  
+        //
+
+
+        movie.animationState = 'initial';
+
+        // Then, to the final after 900ms
+        setTimeout(() => movie.animationState = 'final', 900);
+      }, 1000)
+    } else {
+      const snack: MatSnackBarRef<SimpleSnackBar> = this.snackBar.open(
+        'You have to login to add a movie to your favorites',
+        null,
+        {
+          duration: 2500
+        }
       );
-      // Fictional TODO : appeler une méthode movieService.updateLikes() qui
-      //  
-      //
+      snack.afterDismissed().subscribe((status: any) => {
+        this.router.navigate(['../', 'login']);
+      });
 
-
-      movie.animationState = 'initial';
-
-      // Then, to the final after 900ms
-      setTimeout(() => movie.animationState = 'final', 900);
-    }, 1000)
+    }
   }
 
   public unLikeIt(movie: Movie): void {
     movie.animationState = 'initial';
 
     setTimeout(() => {
-  
-      movie.likes-= 1;
+
+      movie.likes -= 1;
       // console.log(`You liked the movie: ${JSON.stringify(movie)}`);
       // Emit a new update to ws...
       const message: any = {
@@ -212,14 +225,14 @@ export class HomeComponent implements OnInit {
 
       // Then, to the final after 900ms
       setTimeout(() => movie.animationState = 'initial', 900);
-    } , 1000)
+    }, 1000)
   }
 
 
   // Jean-luc version
   public moveTo(idMovie: number): void {
-    if( this.userService.user && this.userService.user !== null) {
-      this.router.navigate(['../','movie', idMovie]);
+    if (this.userService.user && this.userService.user !== null) {
+      this.router.navigate(['../', 'movie', idMovie]);
     } else {
       // Load a toast and route to login
       const snack: MatSnackBarRef<SimpleSnackBar> = this.snackBar.open(
@@ -230,10 +243,10 @@ export class HomeComponent implements OnInit {
         }
       );
       snack.afterDismissed().subscribe((status: any) => {
-        const navigationExtras: NavigationExtras = {state: {movie: idMovie}};
+        const navigationExtras: NavigationExtras = { state: { movie: idMovie } };
         this.router.navigate(['../', 'login'], navigationExtras);
       });
-      
+
     }
   }
 
