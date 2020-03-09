@@ -4,26 +4,26 @@
             
             <li>
                 <a [routerLink]="['home']">
-                    <mat-icon>home</mat-icon> 
+                    <mat-icon>home </mat-icon> 
                     Home
                 </a>
             </li>
             <li *ngIf="!userService.user">
                 <a [routerLink]="['login']">
-                    <mat-icon class="my-icons">lock</mat-icon>
+                    <mat-icon class="my-icons">lock </mat-icon>
                     Login
                 </a>
             </li>
             <li *ngIf="userService.user">
                 <a (click)="doLogout()"
                    [routerLink]="['home']">
-                   <mat-icon class="my-icons">lock_open</mat-icon>
+                   <mat-icon class="my-icons">lock_open </mat-icon>
                     Logout
                 </a>
             </li>  
             <li>
                 <a [routerLink]="['register']">
-                   <mat-icon class="my-icons">face</mat-icon>
+                   <mat-icon class="my-icons">face </mat-icon>
                     Register
                 </a>
             </li>      
