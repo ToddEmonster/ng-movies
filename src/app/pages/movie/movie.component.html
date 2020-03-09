@@ -1,43 +1,32 @@
-<p>{{ movie | json }}</p>
+<!-- <p>{{ movie | json }}</p> -->
 
+<h1>Movie Detail</h1>
 
 <!-- I'll put the form here -->
+<div class="movie-detail">
+    <h2> {{movie.title}} <span>[{{movie.originalTitle}}]</span> </h2>
+    <h3> {{movie.director.name}} | ({{movie.year}})</h3>
+    <h3>{{movie.duration}} min</h3>
+    <h4>{{movie.genre}}</h4>
 
-<form [formGroup]="movieForm">
-    <!-- // TODO : other movie attributes -->
+    <form [formGroup]="movieForm">
+        <!-- // TODO : other movie attributes -->
 
+        <!-- SYNOPSIS -->
+        <mat-form-field class="form-field">
+            <!-- <mat-label>Search a movie, actress, director...</mat-label> -->
+            <mat-label>Modify the synopsis</mat-label>
+            <textarea rows="8" cols="20" class="synopsis-input" matInput type="synopsis" placeholder="Type the synopsis here..."
+                formControlName="synopsis">
+            </textarea>
+            <button mat-button *ngIf="synopsis" matSuffix mat-icon-button aria-label="Clear" (click)="clearSynopsis()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+        <button mat-raised-button (click)="updateSynopsis()" [disabled]="movieForm.invalid">Update synopsis</button>
 
-    <!-- SYNOPSIS -->
-    <mat-form-field class="form-field">
-        <!-- <mat-label>Search a movie, actress, director...</mat-label> -->
-        <mat-label>Modify the synopsis</mat-label>
-        <textarea 
-            class="synopsis-input"
-            matInput 
-            type="synopsis"
-            placeholder="Type the synopsis here..."
-            formControlName="synopsis"
-        ></textarea>
-        <button 
-            mat-button 
-            *ngIf="synopsis" 
-            matSuffix 
-            mat-icon-button 
-            aria-label="Clear" 
-            (click)="clearSynopsis()"
-        >
-        <mat-icon>close</mat-icon>
-        </button>
-    </mat-form-field>
-    <button 
-        mat-raised-button 
-        (click)="updateSynopsis()"
-        [disabled]="movieForm.invalid"
-        >Update synopsis</button>    
+        <button mat-raised-button (click)="validateDelete()">Delete movie</button>
 
-    <button 
-    mat-raised-button 
-    (click)="validateDelete()"
-    >Delete movie</button>    
+    </form>
 
-</form>
+</div>

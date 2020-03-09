@@ -1,22 +1,23 @@
 <div class="content">
 
-  <h1>Homepage : {{ 'global.title' | translate | uppercase }}</h1>
+  <h1> {{ 'global.title' | translate | uppercase }}</h1>
 
   <div id="search-component">
     <app-search (moviesEvent)="receiveMoviesEvent($event)"></app-search>
-  </div>
 
-  <div id="filter">
-    <mat-form-field>
+
+    <div id="filter">
+      <mat-form-field>
         <mat-label>{{ 'home.yearsSelectorLabel' | translate }} </mat-label>
         <mat-select size="1" [(ngModel)]="year">
-            <mat-option [value]="0" selected>{{ 'home.allYears' | translate }} </mat-option>
-            <mat-option *ngFor="let year of years" [value]="year">
-                {{ year }}
-            </mat-option>
+          <mat-option [value]="0" selected>{{ 'home.allYears' | translate }} </mat-option>
+          <mat-option *ngFor="let year of years" [value]="year">
+            {{ year }}
+          </mat-option>
         </mat-select>
-    </mat-form-field>
-    
+      </mat-form-field>
+
+    </div>
   </div>
 
   <!-- // TODO : translate les résultats sous cette forme -->
@@ -30,54 +31,45 @@
   <p *ngIf="(moviesOb | async) ?.length == 1"> Un seul résultat trouvé : </p>
   <p *ngIf="(moviesOb | async) ?.length < 1"> Aucun résultat trouvé ! </p>
 
-
+<!-- 
   <p>Default country is : {{ defaultCountry }}</p>
-  <p>Default year is : {{ year }}</p>
+  <p>Default year is : {{ year }}</p> -->
 
-  <div class=movie *ngFor="let movie of moviesOb | async">
+  <div class="movie">
+    <div class="movie-infos" *ngFor="let movie of moviesOb | async">
       <div *ngIf="movie.year == year || year == 0">
-     
-          <mat-card class="movie-card">
-              <mat-card-header class="movie-header">
-                <mat-card-title 
-                  class = "movie-title"
-                  [ngClass]="{'old': movie.year < 2000, 'title': true }"
-                >
-                  <a [routerLink]="['../','movie', movie.idMovie]">
-                    {{ movie.title }}
-                  </a>
-                </mat-card-title>
-                <mat-card-subtitle>{{ movie.year | elapsedTime | async }} ({{ movie.country }})</mat-card-subtitle>
-              </mat-card-header>
 
-              <img mat-card-image src="{{ movie.imgSrc }}" alt="{{ movie.imgAlt }}">
-              <mat-card-content>
-                <p>{{ movie.synopsis}}</p>
-              </mat-card-content>
-              <mat-card-actions>
-  
-                    <mat-icon 
-                      (click)="likeIt(movie)"
-                      *ngIf="movie.likes == 0"
-                      [@heartGrowing]='movie.animationState'
-                    >
-                    favorite_border</mat-icon> 
-                    <mat-icon
-                      *ngIf="movie.likes > 0"
-                      matBadge="{{ movie.likes }}"
-                      matBadgeColor="warn"
-                      [@heartSmalling]='movie.animationState'
-                    >
-                    favorite</mat-icon> 
+        <mat-card class="movie-card">
+          <mat-card-header class="movie-header">
+            <mat-card-title class="movie-title" [ngClass]="{'old': movie.year < 2000, 'title': true }">
+              <a [routerLink]="['../','movie', movie.idMovie]">
+                {{ movie.title }}
+              </a>
+            </mat-card-title>
+            <mat-card-subtitle>{{movie.year}} <br> 
+              {{ movie.year | elapsedTime | async }} ({{ movie.country }})</mat-card-subtitle>
+          </mat-card-header>
+<!-- 
+          <img mat-card-image src="{{ movie.imgSrc }}" alt="{{ movie.imgAlt }}">
+          <mat-card-content>
+            <p>{{ movie.synopsis}}</p>
+          </mat-card-content> -->
+          <mat-card-actions>
+            <button mat-stroked-button (click)="moveTo( movie.idMovie )">
+              Details
+              <mat-icon>add</mat-icon>
+            </button>
 
-                <button mat-stroked-button 
-                        (click)="moveTo( movie.idMovie )">
-                  Details
-                  <mat-icon>add</mat-icon>
-                </button>
-              </mat-card-actions>
-            </mat-card>
+            <mat-icon class="favorite" title="Add to favorite" (click)="likeIt(movie)" *ngIf="movie.likes == 0" [@heartGrowing]='movie.animationState'>
+              favorite_border</mat-icon>
+            <mat-icon class="favorite" *ngIf="movie.likes > 0" matBadge="{{ movie.likes }}" matBadgeColor="warn"
+              [@heartSmalling]='movie.animationState'>
+              favorite</mat-icon>
+
+          </mat-card-actions>
+        </mat-card>
       </div>
+    </div>
   </div>
-  
+
 </div>

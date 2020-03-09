@@ -1,6 +1,6 @@
 {
     "global": {
-        "title": "Shitty Movies"
+        "title": "amazing movies"
     },
     "home": {
         "yearsSelectorLabel": "By year",
@@ -12,7 +12,7 @@
         "lessThanOneYear": "One year or less"
     },
     "registerForm": {
-        "title": "Register page",
+        "title": "Register",
         "firstName": {
             "fieldTitle": "First name :",
             "placeholder": "Your first name",

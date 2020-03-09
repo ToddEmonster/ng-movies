@@ -1,4 +1,37 @@
-.synopsis-input {
-    width: 200em;
-    height: 1.5em;
+h1{
+  color: #fff;
+  text-align: center;
+  margin-top: 100px;
+}
+h2{
+  font-family: 'Special elite';
+  font-size: 1.7rem;
+  color:rgb(55, 3, 80);
+}
+  .movie-detail{
+    background-color: #b5e1f0;
+    border-radius: 14px;
+    width: 44%;
+    margin: auto;
+    text-align: center;
+    padding: 30px;
+    form{
+      padding: 12px;
+      width: 74%;
+      margin: auto;
+      .form-field{
+        display: flex;
+        justify-content: center;
+        textarea{
+          background-color: #c5e6f1;
+          padding: 12px 34px;
+          margin: auto;
+        }
+      }
+      button{
+        margin: 6px;
+      }
+    }
   }
+
+ 

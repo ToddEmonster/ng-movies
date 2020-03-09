@@ -21,7 +21,7 @@ export class MovieService {
   ) { }
 
   public async allMovies() {
-    const apiRoute: string=`${environment.apiRoot}/movie`;
+    const apiRoute: string=`${environment.apiRoot}/movies`;
     let movies;
     try {
       const movies = await fetch(apiRoute);
@@ -34,7 +34,7 @@ export class MovieService {
 
   public all(): Observable<Movie[]> {
     this._years = new Set<number>();
-    const apiRoute: string = `${environment.apiRoot}movie`;
+    const apiRoute: string = `${environment.apiRoot}movies`;
     return this.httpClient.get<Movie[]>(
       apiRoute
     )
@@ -53,7 +53,7 @@ export class MovieService {
   }
 
   public byTitle(title: string): Observable<Movie[]> {
-    const apiRoute: string = `${environment.apiRoot}movie/byTitle?t=${title}`;
+    const apiRoute: string = `${environment.apiRoot}movies/byTitle?t=${title}`;
     this._years = new Set<number>();
     
     return this.httpClient.get<Movie[]>(
@@ -74,7 +74,7 @@ export class MovieService {
   }
 
   public byId(id: number): Observable<any> {
-    const apiRoot: string = `${environment.apiRoot}movie/${id}`;
+    const apiRoot: string = `${environment.apiRoot}movies/${id}`;
     return this.httpClient.get<any>(
       apiRoot, 
       { 
@@ -94,7 +94,7 @@ export class MovieService {
   }
 
   public update(movie: any): Observable<HttpResponse<any>> {
-    const apiRoot: string = `${environment.apiRoot}movie/modify`;
+    const apiRoot: string = `${environment.apiRoot}movies/modify`;
 
     return this.httpClient.put(
       apiRoot,
@@ -112,7 +112,7 @@ export class MovieService {
   
   // DOESN'T WORK. NEED WORK ON IT (given up in class)
   public delete(id: number): Observable<HttpResponse<any>> {
-    const apiRoot: string = `${environment.apiRoot}movie/${id}`;
+    const apiRoot: string = `${environment.apiRoot}movies/${id}`;
 
     return this.httpClient.delete(
       apiRoot,
