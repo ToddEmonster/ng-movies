@@ -211,8 +211,8 @@ export class HomeComponent implements OnInit {
       movie.animationState = 'initial';
 
       // Then, to the final after 900ms
-      setTimeout(() => movie.animationState = 'final', 900);
-    }, 1000)
+      //setTimeout(() => movie.animationState = 'final', 900);
+    } , 1000)
   }
 
 
