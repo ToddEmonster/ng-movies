@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Navigation, Router } from '@angular/router';
 import { FormGroup, FormBuilder, AbstractControl, Validators } from '@angular/forms';
-import { UserService } from '../../services/user.service';
 import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
   selector: 'app-register',

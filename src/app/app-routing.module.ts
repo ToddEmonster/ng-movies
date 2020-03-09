@@ -5,7 +5,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { LoginGuard } from './core/guards/login.guard';
 import { MovieComponent } from './pages/movie/movie.component';
 import { MovieResolver } from './core/resolver/movie-resolver';
-import { RegisterComponent } from './core/pages/register/register.component';
+import { RegisterComponent } from './pages/register/register.component';
 
 
 const routes: Routes = [
