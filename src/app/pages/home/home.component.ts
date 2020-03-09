@@ -180,7 +180,7 @@ export class HomeComponent implements OnInit {
   }
 
   public unLikeIt(movie: Movie): void {
-    movie.animationState = 'final';
+    movie.animationState = 'initial';
 
     setTimeout(() => {
   
@@ -208,10 +208,10 @@ export class HomeComponent implements OnInit {
       //
 
 
-      movie.animationState = 'initial';
+      movie.animationState = 'final';
 
       // Then, to the final after 900ms
-      //setTimeout(() => movie.animationState = 'final', 900);
+      setTimeout(() => movie.animationState = 'initial', 900);
     } , 1000)
   }
 
