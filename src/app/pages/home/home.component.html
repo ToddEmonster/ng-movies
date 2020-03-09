@@ -69,11 +69,13 @@
             </mat-icon>
             
             <mat-icon class="favorite" 
-                      *ngIf="movie.likes > 0" 
+                      *ngIf="movie.likes > 0"
+                      (click)="unLikeIt(movie)" 
                       matBadge="{{ movie.likes }}" 
                       matBadgeColor="warn"
                       [@heartSmalling]='movie.animationState'>
-              favorite</mat-icon>
+              favorite
+            </mat-icon>
 
           </mat-card-actions>
         </mat-card>

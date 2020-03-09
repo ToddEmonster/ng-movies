@@ -167,7 +167,6 @@ export class HomeComponent implements OnInit {
           return movies;
         })
       );
-
       // Fictional TODO : appeler une méthode movieService.updateLikes() qui
       //  
       //
@@ -179,6 +178,43 @@ export class HomeComponent implements OnInit {
       setTimeout(() => movie.animationState = 'final', 900);
     }, 1000)
   }
+
+  public unLikeIt(movie: Movie): void {
+    movie.animationState = 'final';
+
+    setTimeout(() => {
+  
+      movie.likes-= 1;
+      // console.log(`You liked the movie: ${JSON.stringify(movie)}`);
+      // Emit a new update to ws...
+      const message: any = {
+        message: 'like',
+        data: movie
+      };
+      this.socket$.next(message);
+
+      // Update the observable (retains values)
+      this.moviesOb = this.moviesOb.pipe(
+        map((movies: Movie[]): Movie[] => {
+          let movieIndex: number = movies.findIndex(
+            (obj: Movie, index: number) => obj.idMovie == movie.idMovie
+          );
+          movies[movieIndex] = movie;
+          return movies;
+        })
+      );
+      // Fictional TODO : appeler une méthode movieService.updateLikes() qui
+      //  
+      //
+
+
+      movie.animationState = 'initial';
+
+      // Then, to the final after 900ms
+      setTimeout(() => movie.animationState = 'final', 900);
+    }, 1000)
+  }
+
 
   // Jean-luc version
   public moveTo(idMovie: number): void {
