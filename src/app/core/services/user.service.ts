@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Optional } from '@angular/core';
 
 import { UserInterface } from './../models/user-interface'
 import { BehaviorSubject } from 'rxjs';
@@ -20,29 +20,48 @@ export class UserService {
 
 
   constructor(private httpClient: HttpClient) {
-    this._registeredUsers = new Array<any>();
-    this._registeredUsers.push(
-      {
-        login: 'jlaubert',
-        password: 'totototo',
-        token: '$2y$10$8oiALQuf2s.wOraJSbWm.u5thPNsS4Q2jYjE.ys29aF/ajrXeCXE.',
-        isAuthenticated: false
-      }
-    );
-    const userAsString: string = localStorage.getItem('user');
-    if (userAsString !== null) {
-      const userAsObject: any = JSON.parse(userAsString);
-      this._user = this._registeredUsers.find((obj: UserInterface) => obj.token == userAsObject.token);
-      if (this._user !== undefined) {
-        this._user.isAuthenticated = true;
-        console.log('Notify authenticated user');
-        this.userSubject$.next(this._user);
-      } else {
-      console.log('Something went wrong');
-      }
+    const optToken: string = localStorage.getItem('user');
+    const uri: string = `${environment.isLogged}`;
+
+    // Si on trouve un token, ça veut dire que quelqu'un est connecté
+    if (optToken !== null) {
+      // ça c'est l'objet JSON qui est le token stocké en local
+      const tokenAsObject: any = JSON.parse(optToken);
+
+      // J'envoie le token vers le Back, j'attends de lui qu'il me renvoie le user associé via JwtTokenUtil
+      this.httpClient.post<any>(
+        uri,
+        { token: tokenAsObject.token },
+        { observe: 'response' }
+      ).pipe(
+        take(1)
+      ).subscribe( (response:HttpResponse<any>) => {
+        // Si le Back me renvoie bien un User
+        if (response.status === 200) {
+          
+          // initialize the user interface
+          this._user = {
+            login: null,
+            password: null,
+            isAuthenticated: false
+          };
+          
+          // update the current local user
+          this._user.isAuthenticated = true;
+          this._user.login = response.body.username;
+          this._user.password = response.body.password;
+
+          console.log('There\'s a user who is logged right now');
+
+          this.userSubject$.next(this._user);
+        } else { 
+          console.log('Something went wrong'); // Si le Back me renvoie une erreur
+        } 
+      });
+      // Si le Token est nul ( = pas de user connecté)
     } else {
-      console.log('Notify unidentified user');
-      this.userSubject$.next(null);
+        console.log('Notify unidentified user');
+        this.userSubject$.next(null);
     }
   }
 

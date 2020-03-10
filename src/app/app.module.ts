@@ -84,7 +84,7 @@ export function initializeApp(appConfig: AppConfig) {
   ],
   providers: [
     AppConfig,
-    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true},
+    // { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true}, // commented because causes cyclic dependencies
     { provide: APP_INITIALIZER,useFactory: initializeApp, deps: [AppConfig], multi: true},
     {
       provide: APP_INITIALIZER, // angular token given app init
