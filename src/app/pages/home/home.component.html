@@ -20,16 +20,13 @@
     </div>
   </div>
 
-  <!-- // TODO : translate les résultats sous cette forme -->
-  <!-- <p> {{ 'moviesListing.moviesResult' | translate }}</p>   -->
-
-  <!-- <p *ngIf="movieService.movieCounter > 1"> {{ movieService.movieCounter }} résultats trouvés</p>
-  <p *ngIf="movieService.movieCounter == 1"> Un seul résultat trouvé</p>
-  <p *ngIf="movieService.movieCounter< 1"> Aucun résultat trouvé</p>  -->
-
-  <p *ngIf="(moviesOb | async) ?.length > 1"> {{ (moviesOb | async) ?.length }} résultats trouvés</p>
+  <!-- <p *ngIf="(moviesOb | async) ?.length > 1"> {{ (moviesOb | async) ?.length }} résultats trouvés</p>
   <p *ngIf="(moviesOb | async) ?.length == 1"> Un seul résultat trouvé : </p>
-  <p *ngIf="(moviesOb | async) ?.length < 1"> Aucun résultat trouvé ! </p>
+  <p *ngIf="(moviesOb | async) ?.length < 1"> Aucun résultat trouvé ! </p> -->
+  
+  <h4 class="m-auto" *ngIf="movieService.movieCounter == 0">{{'moviesListing.movieNull' | translate}} </h4>
+  <h4 class="m-auto" *ngIf="movieService.movieCounter == 1">{{movieService.movieCounter}} {{'moviesListing.movieSingle' | translate}}  </h4>
+  <h4 class="m-auto" *ngIf="movieService.movieCounter > 1">{{movieService.movieCounter}} {{'moviesListing.moviePlural' | translate}}  </h4>
 
 <!-- 
   <p>Default country is : {{ defaultCountry }}</p>
@@ -47,7 +44,7 @@
               </a>
             </mat-card-title>
             <mat-card-subtitle>{{movie.year}} <br> 
-              {{ movie.year | elapsedTime | async }} ({{ movie.country }})</mat-card-subtitle>
+              {{ movie.year | elapsedTime | async }}</mat-card-subtitle>
           </mat-card-header>
 <!-- 
           <img mat-card-image src="{{ movie.imgSrc }}" alt="{{ movie.imgAlt }}">

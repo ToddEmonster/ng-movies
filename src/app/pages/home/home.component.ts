@@ -59,7 +59,7 @@ export class HomeComponent implements OnInit {
   public moviesOb: Observable<Movie[]>;
 
   private socket$: WebSocketSubject<any>;
-  private translationChange$: any;
+  private langChanges$: any;
 
   // Deprecated button method... FOR NOW
   public toggleCountry(): void {
@@ -107,8 +107,15 @@ export class HomeComponent implements OnInit {
       () => console.warn('Completed!')
     );
 
-    this.translationChange$ = this.translateService.onTranslationChange;
-    this.translationChange$.subscribe();
+    this.langChanges$ = this.translateService.onLangChange;
+    this.langChanges$.subscribe((event: any) =>{
+    
+      this.moviesOb = this.moviesOb.pipe(
+        map((movies: Movie[]): Movie[] => {
+          return movies;
+        })
+      )
+    });
 
     this.moviesOb = this.movieService.all();
 
@@ -123,7 +130,7 @@ export class HomeComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.yearSubscription.unsubscribe();
-    this.translationChange$.unsubscribe;
+    this.langChanges$.unsubscribe;
   }
 
   public receiveMoviesEvent($event): void {

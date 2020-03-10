@@ -9,7 +9,14 @@
     },
     "moviesListing": {
         "moviesResult": "movieService.movieCounter, plural, =0 {No movie} =1 {One movie} many { movieService.movieCounter }",
-        "lessThanOneYear": "One year or less"
+        "movieNull": "No result",
+        "movieSingle" : "movie",
+        "moviePlural" : "movies",
+        "lessOne": "Less than a year ago",
+        "moreTwo": "more than 2 years ago",
+        "twoAndFive": "between 3 and 5 years ago",
+        "betweenFiveAndTen": "Between 5 and 10 years ago",
+        "moreTen": "More than 10 years ago"
     },
     "registerForm": {
         "title": "Register",

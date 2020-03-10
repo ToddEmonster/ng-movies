@@ -30,18 +30,20 @@ export class ElapsedTimePipe implements PipeTransform {
         const elapsedTime: number = parseInt(now.format('YYYY')) - value;
 
         if (elapsedTime == 1) {
-          // transformValue = `un an ou moins`;
-          transformValue = this.translateService.instant('moviesListing.lessThanOneYear');
-        } else if (elapsedTime <= 2) {
-          transformValue = `2 ans ou moins`
-        } else if (elapsedTime <= 5) {
-          transformValue = `entre 3 et 5 ans` 
-        } else if (elapsedTime > 5) {
-          transformValue = `plus de 5 ans`
-        } 
-        resolve(`Sorti il y a ${transformValue} `);
+          transformValue = this.translateService.instant('moviesListing.lessOne');
+        } else if(elapsedTime < 2){
+          transformValue = this.translateService.instant('moviesListing.moreTwo');
+        }else if (elapsedTime < 5) {
+          transformValue = this.translateService.instant('moviesListing.twoAndFive');
+        }else if (elapsedTime > 5 && elapsedTime < 10) {
+          transformValue = this.translateService.instant('moviesListing.betweenFiveAndTen');
+        }else{
+          transformValue = this.translateService.instant('moviesListing.moreTen');
+        }
+        resolve(`${transformValue}`);
       });
     });
   }
 
 }
+
