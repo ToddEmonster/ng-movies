@@ -38,7 +38,7 @@ export class UserService {
         console.log('Notify authenticated user');
         this.userSubject$.next(this._user);
       } else {
-      console.log('Something went wrong');
+      console.log('Something went wrong 0000000000');
       }
     } else {
       console.log('Notify unidentified user');
@@ -85,7 +85,6 @@ export class UserService {
     }, (error) => {
       this._user = null;
       this.userSubject$.next(this._user);
-
       resolve(false);
      });
     });
@@ -138,7 +137,5 @@ export class UserService {
     });
 
   }
-
-
 
 }

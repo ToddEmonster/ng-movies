@@ -20,11 +20,25 @@ header{
                 color: skyblue;
             }
         }
+        li{
+            color: #fff !important;
+        }
+        span{
+            text-transform: uppercase;
+            color: skyblue;
+        }
     }
     .infos{
         display: flex;
         justify-content: space-between;
         color: #fff;
-        margin-right: 120px;
+        width: 84%;
+        margin: auto;
+       i{
+        &:hover{
+            color: skyblue;
+            cursor: pointer;
+        }
+       }
     }
 }

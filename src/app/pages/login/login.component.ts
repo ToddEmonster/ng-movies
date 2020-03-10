@@ -34,6 +34,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     // How to access to the navigation state ?
+   
     if (this._navigation.extras && this._navigation.extras.state) {
       const state = this._navigation.extras.state as {movie: number};
       if (state.hasOwnProperty('movie')) {
@@ -79,11 +80,11 @@ export class LoginComponent implements OnInit {
             duration: 2500,
             verticalPosition: 'top'
           }
-        );
-        // Redraw form with empty values
-        this.login.setValue('');
-        this.password.setValue('');
-      };
+          );
+          // Redraw form with empty values
+          this.login.setValue('');
+          this.password.setValue('');
+        };
     }); 
   }
 
