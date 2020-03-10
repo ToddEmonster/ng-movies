@@ -3,5 +3,6 @@ export interface NewUserInterface {
     lastName: string,
     email: string,
     username: string,
-    password: string
+    password: string,
+    isAdmin: boolean
 }
