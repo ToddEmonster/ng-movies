@@ -69,6 +69,7 @@
             </mat-icon>
             
             <mat-icon class="favorite" 
+                      title="Remove from favorite" 
                       *ngIf="movie.likes > 0"
                       (click)="unLikeIt(movie)" 
                       matBadge="{{ movie.likes }}" 

@@ -167,9 +167,7 @@ export class HomeComponent implements OnInit {
             return movies;
           })
         );
-        // Fictional TODO : appeler une méthode movieService.updateLikes() qui
-        //  
-        //
+        // Fictional TODO : appeler une méthode movieService.updateLikes() 
 
 
         movie.animationState = 'initial';
@@ -217,9 +215,6 @@ export class HomeComponent implements OnInit {
         })
       );
       // Fictional TODO : appeler une méthode movieService.updateLikes() qui
-      //  
-      //
-
 
       movie.animationState = 'final';
 
