@@ -52,6 +52,7 @@ export class MyAccountComponent implements OnInit {
 
     this.idUser = this.userService.user.idUser;
     this.username = this.userService.user.username;
+    this.isAdmin = this.userService.user.isAdmin;
 
     this.myAccountForm = this.formBuilder.group({
       firstName: [

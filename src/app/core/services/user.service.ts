@@ -137,7 +137,9 @@ export class UserService {
           lastName: newUser.lastName,
           email: newUser.email,
           username: newUser.username,
-          password: newUser.password
+          password: newUser.password,
+          logged: false,
+          isAdmin: false
         },
         {
           observe: 'response'
