@@ -4,5 +4,7 @@ export interface UserInterface {
     token?: string, // "?" veut dire "optionnel"
     isAuthenticated: boolean,
     isAdmin? : boolean,
-    firstName: string
+    firstName: string,
+    lastName: string,
+    email: string
 }

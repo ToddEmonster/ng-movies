@@ -44,13 +44,19 @@ export class UserService {
             username: null,
             password: null,
             isAuthenticated: false,
-            firstName: null
+            firstName: null,
+            lastName: null,
+            email: null
           };
           
           // update the current local user
           this._user.isAuthenticated = true;
           this._user.username = response.body.username;
           this._user.password = response.body.password;
+          this._user.firstName = response.body.firstName;
+          this._user.lastName = response.body.lastName;
+          this._user.email = response.body.email;
+          this._user.isAdmin = response.body.isAdmin;
 
           console.log('There\'s a user who is logged right now');
 

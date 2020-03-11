@@ -58,19 +58,19 @@ export class MyAccountComponent implements OnInit {
         )
       ],
       lastName: [
-        '',
+        this.userService.user.lastName,
         Validators.compose([
           Validators.required,Validators.minLength(2)]
         )
       ],
       email: [
-        '',
+        this.userService.user.email,
         Validators.compose([
           Validators.required,Validators.minLength(3)]
         )
       ],
       password: [
-        '',
+        this.userService.user.password,
         Validators.compose([
           Validators.required,Validators.minLength(8)]
         )

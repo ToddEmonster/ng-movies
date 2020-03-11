@@ -7,7 +7,7 @@
 
 <form [formGroup]="myAccountForm">
 
-    <mat-form-field class=""> 
+    <mat-form-field> 
         <mat-label>{{ 'myAccountForm.firstName.fieldTitle' | translate }}</mat-label>
         <input matInput type="text"
           placeholder="{{ 'registerForm.firstName.placeholder' | translate }}"
@@ -18,11 +18,9 @@
         </mat-error>
       </mat-form-field>
 
-    <mat-form-field class=""> 
+    <mat-form-field> 
     <mat-label>{{ 'myAccountForm.lastName.fieldTitle' | translate }}</mat-label>
-    <input 
-        matInput 
-        type="text"
+    <input matInput type="text"
         placeholder="{{ 'myAccountForm.lastName.placeholder' | translate }}"
         formControlName="lastName"
     >
@@ -31,11 +29,9 @@
     </mat-error>
     </mat-form-field>
 
-    <mat-form-field class=""> 
+    <mat-form-field> 
     <mat-label>{{ 'myAccountForm.email.fieldTitle' | translate }}</mat-label>
-    <input 
-        matInput 
-        type="text"
+    <input matInput type="text"
         placeholder="{{ 'myAccountForm.email.placeholder' | translate }}"
         formControlName="email"
     >
@@ -45,11 +41,9 @@
     </mat-form-field>
 
   
-    <mat-form-field class = "">
+    <mat-form-field>
       <mat-label>{{ 'myAccountForm.password.fieldTitle' | translate }}</mat-label>
-      <input 
-        matInput 
-        type="password"
+      <input matInput type="password"
         placeholder="{{ 'myAccountForm.password.placeholder' | translate }}"
         formControlName="password"
       >
