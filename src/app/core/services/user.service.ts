@@ -41,14 +41,14 @@ export class UserService {
           
           // initialize the user interface
           this._user = {
-            login: null,
+            username: null,
             password: null,
             isAuthenticated: false
           };
           
           // update the current local user
           this._user.isAuthenticated = true;
-          this._user.login = response.body.username;
+          this._user.username = response.body.username;
           this._user.password = response.body.password;
 
           console.log('There\'s a user who is logged right now');
@@ -78,7 +78,7 @@ export class UserService {
       this.httpClient.post<any>(
         uri, // http://localhost:8080/authenticate
         { 
-          username: user.login,
+          username: user.username,
           password: user.password
         },
         {

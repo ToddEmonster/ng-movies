@@ -48,7 +48,7 @@ export class MyAccountComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.username = this.userService.user.login;
+    this.username = this.userService.user.username;
 
     this.myAccountForm = this.formBuilder.group({
       firstName: [

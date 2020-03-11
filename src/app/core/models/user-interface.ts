@@ -1,5 +1,5 @@
 export interface UserInterface {
-    login: string,
+    username: string,
     password: string,
     token?: string, // "?" veut dire "optionnel"
     isAuthenticated: boolean,
