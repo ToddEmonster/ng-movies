@@ -24,8 +24,8 @@ export class LoginComponent implements OnInit {
       this._navigation = this.router.getCurrentNavigation();
      }
 
-  public get login(): AbstractControl {
-    return this.loginForm.controls.login;
+  public get username(): AbstractControl {
+    return this.loginForm.controls.username;
   }
 
   public get password(): AbstractControl {
@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
     }
     
     this.loginForm = this.formBuilder.group({
-      login: [
+      username: [
         '', 
         Validators.compose(
           [Validators.required, Validators.minLength(5)]
@@ -82,7 +82,7 @@ export class LoginComponent implements OnInit {
           }
           );
           // Redraw form with empty values
-          this.login.setValue('');
+          this.username.setValue('');
           this.password.setValue('');
         };
     }); 

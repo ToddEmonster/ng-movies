@@ -11,7 +11,7 @@
             <li *ngIf="!userService.user">
                 <a [routerLink]="['login']">
                     <mat-icon class="my-icons">lock</mat-icon>
-                    Username
+                    Login
                 </a>
             </li>
             <li *ngIf="userService.user" class="connected-as">

@@ -6,11 +6,11 @@
     <input 
       matInput 
       type="text"
-      placeholder="Your login"
-      formControlName="login"
+      placeholder="Your username"
+      formControlName="username"
     >
-    <mat-error *ngIf="login.touched && login.invalid">
-      Your login is <strong>required</strong> and must have at least 5 characters
+    <mat-error *ngIf="username.touched && username.invalid">
+      Your username is <strong>required</strong> and must have at least 5 characters
     </mat-error>
   </mat-form-field>
 

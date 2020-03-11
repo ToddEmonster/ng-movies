@@ -3,5 +3,6 @@ export interface UserInterface {
     password: string,
     token?: string, // "?" veut dire "optionnel"
     isAuthenticated: boolean,
-    isAdmin? : boolean
+    isAdmin? : boolean,
+    firstName: string
 }

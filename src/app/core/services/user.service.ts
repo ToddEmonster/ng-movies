@@ -43,7 +43,8 @@ export class UserService {
           this._user = {
             username: null,
             password: null,
-            isAuthenticated: false
+            isAuthenticated: false,
+            firstName: null
           };
           
           // update the current local user
