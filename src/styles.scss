@@ -4,7 +4,9 @@ html, body { height: 100%; }
 body {
      margin: 0;padding: 0;
       font-family: Roboto, "Helvetica Neue", sans-serif; 
-      background-image: url("https://lecoindescritiquescine.com/wp-content/uploads/2017/10/Blade-Runner-2049-Movie-Wallpapers-71.jpg");
+      background-image: url("assets/images/bg.jpg");
+      // background-image: url("https://lecoindescritiquescine.com/wp-content/uploads/2017/10/Blade-Runner-2049-Movie-Wallpapers-71.jpg");
+      background-color: rgb(56, 149, 165);
       background-repeat: no-repeat;  
       background-attachment: fixed;
       background-size: cover;
