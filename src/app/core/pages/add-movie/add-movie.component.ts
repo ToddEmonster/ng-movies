@@ -23,6 +23,25 @@ export class AddMovieComponent implements OnInit {
     return this.addMovieForm.controls.year;
   }
 
+  public get originalTitle(): AbstractControl {
+    return this.addMovieForm.controls.originalTitle;
+  }
+
+  public get director(): AbstractControl {
+    return this.addMovieForm.controls.director;
+  }
+  public get synopsis(): AbstractControl {
+    return this.addMovieForm.controls.synopsis;
+  }
+
+  public get classification(): AbstractControl {
+    return this.addMovieForm.controls.classification;
+  }
+
+  public get rating(): AbstractControl {
+    return this.addMovieForm.controls.classification;
+  }
+
   ngOnInit(): void {
 
     this.addMovieForm = this.formBuilder.group({
@@ -36,10 +55,55 @@ export class AddMovieComponent implements OnInit {
         '',
         Validators.compose([
           Validators.required, 
-          Validators.minLength(8)
+          Validators.minLength(4)
         ])
-      ]
+      ],
+      originalTitle: [
+        '',
+        Validators.compose([
+          // Validators.required, 
+          Validators.minLength(2)
+        ])
+      ],
+      duration: [
+        '',
+        Validators.compose([
+          // Validators.required, 
+          // Validators.minLength(2)
+        ])
+      ],
+      director: [
+        '',
+        Validators.compose([
+          // Validators.required, 
+          Validators.minLength(2)
+        ])
+      ],
+      synopsis: [
+        '',
+        Validators.compose([
+          // Validators.required, 
+          Validators.minLength(10)
+        ])
+      ],
+      classification: [
+        '',
+        Validators.compose([
+          // Validators.required, 
+          // Validators.minLength(0)
+        ])
+      ],
+      rating: [
+        '',
+        Validators.compose([
+          // Validators.required, 
+          // Validators.minLength(0)
+        ])
+      ],
     });
   }
 
+  addMovie(): void{
+    alert("movied added")
+  }
 }
