@@ -1,0 +1,82 @@
+<h1>{{ 'myAccountForm.title' | translate | uppercase}}</h1>
+
+<p> {{ 'myAccountForm.id' | translate}} <i>"id à récupérer depuis le Back"</i><br>
+    {{ 'myAccountForm.username' | translate }} {{ username }}
+</p>
+
+
+<form [formGroup]="myAccountForm">
+
+    <mat-form-field class=""> 
+        <mat-label>{{ 'myAccountForm.firstName.fieldTitle' | translate }}</mat-label>
+        <input 
+          matInput 
+          type="text"
+          placeholder="{{ 'registerForm.firstName.placeholder' | translate }}"
+          formControlName="firstName"
+        >
+        <mat-error *ngIf="firstName.invalid">
+          {{ 'myAccountForm.firstName.fieldRequired' | translate }}
+        </mat-error>
+      </mat-form-field>
+
+    <mat-form-field class=""> 
+    <mat-label>{{ 'myAccountForm.lastName.fieldTitle' | translate }}</mat-label>
+    <input 
+        matInput 
+        type="text"
+        placeholder="{{ 'myAccountForm.lastName.placeholder' | translate }}"
+        formControlName="lastName"
+    >
+    <mat-error *ngIf="lastName.invalid">
+      {{ 'myAccountForm.lastName.fieldRequired' | translate }}
+    </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class=""> 
+    <mat-label>{{ 'myAccountForm.email.fieldTitle' | translate }}</mat-label>
+    <input 
+        matInput 
+        type="text"
+        placeholder="{{ 'myAccountForm.email.placeholder' | translate }}"
+        formControlName="email"
+    >
+    <mat-error *ngIf="email.invalid">
+      {{ 'myAccountForm.email.fieldRequired' | translate }}
+    </mat-error>
+    </mat-form-field>
+
+  
+    <mat-form-field class = "">
+      <mat-label>{{ 'myAccountForm.password.fieldTitle' | translate }}</mat-label>
+      <input 
+        matInput 
+        type="password"
+        placeholder="{{ 'myAccountForm.password.placeholder' | translate }}"
+        formControlName="password"
+      >
+      <mat-error *ngIf="password.invalid">
+        {{ 'myAccountForm.password.fieldRequired' | translate }}
+      </mat-error>
+    </mat-form-field>
+  
+    <button 
+    mat-raised-button 
+    (click)="becomeAdmin()"
+    >   <mat-icon>verified_user</mat-icon> 
+        {{ 'myAccountForm.becomeAdmin' | translate }}
+    </button>   
+
+
+  <button 
+      mat-raised-button 
+      (click)="modifyAccount()"
+      [disabled]="myAccountForm.invalid"
+  >{{ 'myAccountForm.modifyAccount' | translate }}</button>   
+
+  <button 
+  mat-raised-button 
+  (click)="cancelChanges()"
+  >{{ 'myAccountForm.cancelChanges' | translate }}</button>   
+
+  </form>

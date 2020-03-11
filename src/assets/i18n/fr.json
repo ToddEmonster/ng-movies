@@ -47,5 +47,36 @@
             "fieldRequired" : "Un mot de passe est obligatoire et doit comporter au minimum 8 caractères"
         },
         "createAccount": "Créer un compte"
+    },
+    
+    "myAccountForm": {
+        "title": "Mon compte",
+        "id": "Mon id :",
+        "username": "Nom d'utilisateur :",
+        "firstName": {
+            "fieldTitle": "Prénom :",
+            "placeholder": "Votre prénom",
+            "fieldRequired": "Ce champ est obligatoire."
+        },
+        "lastName": {
+            "fieldTitle": "Nom de famille :",
+            "placeholder": "Votre nom de famille",
+            "fieldRequired" : "Ce champ est obligatoire."
+        },
+        "email": {
+            "fieldTitle": "Adresse email :",
+            "placeholder": "Votre adresse email",
+            "fieldRequired" : "Ce champ est obligatoire et doit être une adresse mail valide"
+        },
+        "password": {
+            "fieldTitle": "Mon mot de passe :",
+            "placeholder": "Mon mot de passe",
+            "fieldRequired" : "Un mot de passe est obligatoire et doit comporter au minimum 8 caractères"
+        },
+        "becomeAdmin": "Devenir un admin",
+        "giveUpAdmin": "Abandonner rôle administrateur",
+        "modifyAccount": "Modifier mon compte",
+        "cancelChanges": "Annuler les changements"
     }
+
 }

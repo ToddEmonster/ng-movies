@@ -18,6 +18,7 @@
         "betweenFiveAndTen": "Between 5 and 10 years ago",
         "moreTen": "More than 10 years ago"
     },
+
     "registerForm": {
         "title": "Register",
         "firstName": {
@@ -46,5 +47,35 @@
             "fieldRequired" : "A password is required and must have at least 8 characters"
         },
         "createAccount": "Create account"
+    },
+    
+    "myAccountForm": {
+        "title": "My Account",
+        "id": "My id :",
+        "username": "Your username :",
+        "firstName": {
+            "fieldTitle": "First name :",
+            "placeholder": "Your first name",
+            "fieldRequired": "This field is required."
+        },
+        "lastName": {
+            "fieldTitle": "Last name :",
+            "placeholder": "Your last name :",
+            "fieldRequired" : "This field is required."
+        },
+        "email": {
+            "fieldTitle": "Email :",
+            "placeholder": "Your email",
+            "fieldRequired" : "This field is required and must be a valid email."
+        },
+        "password": {
+            "fieldTitle": "New password :",
+            "placeholder": "New password",
+            "fieldRequired" : "A password is required and must have at least 8 characters"
+        },
+        "becomeAdmin": "Become an admin",
+        "giveUpAdmin": "Give up admin role",
+        "modifyAccount": "Create account",
+        "cancelChanges": "Cancel changes"
     }
 }
