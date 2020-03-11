@@ -4,6 +4,9 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable, BehaviorSubject, throwError } from 'rxjs';
 import { Movie } from '../models/movie';
 import { take, map, catchError } from 'rxjs/operators';
+import { NewMovieInterface } from '../models/new-movie-interface';
+import { promise } from 'protractor';
+import { MovieInterface } from '../models/movie-interface';
 
 @Injectable({
   providedIn: 'root'
@@ -14,14 +17,57 @@ export class MovieService {
   public years$ : BehaviorSubject<number[]> =
     new BehaviorSubject<number[]>(Array.from(this._years).sort());
   
-  public movieCounter: number = 0;
+    public movieCounter: number = 0;
+    private _newMovie: NewMovieInterface = null;
+    private _movie: MovieInterface = null;
+    public movieSubject$: BehaviorSubject<MovieInterface> = new BehaviorSubject<MovieInterface>(this._movie); 
+    public newMovieSubject$: BehaviorSubject<NewMovieInterface> = new BehaviorSubject<NewMovieInterface>(this._newMovie);
 
-  constructor(
-    private httpClient: HttpClient
-  ) { }
+  constructor(private httpClient: HttpClient) { 
+    const uri: string = `${environment.apiRoot}movie`;
+
+    this.httpClient.post<any>(
+      uri,
+      { observe: 'response' }
+    ).pipe(
+      take(1)
+    ).subscribe((response:HttpResponse<any>) => {
+        
+        // initialize the movie interface
+        this._movie = {
+          title: null,
+          year: null,
+          originalTitle: null,
+          duration: null,
+          director: null,
+          synopsis: null,
+         classification: null,
+         rating: null,
+        };
+        
+        // update current local
+        this._movie.title = response.body.title;
+        this._movie.year = response.body.year;
+        this._movie.originalTitle = response.body.originalTitle;
+        // this._movie.duration = response.body.duration;
+        // this._movie.director = response.body.director;
+        this._movie.synopsis = response.body.synopsis;
+        // this._movie.classification = response.body.classification;
+        // this._movie.rating = response.body.rating;
+        
+
+        this.movieSubject$.next(this._movie);
+
+    });
+
+  }
+
+  public get movie(): MovieInterface {
+    return this._movie;
+  }
 
   public async allMovies() {
-    const apiRoute: string=`${environment.apiRoot}/movie`;
+    const apiRoute: string=`${environment.apiRoot}movie`;
     let movies;
     try {
       const movies = await fetch(apiRoute);
@@ -127,6 +173,42 @@ export class MovieService {
     );
   } 
 
+  public createMovie(newMovie: NewMovieInterface): Promise<boolean>{
+    const uri: string = `${environment.apiRoot}movie`;
+    return new Promise<boolean>((resolve) => {
+      this.httpClient.post<any>(
+        uri, // http://localhost:8080/api/movie
+        { 
+          title: newMovie.title,
+          year: newMovie.year,
+          originalTitle: newMovie.originalTitle,
+          // duration: newMovie.duration,
+          // director: newMovie.director,
+          synopsis: newMovie.synopsis,
+          // classification: newMovie.classification,
+          // rating: newMovie.rating,
+        },
+        {
+          observe: 'response'
+        }
+    ).pipe(
+      take(1)
+    ).subscribe((response: HttpResponse<any>) => {
+      if (response.status === 200) {
 
+        console.log("movie uploaded");
+        this._newMovie = newMovie;
+        // this.newMovieSubject$.next(this._newMovie);
+      
+        resolve(true); // Take your promise
+      }
+    }, (error) => {
+      console.log("error uploading movie");
+      this._newMovie = null;
+      // this.newMovieSubject$.next(this._newMovie);
+      resolve(false);
+     });
+    });
+  }
 
 }

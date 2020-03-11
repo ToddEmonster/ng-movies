@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
+import { MovieService } from '../../services/movie.service';
+import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-movie',
@@ -12,7 +16,11 @@ export class AddMovieComponent implements OnInit {
 
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private movieService: MovieService,
+    private router: Router,
+    private translateService: TranslateService,
+    private snackBar: MatSnackBar
   ) { }
 
   public get title(): AbstractControl {
@@ -25,6 +33,9 @@ export class AddMovieComponent implements OnInit {
 
   public get originalTitle(): AbstractControl {
     return this.addMovieForm.controls.originalTitle;
+  }
+  public get duration(): AbstractControl {
+    return this.addMovieForm.controls.duration;
   }
 
   public get director(): AbstractControl {
@@ -103,7 +114,40 @@ export class AddMovieComponent implements OnInit {
     });
   }
 
-  addMovie(): void{
-    alert("movied added")
+  public addMovie(): void{
+    this.movieService.createMovie(this.addMovieForm.value).then((status: boolean) => {
+      if (status) {
+        // Road to home
+        const snack: MatSnackBarRef<SimpleSnackBar> = this.snackBar.open(
+          'Movie was successfully uploaded !',
+          '',
+          {
+            duration: 2500,
+            verticalPosition: 'top'
+          }
+        );
+        snack.afterDismissed().subscribe((status: any) => {
+          this.router.navigate(['home']);
+        });
+      } else {
+        this.snackBar.open(
+          'Sorry, movie upload failed !', 
+          '',
+          {
+            duration: 2500,
+            verticalPosition: 'top'
+          }
+        );
+        // Redraw form with empty values
+        this.title.setValue('');
+        this.year.setValue('');
+        this.originalTitle.setValue('');
+        this.duration.setValue('');
+        this.director.setValue('');
+        this.synopsis.setValue('');
+        this.classification.setValue('');
+        this.rating.setValue('');
+      };
+    });
   }
 }
