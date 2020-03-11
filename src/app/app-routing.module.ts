@@ -6,6 +6,7 @@ import { LoginGuard } from './core/guards/login.guard';
 import { MovieComponent } from './pages/movie/movie.component';
 import { MovieResolver } from './core/resolver/movie-resolver';
 import { RegisterComponent } from './pages/register/register.component';
+import { MyAccountComponent } from './pages/my-account/my-account.component';
 
 
 const routes: Routes = [
@@ -22,6 +23,11 @@ const routes: Routes = [
     path:'login',
     component: LoginComponent,
     canActivate: [LoginGuard]
+  },
+  {
+    path:'myAccount',
+    component: MyAccountComponent,
+    // canActivate: [MyAccountGuard]
   },
   {
     path:'register',

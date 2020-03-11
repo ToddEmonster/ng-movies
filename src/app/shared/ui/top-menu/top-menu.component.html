@@ -10,22 +10,28 @@
             </li>
             <li *ngIf="!userService.user">
                 <a [routerLink]="['login']">
-                    <mat-icon class="my-icons">lock </mat-icon>
+                    <mat-icon class="my-icons">lock</mat-icon>
                     Login
                 </a>
             </li>
             <li *ngIf="userService.user" class="connected-as">
                 <a (click)="doLogout()" [routerLink]="['home']">
-                    <mat-icon class="my-icons">lock_open </mat-icon>
+                    <mat-icon class="my-icons">lock_open</mat-icon>
                     Logout
                 </a>
             </li>
+            <li *ngIf="userService.user" class="connected-as">
+                <a [routerLink]="['myAccount']">
+                    <mat-icon class="my-icons">assignment_ind</mat-icon>
+                    My Account
+                </a>
+            </li>
             <li *ngIf="user">
-                <em>Connected as <span> {{ user.login }} </span></em>
+                <em>Connected as <span> {{ user.username }} </span></em>
             </li>
             <li>
                 <a [routerLink]="['register']" >
-                    <mat-icon class="my-icons">face </mat-icon>
+                    <mat-icon class="my-icons">face</mat-icon>
                     Register
                 </a>
             </li>

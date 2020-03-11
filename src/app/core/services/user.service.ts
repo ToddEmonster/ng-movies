@@ -41,15 +41,25 @@ export class UserService {
           
           // initialize the user interface
           this._user = {
-            login: null,
+            idUser: null,
+            username: null,
             password: null,
-            isAuthenticated: false
+            isAuthenticated: false,
+            firstName: null,
+            lastName: null,
+            email: null,
+            isAdmin: null
           };
           
           // update the current local user
           this._user.isAuthenticated = true;
-          this._user.login = response.body.username;
+          this._user.idUser = response.body.idUser;
+          this._user.username = response.body.username;
           this._user.password = response.body.password;
+          this._user.firstName = response.body.firstName;
+          this._user.lastName = response.body.lastName;
+          this._user.email = response.body.email;
+          this._user.isAdmin = response.body.isAdmin;
 
           console.log('There\'s a user who is logged right now');
 
@@ -78,7 +88,7 @@ export class UserService {
       this.httpClient.post<any>(
         uri, // http://localhost:8080/authenticate
         { 
-          username: user.login,
+          username: user.username,
           password: user.password
         },
         {
@@ -127,7 +137,9 @@ export class UserService {
           lastName: newUser.lastName,
           email: newUser.email,
           username: newUser.username,
-          password: newUser.password
+          password: newUser.password,
+          logged: false,
+          isAdmin: false
         },
         {
           observe: 'response'
@@ -136,11 +148,7 @@ export class UserService {
       take(1)
     ).subscribe((response: HttpResponse<any>) => {
       if (response.status === 200) {
-        // Store token...
-          localStorage.setItem(
-            'user',
-            JSON.stringify({token: response.body.token})
-          ); 
+        
         this._newUser = newUser;
         
         this.newUserSubject$.next(this._newUser);
