@@ -16,6 +16,7 @@ export class MyAccountComponent implements OnInit {
   private _navigation: Navigation;
   private translationChange$: any;
 
+  public idUser: number = 999;
   public username: string = "username à récupérer depuis le Back";
 
   constructor(
@@ -48,6 +49,7 @@ export class MyAccountComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.idUser = this.userService.user.idUser;
     this.username = this.userService.user.username;
 
     this.myAccountForm = this.formBuilder.group({

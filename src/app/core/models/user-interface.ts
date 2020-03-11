@@ -1,4 +1,5 @@
 export interface UserInterface {
+    idUser: number,
     username: string,
     password: string,
     token?: string, // "?" veut dire "optionnel"

@@ -41,6 +41,7 @@ export class UserService {
           
           // initialize the user interface
           this._user = {
+            idUser: null,
             username: null,
             password: null,
             isAuthenticated: false,
@@ -51,6 +52,7 @@ export class UserService {
           
           // update the current local user
           this._user.isAuthenticated = true;
+          this._user.idUser = response.body.idUser;
           this._user.username = response.body.username;
           this._user.password = response.body.password;
           this._user.firstName = response.body.firstName;
@@ -143,11 +145,7 @@ export class UserService {
       take(1)
     ).subscribe((response: HttpResponse<any>) => {
       if (response.status === 200) {
-        // Store token...
-          localStorage.setItem(
-            'user',
-            JSON.stringify({token: response.body.token})
-          ); 
+        
         this._newUser = newUser;
         
         this.newUserSubject$.next(this._newUser);
