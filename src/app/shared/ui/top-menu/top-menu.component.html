@@ -24,7 +24,7 @@
                 <em>Connected as <span> {{ user.login }} </span></em>
             </li>
             <li>
-                <a [routerLink]="['register']" >
+                <a [routerLink]="['register']">
                     <mat-icon class="my-icons">face </mat-icon>
                     Register
                 </a>
@@ -32,9 +32,14 @@
         </ul>
     </nav>
     <div class="infos">
-        <i class="material-icons" title="Log as admin">
-            verified_user
-        </i>
+        <div class="action">
+            <i class="material-icons" title="Log as admin">
+                verified_user
+            </i>
+            <i class="material-icons" title="Add a movie" (click)=addMovie()>
+                slideshow
+            </i>
+        </div>
         <app-language-switcher></app-language-switcher>
     </div>
 </header>

@@ -1,0 +1,40 @@
+
+<h1>Add Movie</h1>
+
+<form [formGroup]="addMovieForm">
+  <mat-form-field class=""> 
+    <mat-label>Title :</mat-label>
+    <input 
+      matInput 
+      type="text"
+      placeholder="Title"
+      formControlName="title"
+    >
+    <mat-error *ngIf="title.touched && title.invalid">
+     Title is required
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class = "">
+    <mat-label>Year : </mat-label>
+    <input 
+      matInput 
+      type="text"
+      placeholder="year"
+      formControlName="year"
+    >
+    <mat-error *ngIf="year.touched && year.invalid">
+     Release date is required
+    </mat-error>
+  </mat-form-field>
+
+<button 
+    mat-raised-button 
+ 
+    [disabled]="addMovieForm.invalid"
+>Log in </button>   
+      
+</form>
+
+<!-- TODO : what if user forgot their credentials -->
+<!-- TODO : place routerLink to registering user if not -->

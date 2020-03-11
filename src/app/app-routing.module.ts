@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ɵAPP_ID_RANDOM_PROVIDER } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
@@ -6,6 +6,7 @@ import { LoginGuard } from './core/guards/login.guard';
 import { MovieComponent } from './pages/movie/movie.component';
 import { MovieResolver } from './core/resolver/movie-resolver';
 import { RegisterComponent } from './pages/register/register.component';
+import { AddMovieComponent } from './core/pages/add-movie/add-movie.component';
 
 
 const routes: Routes = [
@@ -26,6 +27,10 @@ const routes: Routes = [
   {
     path:'register',
     component: RegisterComponent
+  },
+  {
+    path:'add-movie',
+    component: AddMovieComponent
   },
   {
     path:'movie/:id',

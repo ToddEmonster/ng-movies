@@ -24,7 +24,8 @@ import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-transla
 import { TranslationService } from './core/services/translation.service';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ElapsedTimePipe } from './shared/pipes/elapsed-time.pipe';
-import { RegisterComponent } from './pages/register/register.component'; 
+import { RegisterComponent } from './pages/register/register.component';
+import { AddMovieComponent } from './core/pages/add-movie/add-movie.component'; 
 
 
 // Define a function that invoke TranslationService
@@ -62,7 +63,8 @@ export function initializeApp(appConfig: AppConfig) {
     MovieComponent,
     DeleteComponent,
     ElapsedTimePipe,
-    RegisterComponent
+    RegisterComponent,
+    AddMovieComponent
   ],
   imports: [
     BrowserModule,
