@@ -49,14 +49,14 @@ export class MovieService {
         this._movie.title = response.body.title;
         this._movie.year = response.body.year;
         this._movie.originalTitle = response.body.originalTitle;
-        // this._movie.duration = response.body.duration;
+        this._movie.duration = response.body.duration;
         // this._movie.director = response.body.director;
         this._movie.synopsis = response.body.synopsis;
-        // this._movie.classification = response.body.classification;
-        // this._movie.rating = response.body.rating;
+        this._movie.classification = response.body.classification;
+        this._movie.rating = response.body.rating;
         
 
-        this.movieSubject$.next(this._movie);
+        // this.movieSubject$.next(this._movie);
 
     });
 
@@ -182,11 +182,11 @@ export class MovieService {
           title: newMovie.title,
           year: newMovie.year,
           originalTitle: newMovie.originalTitle,
-          // duration: newMovie.duration,
+          duration: newMovie.duration,
           // director: newMovie.director,
           synopsis: newMovie.synopsis,
-          // classification: newMovie.classification,
-          // rating: newMovie.rating,
+          classification: newMovie.classification,
+          rating: newMovie.rating,
         },
         {
           observe: 'response'
