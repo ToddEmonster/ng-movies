@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Navigation, Router } from '@angular/router';
 import { FormGroup, FormBuilder, AbstractControl, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, SimpleSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
@@ -94,7 +94,17 @@ export class RegisterComponent implements OnInit {
     this.userService.createNewAccount(this.registerForm.value).then((status: boolean) => {
       if (status) {
         // Road to home
+        const snack: MatSnackBarRef<SimpleSnackBar> = this.snackBar.open(
+          'Voilaaa !You have created your own account !',
+          '',
+          {
+            duration: 2500,
+            verticalPosition: 'top'
+          }
+        );
+        snack.afterDismissed().subscribe((status: any) => {
         this.router.navigate(['home']);
+        });
       } else {
         this.snackBar.open(
           'Sorry, the registration failed !',
