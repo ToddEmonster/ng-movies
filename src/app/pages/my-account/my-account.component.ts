@@ -52,7 +52,7 @@ export class MyAccountComponent implements OnInit {
 
     this.myAccountForm = this.formBuilder.group({
       firstName: [
-        '',
+        this.userService.user.firstName,
         Validators.compose([
           Validators.required,Validators.minLength(2)]
         )
