@@ -17,7 +17,8 @@ export class MyAccountComponent implements OnInit {
   private translationChange$: any;
 
   public idUser: number = 999;
-  public username: string = "username à récupérer depuis le Back";
+  public username: string = "Username à récupérer depuis le Back";
+  public isAdmin: boolean;
 
   constructor(
     private formBuilder: FormBuilder,

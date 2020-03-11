@@ -52,6 +52,9 @@
       </mat-error>
     </mat-form-field>
   
+
+    <p> {{ 'myAccountForm.isAdmin' | translate}} <i>{{ isAdmin }}</i><br>
+
     <button 
     mat-raised-button 
     (click)="becomeAdmin()"

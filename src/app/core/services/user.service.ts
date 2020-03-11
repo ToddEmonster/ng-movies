@@ -47,7 +47,8 @@ export class UserService {
             isAuthenticated: false,
             firstName: null,
             lastName: null,
-            email: null
+            email: null,
+            isAdmin: null
           };
           
           // update the current local user

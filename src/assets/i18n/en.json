@@ -73,6 +73,7 @@
             "placeholder": "New password",
             "fieldRequired" : "A password is required and must have at least 8 characters"
         },
+        "isAdmin": "Am I an admin",
         "becomeAdmin": "Become an admin",
         "giveUpAdmin": "Give up admin role",
         "modifyAccount": "Create account",

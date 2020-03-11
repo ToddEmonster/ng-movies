@@ -73,6 +73,7 @@
             "placeholder": "Mon mot de passe",
             "fieldRequired" : "Un mot de passe est obligatoire et doit comporter au minimum 8 caractères"
         },
+        "isAdmin": "Suis-je admin :",
         "becomeAdmin": "Devenir un admin",
         "giveUpAdmin": "Abandonner rôle administrateur",
         "modifyAccount": "Modifier mon compte",
