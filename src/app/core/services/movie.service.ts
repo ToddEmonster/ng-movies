@@ -24,43 +24,8 @@ export class MovieService {
     public newMovieSubject$: BehaviorSubject<NewMovieInterface> = new BehaviorSubject<NewMovieInterface>(this._newMovie);
 
   constructor(private httpClient: HttpClient) { 
-    const uri: string = `${environment.apiRoot}movie`;
 
-    this.httpClient.post<any>(
-      uri,
-      { observe: 'response' }
-    ).pipe(
-      take(1)
-    ).subscribe((response:HttpResponse<any>) => {
-        
-        // initialize the movie interface
-        this._movie = {
-          title: null,
-          year: null,
-          originalTitle: null,
-          duration: null,
-          director: null,
-          synopsis: null,
-         classification: null,
-         rating: null,
-        };
-        
-        // update current local
-        this._movie.title = response.body.title;
-        this._movie.year = response.body.year;
-        this._movie.originalTitle = response.body.originalTitle;
-        this._movie.duration = response.body.duration;
-        // this._movie.director = response.body.director;
-        this._movie.synopsis = response.body.synopsis;
-        this._movie.classification = response.body.classification;
-        this._movie.rating = response.body.rating;
-        
-
-        // this.movieSubject$.next(this._movie);
-
-    });
-
-  }
+    }
 
   public get movie(): MovieInterface {
     return this._movie;
@@ -198,7 +163,7 @@ export class MovieService {
 
         console.log("movie uploaded");
         this._newMovie = newMovie;
-        // this.newMovieSubject$.next(this._newMovie);
+        this.newMovieSubject$.next(this._newMovie);
       
         resolve(true); // Take your promise
       }

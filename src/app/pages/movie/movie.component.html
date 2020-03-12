@@ -5,8 +5,9 @@
 <!-- I'll put the form here -->
 <div class="movie-detail">
     <h2> {{movie.title}} <span>[{{movie.originalTitle}}]</span> </h2>
-    <h3> {{movie.director.name}} | ({{movie.year}})</h3>
-    <h3>{{movie.duration}} min</h3>
+    <h3 *ngIf="movie.director !== null"> {{movie.director.name}}</h3>
+    <h3>({{movie.year}})</h3>
+    <h3 *ngIf="movie.duration !== null">{{movie.duration}} min</h3>
     <h4>{{movie.genre}}</h4>
 
     <form [formGroup]="movieForm">
