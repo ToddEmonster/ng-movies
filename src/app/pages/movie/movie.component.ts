@@ -70,5 +70,13 @@ export class MovieComponent implements OnInit {
     });
   }
 
+  isShown: boolean = false ; // hidden by default
+
+
+toggleShow() {
+
+  this.isShown = ! this.isShown;
+
+}
 
 }
