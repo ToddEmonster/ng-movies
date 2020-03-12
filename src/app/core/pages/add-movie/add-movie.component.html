@@ -24,8 +24,9 @@
       formControlName="year"
     >
     <mat-error *ngIf="year.touched && year.invalid">
-     Release date is required
+     Release date is required and Can't greater than current year
     </mat-error>
+ 
   </mat-form-field>
  
   <mat-form-field class = "">

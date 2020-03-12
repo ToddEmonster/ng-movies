@@ -4,6 +4,10 @@ import { MovieService } from '../../services/movie.service';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
+import * as moment from 'moment';
+import { HttpClient } from '@angular/common/http';
+import { take } from 'rxjs/operators';
+import { resolve } from 'dns';
 
 @Component({
   selector: 'app-add-movie',
@@ -12,16 +16,35 @@ import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/s
 })
 export class AddMovieComponent implements OnInit {
 
-  public addMovieForm: FormGroup;
 
+  private static readonly API: string = 'http://worldclockapi.com/api/json/utc/now';
+  public addMovieForm: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
     private movieService: MovieService,
     private router: Router,
     private translateService: TranslateService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private httpClient: HttpClient,
   ) { }
+
+  // getCurrentYear(): Promise<number> {
+  //   return new Promise<number>((resolve) => {
+  //     this.httpClient.get<any>(
+  //       AddMovieComponent.API
+  //     ).pipe(
+  //       take(1)
+  //     ).subscribe((utcDateTime: any) => {
+  //       const now: moment.Moment = moment(utcDateTime.currentDatetime);
+  //       const currentYear = parseInt(now.format('YYYY'));
+  //       resolve(currentYear)
+  //     });
+  //     return resolve();
+
+  //   })
+  // }
+
 
   public get title(): AbstractControl {
     return this.addMovieForm.controls.title;
@@ -55,9 +78,15 @@ export class AddMovieComponent implements OnInit {
 
   ngOnInit(): void {
 
+    const now: moment.Moment = moment();
+    const currentYear = parseInt(now.format('YYYY'));
+
+    // const currentYear = 2020;
+
     this.addMovieForm = this.formBuilder.group({
+
       title: [
-        '', 
+        '',
         Validators.compose(
           [Validators.required, Validators.minLength(2)]
         )
@@ -65,8 +94,9 @@ export class AddMovieComponent implements OnInit {
       year: [
         '',
         Validators.compose([
-          Validators.required, 
-          Validators.minLength(4)
+          Validators.required,
+          Validators.minLength(4),
+          Validators.max(currentYear)
         ])
       ],
       originalTitle: [
@@ -112,9 +142,10 @@ export class AddMovieComponent implements OnInit {
         ])
       ],
     });
+
   }
 
-  public addMovie(): void{
+  public addMovie(): void {
     this.movieService.createMovie(this.addMovieForm.value).then((status: boolean) => {
       if (status) {
         // Road to home
@@ -131,7 +162,7 @@ export class AddMovieComponent implements OnInit {
         });
       } else {
         this.snackBar.open(
-          'Sorry, movie upload failed !', 
+          'Sorry, movie upload failed !',
           '',
           {
             duration: 2500,
