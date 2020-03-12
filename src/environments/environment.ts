@@ -7,7 +7,7 @@ export const environment = {
   apiRoot: 'http://localhost:8080/api/',
   authenticate: 'http://localhost:8080/authenticate',
   wssAddress: 'ws://127.0.0.1:9090',
-  register: 'http://localhost:8080/register',
+  register: 'http://localhost:8080/api/account/register',
   isLogged: 'http://localhost:8080/isLogged',
 };
 

@@ -16,9 +16,25 @@ export class MyAccountComponent implements OnInit {
   private _navigation: Navigation;
   private translationChange$: any;
 
-  public idUser: number = 999;
-  public username: string = "Username à récupérer depuis le Back";
+  public idUser: number;
+  public username: string;
   public isAdmin: boolean;
+
+  public get firstName(): AbstractControl {
+    return this.myAccountForm.controls.firstName;
+  }
+
+  public get lastName(): AbstractControl {
+    return this.myAccountForm.controls.lastName;
+  }
+
+  public get email(): AbstractControl {
+    return this.myAccountForm.controls.email;
+  }
+
+  public get password(): AbstractControl {
+    return this.myAccountForm.controls.password;
+  }
 
   constructor(
     private formBuilder: FormBuilder,
@@ -29,24 +45,6 @@ export class MyAccountComponent implements OnInit {
     ) {
       this._navigation = this.router.getCurrentNavigation();
     }
-
-
-    public get firstName(): AbstractControl {
-      return this.myAccountForm.controls.firstName;
-    }
-  
-    public get lastName(): AbstractControl {
-      return this.myAccountForm.controls.lastName;
-    }
-  
-    public get email(): AbstractControl {
-      return this.myAccountForm.controls.email;
-    }
-  
-    public get password(): AbstractControl {
-      return this.myAccountForm.controls.password;
-    }
-
 
   ngOnInit(): void {
 

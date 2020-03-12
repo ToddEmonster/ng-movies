@@ -18,8 +18,67 @@ export class UserService {
   private _newUser: NewUserInterface = null;
   public newUserSubject$: BehaviorSubject<NewUserInterface> = new BehaviorSubject<NewUserInterface>(this._newUser);
 
+  public get user(): UserInterface {
+    return this._user;
+  }
 
   constructor(private httpClient: HttpClient) {
+    // const optToken: string = localStorage.getItem('user');
+    // const uri: string = `${environment.isLogged}`;
+
+    // // Si on trouve un token, ça veut dire que quelqu'un est connecté
+    // if (optToken !== null) {
+    //   // ça c'est l'objet JSON qui est le token stocké en local
+    //   const tokenAsObject: any = JSON.parse(optToken);
+
+    //   // J'envoie le token vers le Back, j'attends de lui qu'il me renvoie le user associé via JwtTokenUtil
+    //   this.httpClient.post<any>(
+    //     uri,
+    //     { token: tokenAsObject.token },
+    //     { observe: 'response' }
+    //   ).pipe(
+    //     take(1)
+    //   ).subscribe( (response:HttpResponse<any>) => {
+    //     // Si le Back me renvoie bien un User
+    //     if (response.status === 200) {
+          
+    //       // initialize the user interface
+    //       this._user = {
+    //         idUser: null,
+    //         username: null,
+    //         password: null,
+    //         isAuthenticated: false,
+    //         firstName: null,
+    //         lastName: null,
+    //         email: null,
+    //         isAdmin: null
+    //       };
+          
+    //       // update the current local user
+    //       this._user.isAuthenticated = true;
+    //       this._user.idUser = response.body.idUser;
+    //       this._user.username = response.body.username;
+    //       this._user.password = response.body.password;
+    //       this._user.firstName = response.body.firstName;
+    //       this._user.lastName = response.body.lastName;
+    //       this._user.email = response.body.email;
+    //       this._user.isAdmin = response.body.isAdmin;
+
+    //       console.log('There\'s a user who is logged right now');
+
+    //       this.userSubject$.next(this._user);
+    //     } else { 
+    //       console.log('Something went wrong'); // Si le Back me renvoie une erreur
+    //     } 
+    //   });
+    //   // Si le Token est nul ( = pas de user connecté)
+    // } else {
+    //     console.log('Notify unidentified user');
+    //     this.userSubject$.next(null);
+    // }
+  }
+
+  public ngOnInit() {
     const optToken: string = localStorage.getItem('user');
     const uri: string = `${environment.isLogged}`;
 
@@ -73,13 +132,7 @@ export class UserService {
         console.log('Notify unidentified user');
         this.userSubject$.next(null);
     }
-  }
-
-  public get user(): UserInterface {
-    return this._user;
-  }
-
-  public ngOnInit() { }
+   }
 
   public authenticate(user:UserInterface): Promise<boolean> {
     const uri: string = `${environment.authenticate}`;
