@@ -1,0 +1,26 @@
+form{
+    background-color: #b5e1f0;
+    width: 40%;
+    margin:60px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 12px;
+    padding-top: 24px;
+    mat-form-field{
+        padding: 10px;
+        margin: 4px;
+        width: 70%;
+        margin: auto;
+    }
+    button{
+        width: 200px;
+        margin: 0 auto 20px auto;
+    }
+}
+
+h1 {
+    text-align: center;
+    color:#fff;
+    margin-top: 100px;
+}

@@ -8,7 +8,7 @@ export const environment = {
   authenticate: 'http://localhost:8080/authenticate',
   wssAddress: 'ws://127.0.0.1:9090',
   register: 'http://localhost:8080/register',
-  isLogged: 'http://localhost:8080/isLogged'
+  isLogged: 'http://localhost:8080/isLogged',
 };
 
 /*

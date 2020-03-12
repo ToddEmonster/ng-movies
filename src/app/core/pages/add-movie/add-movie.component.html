@@ -1,0 +1,126 @@
+
+<h1>Add Movie</h1>
+
+<form [formGroup]="addMovieForm">
+  <mat-form-field class=""> 
+    <mat-label>Title :</mat-label>
+    <input 
+      matInput 
+      type="text"
+      placeholder="Title"
+      formControlName="title"
+    >
+    <mat-error *ngIf="title.touched && title.invalid">
+     Title is required
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class = "">
+    <mat-label>Year : </mat-label>
+    <input 
+      matInput 
+      type="number"
+      placeholder="Release date"
+      formControlName="year"
+    >
+    <mat-error *ngIf="year.touched && year.invalid">
+     Release date is required
+    </mat-error>
+  </mat-form-field>
+ 
+  <mat-form-field class = "">
+    <mat-label>Original Title : </mat-label>
+    <input 
+      matInput 
+      type="text"
+      placeholder="Original Title"
+      formControlName="originalTitle"
+    >
+    <mat-error *ngIf="year.touched && year.invalid">
+     Original is required
+    </mat-error>
+  </mat-form-field>
+ 
+  <mat-form-field class = "">
+    <mat-label>Duration : </mat-label>
+    <input 
+      matInput 
+      type="number"
+      placeholder="Duration (in min)"
+      formControlName="duration"
+    >
+    <!-- <mat-error *ngIf="year.touched && year.invalid">
+     Original is required
+    </mat-error> -->
+  </mat-form-field>
+
+  <mat-form-field class = "">
+    <mat-label>Director : </mat-label>
+    <input 
+      matInput 
+      type="text"
+      placeholder="Director"
+      formControlName="director"
+    >
+    <!-- <mat-error *ngIf="year.touched && year.invalid">
+     Original is required
+    </mat-error> -->
+  </mat-form-field>
+
+  <mat-form-field class = "">
+    <mat-label>Synopsis : </mat-label>
+    <input 
+      matInput 
+      type="text"
+      placeholder="Synopsis"
+      formControlName="synopsis"
+    >
+    <!-- <mat-error *ngIf="year.touched && year.invalid">
+     Original is required
+    </mat-error> -->
+  </mat-form-field>
+  
+  <mat-form-field class = "">
+    <mat-label>Classification : </mat-label>
+    <mat-select 
+      matInput 
+      type="text"
+      placeholder="Classification"
+      formControlName="classification"
+    >
+    <mat-option value="all">All Public</mat-option>
+    <mat-option value="-10">-10</mat-option>
+    <mat-option value="-12">-12</mat-option>
+    <mat-option value="-16">-16</mat-option>
+  </mat-select>
+    <!-- <mat-error *ngIf="year.touched && year.invalid">
+     Original is required
+    </mat-error> -->
+  </mat-form-field>
+ 
+  <mat-form-field class = "">
+    <mat-label>Rating : </mat-label>
+    <input 
+      matInput 
+      type="number"
+      placeholder="Rating"
+      formControlName="rating"
+      step="0.5"
+      min="0"
+      max="10"
+    >
+    <!-- <mat-error *ngIf="year.touched && year.invalid">
+     Original is required
+    </mat-error> -->
+  </mat-form-field>
+
+<button 
+    mat-raised-button 
+    (click)="addMovie()"
+    [disabled]="addMovieForm.invalid"
+>Add Movie </button>   
+      
+</form>
+
+<!-- TODO : what if user forgot their credentials -->
+<!-- TODO : place routerLink to registering user if not -->
