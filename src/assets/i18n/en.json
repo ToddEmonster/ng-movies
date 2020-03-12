@@ -13,7 +13,7 @@
         "movieSingle" : "movie",
         "moviePlural" : "movies",
         "lessOne": "Less than a year ago",
-        "moreTwo": "more than 2 years ago",
+        "lessTwo": "Less than 2 years ago",
         "twoAndFive": "between 3 and 5 years ago",
         "betweenFiveAndTen": "Between 5 and 10 years ago",
         "moreTen": "More than 10 years ago"

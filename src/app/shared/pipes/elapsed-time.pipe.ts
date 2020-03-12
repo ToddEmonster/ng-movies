@@ -29,11 +29,11 @@ export class ElapsedTimePipe implements PipeTransform {
         const now: moment.Moment = moment(utcDateTime.currentDatetime);
         const elapsedTime: number = parseInt(now.format('YYYY')) - value;
 
-        if (elapsedTime == 1) {
+        if (elapsedTime <= 1) {
           transformValue = this.translateService.instant('moviesListing.lessOne');
         } else if(elapsedTime < 2){
-          transformValue = this.translateService.instant('moviesListing.moreTwo');
-        }else if (elapsedTime < 5) {
+          transformValue = this.translateService.instant('moviesListing.lessTwo');
+        }else if (elapsedTime > 2 && elapsedTime < 5) {
           transformValue = this.translateService.instant('moviesListing.twoAndFive');
         }else if (elapsedTime > 5 && elapsedTime < 10) {
           transformValue = this.translateService.instant('moviesListing.betweenFiveAndTen');

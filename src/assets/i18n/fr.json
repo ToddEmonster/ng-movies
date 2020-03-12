@@ -13,7 +13,7 @@
         "movieSingle" : "film",
         "moviePlural" : "films",
         "lessOne": "Il y a moins d'un an",
-        "moreTwo": "Il y a plus de 2 ans",
+        "lessTwo": "Il y a moins de 2 ans",
         "twoAndFive": "Entre 2 et 5 ans",
         "betweenFiveAndTen": "Entre 5 et 10 ans",
         "moreTen": "Il y a plus de 10 ans"
