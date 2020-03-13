@@ -17,7 +17,7 @@
         <mat-form-field class="form-field">
             <!-- <mat-label>Search a movie, actress, director...</mat-label> -->
             <mat-label>Modify the synopsis</mat-label>
-            <textarea rows="8" cols="20" class="synopsis-input" matInput type="synopsis"
+            <textarea rows="8" cols="60" class="synopsis-input" matInput type="synopsis"
                 placeholder="Type the synopsis here..." formControlName="synopsis">
             </textarea>
             <button mat-button *ngIf="synopsis" matSuffix mat-icon-button aria-label="Clear" (click)="clearSynopsis()">
@@ -50,6 +50,9 @@
         <span class="from">By username, posted on 22/06/2019</span>
         <p>comment 7</p>
         <span class="from">By username, posted on 22/06/2019</span>
+
+        <!-- if nbcoms > 7 ... -->
+        <div class="view-more"><span> More +</span></div>
     </div>
     <form action="" class="add-comment">
 
