@@ -7,17 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddCommentComponent implements OnInit {
 
+  public isShown: boolean = false; // hidden by default
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  isShown: boolean = false ; // hidden by default
-  
-toggleShow() {
 
 
-  this.isShown = ! this.isShown;
-
-}
+  toggleShow() {
+    this.isShown = !this.isShown;
+  }
 }
