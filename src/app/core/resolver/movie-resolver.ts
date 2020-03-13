@@ -18,7 +18,7 @@ export class MovieResolver {
         state: import("@angular/router").RouterStateSnapshot
       ) : Observable<any> {
           const id: number = parseInt(route.paramMap.get('id'));
-          console.log(`Hello resolver ${id}`);
+          console.log(`Hello movie resolver ${id}`);
 
           return this.movieService.byId(id)
           .pipe(

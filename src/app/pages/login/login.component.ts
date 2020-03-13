@@ -47,15 +47,12 @@ export class LoginComponent implements OnInit {
       username: [
         '', 
         Validators.compose(
-          [Validators.required, Validators.minLength(5)]
-        )
+          [Validators.required, Validators.minLength(5)])
       ],
       password: [
         '',
-        Validators.compose([
-          Validators.required, 
-          Validators.minLength(8)
-        ])
+        Validators.compose(
+          [Validators.required, Validators.minLength(8)])
       ]
     });
   }
@@ -66,6 +63,7 @@ export class LoginComponent implements OnInit {
 
     this.userService.authenticate(this.loginForm.value).then((status: boolean) => {
       if (status) {
+        console.log('Welp, doLogin() in LoginComponent is complete !')
         if (this._idMovie === undefined) {
           // Road to home
           this.router.navigate(['home']);

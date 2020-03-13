@@ -1,9 +1,9 @@
 import { Injectable, Optional } from '@angular/core';
 
 import { UserInterface } from './../models/user-interface'
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { take, map } from 'rxjs/operators';
+import { take, map, catchError } from 'rxjs/operators';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { NewUserInterface } from '../models/new-user-interface';
 
@@ -11,10 +11,13 @@ import { NewUserInterface } from '../models/new-user-interface';
   providedIn: 'root'
 })
 export class UserService {
-  private _registeredUsers: UserInterface[];
-  private _user: UserInterface = null;
+  // l'utilisateur connecté s'il existe
+  private _user: UserInterface = 
+  { idUser: null, username: null, password: null, isAuthenticated: false,
+    firstName: null, lastName: null, email: null, isAdmin: null }; 
   public userSubject$: BehaviorSubject<UserInterface> = new BehaviorSubject<UserInterface>(this._user);
-
+  
+  // modèle pour un nouvel utilisateur lors de sa création
   private _newUser: NewUserInterface = null;
   public newUserSubject$: BehaviorSubject<NewUserInterface> = new BehaviorSubject<NewUserInterface>(this._newUser);
 
@@ -23,154 +26,194 @@ export class UserService {
   }
 
   constructor(private httpClient: HttpClient) {
-    // const optToken: string = localStorage.getItem('user');
-    // const uri: string = `${environment.isLogged}`;
-
-    // // Si on trouve un token, ça veut dire que quelqu'un est connecté
-    // if (optToken !== null) {
-    //   // ça c'est l'objet JSON qui est le token stocké en local
-    //   const tokenAsObject: any = JSON.parse(optToken);
-
-    //   // J'envoie le token vers le Back, j'attends de lui qu'il me renvoie le user associé via JwtTokenUtil
-    //   this.httpClient.post<any>(
-    //     uri,
-    //     { token: tokenAsObject.token },
-    //     { observe: 'response' }
-    //   ).pipe(
-    //     take(1)
-    //   ).subscribe( (response:HttpResponse<any>) => {
-    //     // Si le Back me renvoie bien un User
-    //     if (response.status === 200) {
-          
-    //       // initialize the user interface
-    //       this._user = {
-    //         idUser: null,
-    //         username: null,
-    //         password: null,
-    //         isAuthenticated: false,
-    //         firstName: null,
-    //         lastName: null,
-    //         email: null,
-    //         isAdmin: null
-    //       };
-          
-    //       // update the current local user
-    //       this._user.isAuthenticated = true;
-    //       this._user.idUser = response.body.idUser;
-    //       this._user.username = response.body.username;
-    //       this._user.password = response.body.password;
-    //       this._user.firstName = response.body.firstName;
-    //       this._user.lastName = response.body.lastName;
-    //       this._user.email = response.body.email;
-    //       this._user.isAdmin = response.body.isAdmin;
-
-    //       console.log('There\'s a user who is logged right now');
-
-    //       this.userSubject$.next(this._user);
-    //     } else { 
-    //       console.log('Something went wrong'); // Si le Back me renvoie une erreur
-    //     } 
-    //   });
-    //   // Si le Token est nul ( = pas de user connecté)
-    // } else {
-    //     console.log('Notify unidentified user');
-    //     this.userSubject$.next(null);
-    // }
+    console.log('> UserService has been instanciated.')
+    this.checkIfUserIsConnected();
+  }
+  
+  public ngOnInit() {  }
+  
+  public showUserValue(): void {
+    console.log(`Le user de userService est : ${JSON.stringify(this._user)}`)
   }
 
-  public ngOnInit() {
+  public byId(idUser: number): Observable<any> {
+    const apiRoot: string = `${environment.apiRoot}account/${idUser}`;
+    return this.httpClient.get<any>(
+      apiRoot,
+      { observe: 'response' }
+    ).pipe(
+      take(1),
+      map((response)=> {
+        return response.body;
+      }),
+      catchError((error: any) => {
+        console.log(`Could not retrieve user from idUser: ${JSON.stringify(error)}`);
+        return throwError(error.status)
+      })
+    );
+  }
+
+  public checkIfTokenIsPresent(): boolean {
+    console.log('> checkIfTokenIsPresent() has been called.')
+
     const optToken: string = localStorage.getItem('user');
+    if (optToken !== null) {
+      console.log('A locally stored token has been found')
+      return true;
+    } else {
+      console.log('No token detected in local storage');
+      this.userSubject$.next(null);
+      this.showUserValue();
+      return false;
+    }
+  }
+
+
+  public checkIfUserIsConnected(): void {
+    console.log('> checkIfUserIsConnected() has been called.');
+
+    if (this.checkIfTokenIsPresent()) {
+      const storedToken: string = localStorage.getItem('user');
+      this.showUserValue();
+      // Here, it should be called at each instanciation of UserService
+      // But the Back is not happy.
+      if (!this._user.isAuthenticated) {
+        console.log('The user is empty : not normal.')
+        this.updateUserFromToken(storedToken);
+    } else {
+      this.showUserValue();
+      }
+    } 
+  }
+
+
+  public updateUserFromToken(token: string): void {
+    console.log('> updateUserFromToken() has been called.')
     const uri: string = `${environment.isLogged}`;
 
-    // Si on trouve un token, ça veut dire que quelqu'un est connecté
-    if (optToken !== null) {
-      // ça c'est l'objet JSON qui est le token stocké en local
-      const tokenAsObject: any = JSON.parse(optToken);
+    // Envoyer le token au Back
+    this.httpClient.post<any>(
+      uri,
+      { token: JSON.parse(token) },
+      { observe: 'response' }
+    ).pipe(
+      take(1)
+    ).subscribe( (response:HttpResponse<any>) => {
+      // Récupérer
+      if (response.status === 200) {
 
-      // J'envoie le token vers le Back, j'attends de lui qu'il me renvoie le user associé via JwtTokenUtil
-      this.httpClient.post<any>(
-        uri,
-        { token: tokenAsObject.token },
-        { observe: 'response' }
-      ).pipe(
-        take(1)
-      ).subscribe( (response:HttpResponse<any>) => {
-        // Si le Back me renvoie bien un User
-        if (response.status === 200) {
-          
-          // initialize the user interface
-          this._user = {
-            idUser: null,
-            username: null,
-            password: null,
-            isAuthenticated: false,
-            firstName: null,
-            lastName: null,
-            email: null,
-            isAdmin: null
-          };
-          
-          // update the current local user
-          this._user.isAuthenticated = true;
-          this._user.idUser = response.body.idUser;
-          this._user.username = response.body.username;
-          this._user.password = response.body.password;
-          this._user.firstName = response.body.firstName;
-          this._user.lastName = response.body.lastName;
-          this._user.email = response.body.email;
-          this._user.isAdmin = response.body.isAdmin;
+        console.log(`We gave the Back the token, its reponse is : ${JSON.stringify(response.body)}`)
 
-          console.log('There\'s a user who is logged right now');
+        // update the current local user
+        this._user.isAuthenticated = true;
+        this._user.idUser = response.body.idUser;
+        this._user.username = response.body.username;
+        this._user.password = response.body.password;
+        this._user.firstName = response.body.firstName;
+        this._user.lastName = response.body.lastName;
+        this._user.email = response.body.email;
+        this._user.isAdmin = response.body.isAdmin;
 
-          this.userSubject$.next(this._user);
-        } else { 
-          console.log('Something went wrong'); // Si le Back me renvoie une erreur
-        } 
-      });
-      // Si le Token est nul ( = pas de user connecté)
-    } else {
-        console.log('Notify unidentified user');
-        this.userSubject$.next(null);
-    }
-   }
+        console.log('At this point, the userService._user must have taken the Back response values')
 
-  public authenticate(user:UserInterface): Promise<boolean> {
+
+        console.log(`User ${JSON.stringify(response.body.idUser)}, ${JSON.stringify(response.body.username)} is logged right now`);
+        this.userSubject$.next(this._user);
+
+    } else { 
+      console.log('Could not retrieve detected user from token'); // Si le Back me renvoie une erreur
+      return null;
+    } 
+  });
+}
+  
+
+
+  public authenticate(user: UserInterface): Promise<boolean> {
+    console.log('> authenticate() has been called.')
     const uri: string = `${environment.authenticate}`;
 
     return new Promise<boolean>((resolve) => {
       this.httpClient.post<any>(
         uri, // http://localhost:8080/authenticate
-        { 
-          username: user.username,
+        { username: user.username, 
           password: user.password
         },
-        {
-          observe: 'response'
-        }
+        { observe: 'response' }
     ).pipe(
       take(1)
     ).subscribe((response: HttpResponse<any>) => {
       if (response.status === 200) {
+        console.log('Le Back nous a répondu 200:OK pour authenticate')
+        
         // Store token...
           localStorage.setItem(
             'user',
             JSON.stringify({token: response.body.token})
           ); 
-        this._user = user;
-        this._user.token = response.body.token;
-        this._user.isAuthenticated = true;
+        console.log('Le token est stocké en local');
         
+        // We map the token response in order to send it back to the Back
+        const tokenToSend: string = JSON.stringify(response.body.token);
+
+        // retrieve the rest of the information from the Back
+        this.updateUserFromToken(tokenToSend);
+        console.log(`Le user qui vient de se connecter ressemble à ça : ${JSON.stringify(this._user)}`);
+        
+        // set the currently connected user token as the token we got
+        this._user.token = response.body.token;
+
+        // Propagate the authentication event
         this.userSubject$.next(this._user);
       
         resolve(true); // Take your promise
       }
     }, (error) => {
+      console.log('Le Back n\'est pas content de notre requete authenticate')
       this._user = null;
       this.userSubject$.next(this._user);
       resolve(false);
      });
     });
   }
+
+  // TODO if it's ok
+  // public getUserInformation(optToken: string, uri: string): Promise<UserInterface> {
+  //     // Objet JSON du token stocké en local
+  //     const tokenAsObject: any = JSON.parse(optToken);
+
+  //     // J'envoie le token vers le Back, j'attends de lui qu'il me renvoie le user associé via JwtTokenUtil
+  //     this.httpClient.post<any>(
+  //       uri,
+  //       { token: tokenAsObject.token },
+  //       { observe: 'response' }
+  //     ).pipe(
+  //       take(1)
+  //     ).subscribe( (response:HttpResponse<any>) => {
+  //       // Si le Back me renvoie bien un User
+  //       if (response.status === 200) {
+          
+  //         // update the current local user
+  //         this._user.isAuthenticated = true;
+  //         this._user.idUser = response.body.idUser;
+  //         this._user.username = response.body.username;
+  //         this._user.password = response.body.password;
+  //         this._user.firstName = response.body.firstName;
+  //         this._user.lastName = response.body.lastName;
+  //         this._user.email = response.body.email;
+  //         this._user.isAdmin = response.body.isAdmin;
+
+  //         console.log(`There\'s a user logged right now : ${JSON.stringify(response.body.idUser, response.body.username)}`);
+  //         this.userSubject$.next(this._user);
+
+  //         return this._user;
+
+  //       } else { 
+  //         console.log('Something went wrong'); // Si le Back me renvoie une erreur
+  //         return null;
+  //       } 
+  //     });
+  // }
 
   public logout(): void {
     localStorage.removeItem('user');

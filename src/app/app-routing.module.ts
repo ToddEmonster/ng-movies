@@ -10,6 +10,8 @@ import { RegisterComponent } from './pages/register/register.component';
 import { MyAccountComponent } from './pages/my-account/my-account.component';
 
 import { AddMovieComponent } from './core/pages/add-movie/add-movie.component';
+import { UserResolver } from './core/resolver/user-resolver';
+import { MyAccountGuard } from './core/guards/my-account.guard';
 
 
 const routes: Routes = [
@@ -28,9 +30,12 @@ const routes: Routes = [
     canActivate: [LoginGuard]
   },
   {
-    path:'myAccount',
+    path:'account/:idUser',
     component: MyAccountComponent,
-    // canActivate: [MyAccountGuard]
+    // canActivate: [MyAccountGuard],
+    resolve: {
+      user: UserResolver
+    }
   },
   {
     path:'register',

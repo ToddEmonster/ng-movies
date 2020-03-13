@@ -1,11 +1,14 @@
 export interface UserInterface {
-    idUser: number,
+    token?: string, // "?" veut dire "optionnel"
+
     username: string,
     password: string,
-    token?: string, // "?" veut dire "optionnel"
-    isAuthenticated: boolean,
-    isAdmin : boolean,
+    
+    idUser: number,
     firstName: string,
     lastName: string,
-    email: string
+    email: string,
+    
+    isAuthenticated: boolean,
+    isAdmin : boolean
 }
