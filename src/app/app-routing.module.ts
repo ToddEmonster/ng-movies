@@ -10,6 +10,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { MyAccountComponent } from './pages/my-account/my-account.component';
 
 import { AddMovieComponent } from './core/pages/add-movie/add-movie.component';
+import { AddCommentComponent } from './core/pages/add-comment/add-comment.component';
 
 
 const routes: Routes = [
@@ -39,6 +40,10 @@ const routes: Routes = [
   {
     path:'add-movie',
     component: AddMovieComponent
+  },
+  {
+    path:'add-comment',
+    component: AddCommentComponent
   },
   {
     path:'movie/:id',

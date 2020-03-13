@@ -30,33 +30,5 @@
 
     </form>
 
-    <span class="nb-comments"  (click)="toggleShow()">14 comments</span>
-    <hr>
-    <div class="comments"  *ngIf="isShown">
-        
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est eius velit, culpa consectetur saepe, cupiditate
-            obcaecati, quibusdam tempora quidem laboriosam tempore animi ipsa modi eaque perferendis? Quisquam provident
-            at quod.</p>
-        <span class="from">By username, posted on 22/06/2019</span>
-        <p>comment 2</p>
-        <span class="from">By username, posted on 22/06/2019</span>
-        <p>comment 3</p>
-        <span class="from">By username, posted on 22/06/2019</span>
-        <p>comment 4</p>
-        <span class="from">By username, posted on 22/06/2019</span>
-        <p>comment 5</p>
-        <span class="from">By username, posted on 22/06/2019</span>
-        <p>comment 6</p>
-        <span class="from">By username, posted on 22/06/2019</span>
-        <p>comment 7</p>
-        <span class="from">By username, posted on 22/06/2019</span>
-
-        <!-- if nbcoms > 7 ... -->
-        <div class="view-more"><span> More +</span></div>
-    </div>
-    <form action="" class="add-comment">
-
-        <textarea cols="64" rows="4" type="text" placeholder="your comment"></textarea>
-        <button mat-raised-button>Send</button>
-    </form>
+    <app-add-comment></app-add-comment>
 </div>
