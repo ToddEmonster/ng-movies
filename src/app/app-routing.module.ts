@@ -14,7 +14,7 @@ import { UserResolver } from './core/resolver/user-resolver';
 import { MyAccountGuard } from './core/guards/my-account.guard';
 
 
-const routes: Routes = [
+const routes: Routes = [ 
   {
     path:'',
     redirectTo: 'home',

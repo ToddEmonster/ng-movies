@@ -9,13 +9,13 @@
                 </a>
             </li>
 
-
-            <li>
+            <!-- a supprimer -->
+            <!-- <li>
                 <a (click)="userService.showUserValue()">
                     <mat-icon>pageview</mat-icon>
                     USERSERVICE._USER
                 </a>
-            </li>
+            </li> -->
 
             <li>
                 <a (click)="userService.checkIfUserIsConnected()">
@@ -27,25 +27,25 @@
 
 
 
-            <li *ngIf="!userService.user.isAuthenticated">
+            <li *ngIf="!userService.currentUser.isAuthenticated">
                 <a [routerLink]="['login']">
                     <mat-icon class="my-icons">lock</mat-icon>
                     Login
                 </a>
             </li>
-            <li *ngIf="userService.user.isAuthenticated" class="connected-as">
+            <li *ngIf="userService.currentUser.isAuthenticated" class="connected-as">
                 <a (click)="doLogout()" [routerLink]="['home']">
                     <mat-icon class="my-icons">lock_open</mat-icon>
                     Logout
                 </a>
             </li>
-            <li *ngIf="userService.user.isAuthenticated" class="connected-as">
+            <li *ngIf="userService.currentUser.isAuthenticated" class="connected-as">
                 <a [routerLink]="['../','account', user.idUser]">
                     <mat-icon class="my-icons">assignment_ind</mat-icon>
                     My Account
                 </a>
             </li>
-            <li *ngIf="userService.user.isAuthenticated">
+            <li *ngIf="userService.currentUser.isAuthenticated">
                 <em>Connected as <span> {{ user.username }} </span></em>
             </li>
 

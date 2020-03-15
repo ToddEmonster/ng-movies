@@ -13,8 +13,8 @@ export class TokenInterceptorService implements HttpInterceptor {
     
     let token: String = null;
     
-    if (this.userService.user) {
-      token = this.userService.user.token;
+    if (this.userService.currentUser) {
+      token = this.userService.currentUser.token;
     }
 
     if (token) {

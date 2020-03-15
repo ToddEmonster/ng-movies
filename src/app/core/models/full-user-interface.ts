@@ -1,4 +1,4 @@
-export interface UserInterface {
+export interface FullUserInterface {
     token?: string, // "?" veut dire "optionnel"
 
     username: string,
