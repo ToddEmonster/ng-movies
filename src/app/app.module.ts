@@ -28,8 +28,8 @@ import { RegisterComponent } from './pages/register/register.component';
 
 import { MyAccountComponent } from './pages/my-account/my-account.component'; 
 
-import { AddMovieComponent } from './core/pages/add-movie/add-movie.component';
 import { AddCommentComponent } from './core/pages/add-comment/add-comment.component'; 
+import { AddMovieComponent } from './pages/add-movie/add-movie.component'; 
 
 
 // Define a function that invoke TranslationService

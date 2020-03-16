@@ -23,9 +23,7 @@ export class MovieService {
     public movieSubject$: BehaviorSubject<MovieInterface> = new BehaviorSubject<MovieInterface>(this._movie); 
     public newMovieSubject$: BehaviorSubject<NewMovieInterface> = new BehaviorSubject<NewMovieInterface>(this._newMovie);
 
-  constructor(private httpClient: HttpClient) { 
-
-    }
+  constructor(private httpClient: HttpClient) {  }
 
   public get movie(): MovieInterface {
     return this._movie;

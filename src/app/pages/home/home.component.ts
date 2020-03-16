@@ -141,7 +141,7 @@ export class HomeComponent implements OnInit {
 
   public doDetails(idMovie: number): void {
     console.log('You clicked on Details, the id of the movie is: ' + idMovie);
-    if (this.userService.user && this.userService.user !== null) {
+    if (this.userService.currentUser.isAuthenticated) {
       this.router.navigate(['../', 'movie', idMovie]);
     } else {
       this.router.navigate(['../', 'login']);
@@ -151,7 +151,7 @@ export class HomeComponent implements OnInit {
   }
 
   public likeIt(movie: Movie): void {
-    if (this.userService.user && this.userService.user !== null) {
+    if (this.userService.currentUser.isAuthenticated) {
       movie.animationState = 'final';
       setTimeout(() => {
 
@@ -233,7 +233,7 @@ export class HomeComponent implements OnInit {
 
   // Jean-luc version
   public moveTo(idMovie: number): void {
-    if (this.userService.user && this.userService.user !== null) {
+    if (this.userService.currentUser.isAuthenticated && this.userService.currentUser.isAuthenticated !== null) {
       this.router.navigate(['../', 'movie', idMovie]);
     } else {
       // Load a toast and route to login

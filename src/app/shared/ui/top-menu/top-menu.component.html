@@ -4,29 +4,38 @@
 
             <li>
                 <a [routerLink]="['home']">
-                    <mat-icon>home </mat-icon>
+                    <mat-icon>home</mat-icon>
                     Home
                 </a>
             </li>
-            <li *ngIf="!userService.user">
+
+            <!-- A supprimer -->
+            <li>
+                <a (click)="userService.checkIfUserIsConnected()">
+                    <mat-icon>contact_support</mat-icon>
+                    User connected ?
+                </a>
+            </li>
+
+            <li *ngIf="!userService.currentUser.isAuthenticated">
                 <a [routerLink]="['login']">
                     <mat-icon class="my-icons">lock</mat-icon>
                     Login
                 </a>
             </li>
-            <li *ngIf="userService.user" class="connected-as">
+            <li *ngIf="userService.currentUser.isAuthenticated" class="connected-as">
                 <a (click)="doLogout()" [routerLink]="['home']">
                     <mat-icon class="my-icons">lock_open</mat-icon>
                     Logout
                 </a>
             </li>
-            <li *ngIf="userService.user" class="connected-as">
-                <a [routerLink]="['myAccount']">
+            <li *ngIf="userService.currentUser.isAuthenticated" class="connected-as">
+                <a [routerLink]="['../','account', user.idUser]">
                     <mat-icon class="my-icons">assignment_ind</mat-icon>
                     My Account
                 </a>
             </li>
-            <li *ngIf="user">
+            <li *ngIf="userService.currentUser.isAuthenticated">
                 <em>Connected as <span> {{ user.username }} </span></em>
             </li>
 
