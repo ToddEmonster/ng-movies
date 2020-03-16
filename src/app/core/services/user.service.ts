@@ -54,11 +54,10 @@ export class UserService {
 
 
     if (locallyStoredUser !== null) {
-      console.log('A locally stored token has been found : someone is connected')
-      console.log(`the locally stored user is : ${locallyStoredUser}`)
+      console.log('Someone is connected (locally stored user found)')
+      console.log(`The locally stored user is : ${locallyStoredUser}`)
 
       if (!this._currentUser.isAuthenticated) {
-        console.log('YES we entered the updateCurrentUser branch !')
         const objectLocallyStoredUser: any = JSON.parse(locallyStoredUser);
         this._currentUser.isAuthenticated = true;
         this._currentUser.idUser = objectLocallyStoredUser.idUser;
@@ -105,7 +104,7 @@ export class UserService {
                             username: response.body.username,
                             isAdmin: response.body.isAdmin})
         ); 
-        console.log('Le token et le username sont stockés en local');
+        console.log('Les infos du user connecté ont été enregistrées localement');
         
         // Update the currentUser value
         this._currentUser.isAuthenticated = true;
@@ -114,11 +113,11 @@ export class UserService {
         this._currentUser.isAdmin = response.body.isAdmin;
         this._currentUser.token = response.body.token;
 
-        console.log(`Le user qui vient de se connecter ressemble à ça : ${JSON.stringify(this._currentUser)}`);
+        console.log('Les infos du user connecté ont été enregistrées dans currentUser.');
 
         // Propagate the authentication event
         this.currentUserSubject$.next(this._currentUser);
-      
+        console.log('La nouvelle valeur de currentUser a été propagée.');
         resolve(true); // Take your promise
       }
     }, (error) => {
@@ -135,50 +134,11 @@ export class UserService {
     });
   }
 
-  // TODO if it's ok
-  // public getUserInformation(optToken: string, uri: string): Promise<UserInterface> {
-  //     // Objet JSON du token stocké en local
-  //     const tokenAsObject: any = JSON.parse(optToken);
-
-  //     // J'envoie le token vers le Back, j'attends de lui qu'il me renvoie le user associé via JwtTokenUtil
-  //     this.httpClient.post<any>(
-  //       uri,
-  //       { token: tokenAsObject.token },
-  //       { observe: 'response' }
-  //     ).pipe(
-  //       take(1)
-  //     ).subscribe( (response:HttpResponse<any>) => {
-  //       // Si le Back me renvoie bien un User
-  //       if (response.status === 200) {
-          
-  //         // update the current local user
-  //         this._user.isAuthenticated = true;
-  //         this._user.idUser = response.body.idUser;
-  //         this._user.username = response.body.username;
-  //         this._user.password = response.body.password;
-  //         this._user.firstName = response.body.firstName;
-  //         this._user.lastName = response.body.lastName;
-  //         this._user.email = response.body.email;
-  //         this._user.isAdmin = response.body.isAdmin;
-
-  //         console.log(`There\'s a user logged right now : ${JSON.stringify(response.body.idUser, response.body.username)}`);
-  //         this.userSubject$.next(this._user);
-
-  //         return this._user;
-
-  //       } else { 
-  //         console.log('Something went wrong'); // Si le Back me renvoie une erreur
-  //         return null;
-  //       } 
-  //     });
-  // }
-
   public logout(): void {
     localStorage.removeItem('user');
     this._currentUser = {idUser: null, username: null, isAuthenticated: false, isAdmin:false, token: null};;
     this.currentUserSubject$.next(this._currentUser);
   }
-
 
   public createNewAccount(newUser: FullUserInterface): Promise<boolean> {
     const uri: string = `${environment.register}`;
@@ -209,7 +169,7 @@ export class UserService {
       resolve(false);
      });
     });
-
+    
   }
 
 }

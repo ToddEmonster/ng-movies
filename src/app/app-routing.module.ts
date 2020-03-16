@@ -32,7 +32,7 @@ const routes: Routes = [
   {
     path:'account/:idUser',
     component: MyAccountComponent,
-    // canActivate: [MyAccountGuard],
+    canActivate: [MyAccountGuard],
     resolve: {
       user: UserResolver
     }

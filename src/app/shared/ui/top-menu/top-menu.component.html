@@ -9,23 +9,13 @@
                 </a>
             </li>
 
-            <!-- a supprimer -->
-            <!-- <li>
-                <a (click)="userService.showUserValue()">
-                    <mat-icon>pageview</mat-icon>
-                    USERSERVICE._USER
-                </a>
-            </li> -->
-
+            <!-- A supprimer -->
             <li>
                 <a (click)="userService.checkIfUserIsConnected()">
                     <mat-icon>contact_support</mat-icon>
                     User connected ?
                 </a>
             </li>
-
-
-
 
             <li *ngIf="!userService.currentUser.isAuthenticated">
                 <a [routerLink]="['login']">
