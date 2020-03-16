@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Observable } from 'rxjs';
-import { take, map } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { take, map, catchError } from 'rxjs/operators';
 import { Comment } from '../models/comment';
+import { Movie } from '../models/movie';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ import { Comment } from '../models/comment';
 export class CommentService {
 
  public commentCounter: number = 0;
+ public movie: Movie;
 
   constructor(private httpClient: HttpClient) { }
 
@@ -42,4 +44,23 @@ export class CommentService {
       );
   }
 
+  public byMovieId(movieId: number): Observable<any> {
+    const apiRoot: string = `${environment.apiRoot}comment/byMovieId?m=${movieId}`;
+    return this.httpClient.get<any>(
+      apiRoot, 
+      { 
+        observe: 'response'
+      }
+    )
+    .pipe(
+      take(1),
+      map((response)=> {
+        return response.body;
+      }),
+      catchError((error: any) => {
+        console.log(`Something went wrong: ${JSON.stringify(error)}`);
+        return throwError(error.status)
+      })
+      );
+  }
 }

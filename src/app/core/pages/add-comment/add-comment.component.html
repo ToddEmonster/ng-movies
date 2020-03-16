@@ -1,15 +1,16 @@
-<span class="nb-comments" (click)="toggleShow()">{{commentService.commentCounter}} comments</span>
+<span class="nb-comments" (click)="toggleShow()">{{commentService.commentCounter}} comments </span>
 <hr>
+<div class="comments" *ngIf="isShown">
+    <div class="" *ngFor="let comment of commentsOb | async">
+        <div class="" >
 
-<div class="" *ngFor="let comment of commentsOb | async">
-    <div class="comments" *ngIf="isShown">
+            <p>{{comment.comment}} </p>
+            <span class="from">By {{comment.idAccount}} , On {{comment.date | date:'mediumDate'}}</span>
 
-        <p>{{comment.comment}}</p>
-        <span class="from">By / insert username/ , /insert date /</span>
-       
-        <!-- if nbcoms > 7 ... -->
-        <div class="view-more"><span> More +</span></div>
+            <!-- if nbcoms > 7 ... -->
+        </div>
     </div>
+    <div class="view-more"><span> More +</span></div>
 </div>
 <form action="" class="add-comment">
 
