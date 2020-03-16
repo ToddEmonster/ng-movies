@@ -1,8 +1,9 @@
 export interface CurrentUserInterface {
+    isAuthenticated: boolean,
+
     idUser: number,
     username: string,
-    isAuthenticated: boolean,
     isAdmin: boolean,
-    token?: string
 
+    token?: string
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
-import { MovieService } from '../../services/movie.service';
+import { MovieService } from '../../core/services/movie.service';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';

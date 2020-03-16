@@ -5,7 +5,6 @@ import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { take, map, catchError } from 'rxjs/operators';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { NewUserInterface } from '../models/new-user-interface';
 import { CurrentUserInterface } from '../models/current-user-interface';
 
 @Injectable({
@@ -16,10 +15,6 @@ export class UserService {
   private _currentUser: CurrentUserInterface = {idUser: null, username: null, isAuthenticated: false, isAdmin:false, token: null};
   public currentUserSubject$: BehaviorSubject<CurrentUserInterface> = new BehaviorSubject<CurrentUserInterface>(this._currentUser);
   
-  // modèle pour un nouvel utilisateur lors de sa création
-  private _newUser: NewUserInterface = null;
-  public newUserSubject$: BehaviorSubject<NewUserInterface> = new BehaviorSubject<NewUserInterface>(this._newUser);
-
   public get currentUser(): CurrentUserInterface {
     return this._currentUser;
   }
@@ -32,7 +27,7 @@ export class UserService {
   public ngOnInit() {  }
   
   private showUserValue(): void {
-    console.log(`${JSON.stringify(this.currentUser)}`);
+    console.log(`The value of userService._currentUser is : ${JSON.stringify(this.currentUser)}`);
   }
 
   public byId(idUser: number): Observable<any> {
@@ -54,60 +49,35 @@ export class UserService {
 
   public checkIfUserIsConnected(): void {
     console.log('> checkIfUserIsConnected() has been called.');
-    const optToken: string = localStorage.getItem('user');
+    const locallyStoredUser: string = localStorage.getItem('user');
+    // any = JSON.parse(locallyStoredUser)
 
-    if (optToken !== null) {
+
+    if (locallyStoredUser !== null) {
       console.log('A locally stored token has been found : someone is connected')
-      this.updateCurrentUserFromToken(optToken);
+      console.log(`the locally stored user is : ${locallyStoredUser}`)
+
+      if (!this._currentUser.isAuthenticated) {
+        console.log('YES we entered the updateCurrentUser branch !')
+        const objectLocallyStoredUser: any = JSON.parse(locallyStoredUser);
+        this._currentUser.isAuthenticated = true;
+        this._currentUser.idUser = objectLocallyStoredUser.idUser;
+        this._currentUser.username = objectLocallyStoredUser.username;
+        this._currentUser.isAdmin = objectLocallyStoredUser.isAdmin;
+        this._currentUser.token = objectLocallyStoredUser.token;
+        this.currentUserSubject$.next(this._currentUser);
+      }
     } else {
       console.log('No token detected in local storage');
+      this._currentUser.isAuthenticated = false;
+      this._currentUser.idUser = null;
       this._currentUser.username = null;
       this._currentUser.isAdmin = false;
-      this._currentUser.isAuthenticated = false;
+      this._currentUser.token = null;
       this.currentUserSubject$.next(this._currentUser);
     }
     this.showUserValue();
     } 
-
-
-  public updateCurrentUserFromToken(token: string): void {
-    
-
-
-    console.log('> updateUserFromToken() has been called.')
-    const tokenAsObject: any = JSON.parse(token);
-    const uri: string = `${environment.whoIsLogged}`;
-
-    // Envoyer le token au Back
-    this.httpClient.put<any>(
-      uri,
-      { token: tokenAsObject.token },
-      { observe: 'response' }
-    ).pipe(
-      take(1)
-    ).subscribe( (response:HttpResponse<any>) => {
-
-      if (response.status === 200) {
-
-        console.log(`We gave the Back the token, its reponse is : ${JSON.stringify(response.body)}`)
-
-        // update the current local user
-        this._currentUser.isAuthenticated = true;
-        this._currentUser.username = response.body.username;
-        this._currentUser.idUser = response.body.idUser;
-
-        console.log('At this point, the userService._user must have taken the Back response values')
-
-        console.log(`User ${JSON.stringify(response.body.idUser)}, ${JSON.stringify(response.body.username)} is logged right now`);
-        this.currentUserSubject$.next(this._currentUser);
-
-    } else { 
-      console.log('Could not retrieve detected user from token'); // Si le Back me renvoie une erreur
-      return null;
-    } 
-  });
-}
-  
 
 
   public authenticate(user: FullUserInterface): Promise<boolean> {
@@ -128,33 +98,36 @@ export class UserService {
         console.log('Le Back nous a répondu 200:OK pour authenticate')
         
         // Store token and username, that will locally persist
-          localStorage.setItem(
+        localStorage.setItem(
             'user',
             JSON.stringify({token: response.body.token, 
-                            username: response.body.username})
-          ); 
+                            idUser: response.body.idUser,
+                            username: response.body.username,
+                            isAdmin: response.body.isAdmin})
+        ); 
         console.log('Le token et le username sont stockés en local');
         
         // Update the currentUser value
-        this._currentUser.token = response.body.token;
+        this._currentUser.isAuthenticated = true;
         this._currentUser.idUser = response.body.idUser;
         this._currentUser.username = response.body.username;
-        this._currentUser.isAuthenticated = true;
+        this._currentUser.isAdmin = response.body.isAdmin;
+        this._currentUser.token = response.body.token;
 
         console.log(`Le user qui vient de se connecter ressemble à ça : ${JSON.stringify(this._currentUser)}`);
 
         // Propagate the authentication event
         this.currentUserSubject$.next(this._currentUser);
-
       
         resolve(true); // Take your promise
       }
     }, (error) => {
       console.log('Le Back n\'est pas content de notre requete authenticate')
-      this._currentUser.token = null;
+      this._currentUser.isAuthenticated = false;
       this._currentUser.idUser = null;
       this._currentUser.username = null;
-      this._currentUser.isAuthenticated = false;
+      this._currentUser.isAdmin = false;
+      this._currentUser.token = null;
 
       this.currentUserSubject$.next(this._currentUser);
       resolve(false);
@@ -202,12 +175,12 @@ export class UserService {
 
   public logout(): void {
     localStorage.removeItem('user');
-    this._currentUser = null;
+    this._currentUser = {idUser: null, username: null, isAuthenticated: false, isAdmin:false, token: null};;
     this.currentUserSubject$.next(this._currentUser);
   }
 
 
-  public createNewAccount(newUser: NewUserInterface): Promise<boolean> {
+  public createNewAccount(newUser: FullUserInterface): Promise<boolean> {
     const uri: string = `${environment.register}`;
 
     return new Promise<boolean>((resolve) => {
@@ -229,17 +202,10 @@ export class UserService {
       take(1)
     ).subscribe((response: HttpResponse<any>) => {
       if (response.status === 200) {
-        
-        this._newUser = newUser;
-        
-        this.newUserSubject$.next(this._newUser);
-      
+        console.log('Congratulations, you registered a new account.')
         resolve(true); // Take your promise
       }
     }, (error) => {
-      this._newUser = null;
-      this.newUserSubject$.next(this._newUser);
-
       resolve(false);
      });
     });
