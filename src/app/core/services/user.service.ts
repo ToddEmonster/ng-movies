@@ -172,4 +172,11 @@ export class UserService {
     
   }
 
+  public setAsAdmin(): void {
+    console.log('TODO : You clicked to become an admin')
+  }
+
+  public modifyUserInfo(): void {
+    console.log('TODO : You clicked to modify the account')
+  }
 }

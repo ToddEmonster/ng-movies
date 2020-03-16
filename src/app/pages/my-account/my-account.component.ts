@@ -13,7 +13,6 @@ export class MyAccountComponent implements OnInit {
   public user: any;
   public myAccountForm: FormGroup;
 
-
   // private _navigation: Navigation;
   private translationChange$: any;
 
@@ -93,19 +92,24 @@ export class MyAccountComponent implements OnInit {
   }
 
 
-  // Button methods 
+  // TODO : Button methods 
 
   public becomeAdmin(): void {
-    console.log('TODO : You clicked to become an admin')
+    this.userService.setAsAdmin();
   }
 
-
   public modifyAccount(): void {
-    console.log('TODO : You clicked to modify the account')
+    this.userService.modifyUserInfo();
   }
 
   public cancelChanges(): void {
-    console.log('TODO : You clicked to cancel the modifications')
+    this.firstName.setValue(this.user.firstName);
+    this.lastName.setValue(this.user.lastName);
+    this.email.setValue(this.user.email);
+    this.password.setValue(this.user.password);
+    this.username = this.user.username;
+    this.idUser = this.user.idUser;
+    this.isAdmin = this.user.isAdmin;
   }
 
 }
