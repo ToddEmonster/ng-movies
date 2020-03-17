@@ -13,7 +13,7 @@ import { MyAccountComponent } from './pages/my-account/my-account.component';
 import { AddMovieComponent } from './pages/add-movie/add-movie.component';
 import { UserResolver } from './core/resolver/user-resolver';
 import { MyAccountGuard } from './core/guards/my-account.guard';
-import { AddCommentComponent } from './pages/add-comment/add-comment.component';
+import { AddCommentComponent } from './pages/movie/add-comment/add-comment.component';
 
 
 const routes: Routes = [ 
