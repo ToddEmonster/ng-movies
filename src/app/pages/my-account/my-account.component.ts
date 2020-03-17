@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
-import { Navigation, Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { UserService } from 'src/app/core/services/user.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-my-account',
@@ -11,91 +10,106 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./my-account.component.scss']
 })
 export class MyAccountComponent implements OnInit {
-
+  public user: any;
   public myAccountForm: FormGroup;
-  private _navigation: Navigation;
+
+  // private _navigation: Navigation;
   private translationChange$: any;
 
-  public idUser: number = 999;
-  public username: string = "Username à récupérer depuis le Back";
+  public idUser: number;
+  public username: string;
   public isAdmin: boolean;
 
+
+  // Constructor and OnInit stuff
   constructor(
-    private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
     private router: Router,
-    private userService: UserService,
+
+    private userService: UserService, 
+    private formBuilder: FormBuilder,
     private translateService: TranslateService,
-    private snackBar: MatSnackBar
     ) {
-      this._navigation = this.router.getCurrentNavigation();
+      // this._navigation = this.router.getCurrentNavigation();
     }
-
-
-    public get firstName(): AbstractControl {
-      return this.myAccountForm.controls.firstName;
-    }
-  
-    public get lastName(): AbstractControl {
-      return this.myAccountForm.controls.lastName;
-    }
-  
-    public get email(): AbstractControl {
-      return this.myAccountForm.controls.email;
-    }
-  
-    public get password(): AbstractControl {
-      return this.myAccountForm.controls.password;
-    }
-
 
   ngOnInit(): void {
 
-    this.idUser = this.userService.user.idUser;
-    this.username = this.userService.user.username;
-    this.isAdmin = this.userService.user.isAdmin;
-
     this.myAccountForm = this.formBuilder.group({
       firstName: [
-        this.userService.user.firstName,
+        '',
         Validators.compose([
-          Validators.required,Validators.minLength(2)]
-        )
+          Validators.required,Validators.minLength(2)])
       ],
       lastName: [
-        this.userService.user.lastName,
+        '',
         Validators.compose([
-          Validators.required,Validators.minLength(2)]
-        )
+          Validators.required,Validators.minLength(2)])
       ],
       email: [
-        this.userService.user.email,
+        '',
         Validators.compose([
-          Validators.required,Validators.minLength(3)]
-        )
+          Validators.required,Validators.minLength(3)])
       ],
       password: [
-        this.userService.user.password,
+        '',
         Validators.compose([
-          Validators.required,Validators.minLength(8)]
-        )
+          Validators.required,Validators.minLength(8)])
       ]
     });
+
+    this.route.data.subscribe((data: {user: any}) => {
+      this.user = data.user;
+      this.firstName.setValue(this.user.firstName);
+      this.lastName.setValue(this.user.lastName);
+      this.email.setValue(this.user.email);
+      this.password.setValue(this.user.password);
+      this.username = this.user.username;
+      this.idUser = this.user.idUser;
+      this.isAdmin = this.user.isAdmin;
+    })
+    
 
     this.translationChange$ = this.translateService.onTranslationChange;
     this.translationChange$.subscribe();
   }
 
-  public becomeAdmin(): void {
-    console.log('TODO : You clicked to become an admin')
+  // Attributes getters
+  public get firstName(): AbstractControl {
+    return this.myAccountForm.controls.firstName;
+  }
+
+  public get lastName(): AbstractControl {
+    return this.myAccountForm.controls.lastName;
+  }
+
+  public get email(): AbstractControl {
+    return this.myAccountForm.controls.email;
+  }
+
+  public get password(): AbstractControl {
+    return this.myAccountForm.controls.password;
   }
 
 
+  // TODO : Button methods 
+
+  public becomeAdmin(): void {
+    this.userService.setAsAdmin();
+  }
+
   public modifyAccount(): void {
-    console.log('TODO : You clicked to modify the account')
+    this.userService.modifyUserInfo();
   }
 
   public cancelChanges(): void {
-    console.log('TODO : You clicked to cancel the modifications')
+    this.firstName.setValue(this.user.firstName);
+    this.lastName.setValue(this.user.lastName);
+    this.email.setValue(this.user.email);
+    this.password.setValue(this.user.password);
+    this.username = this.user.username;
+    this.idUser = this.user.idUser;
+    this.isAdmin = this.user.isAdmin;
   }
 
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/core/services/user.service';
-import { UserInterface } from 'src/app/core/models/user-interface';
+import { CurrentUserInterface } from 'src/app/core/models/current-user-interface';
 
 @Component({
   selector: 'app-footer',
@@ -8,14 +8,14 @@ import { UserInterface } from 'src/app/core/models/user-interface';
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent implements OnInit {
-  public user: UserInterface;
+  public user: CurrentUserInterface;
 
   constructor(
     private userService: UserService
   ) { }
 
   ngOnInit(): void {
-    this.userService.userSubject$.subscribe((user: UserInterface) => {
+    this.userService.currentUserSubject$.subscribe((user: CurrentUserInterface) => {
       this.user = user;
     });
   }

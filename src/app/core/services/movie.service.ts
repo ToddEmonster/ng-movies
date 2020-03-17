@@ -24,13 +24,12 @@ export class MovieService {
     public movieSubject$: BehaviorSubject<MovieInterface> = new BehaviorSubject<MovieInterface>(this._movie); 
     public newMovieSubject$: BehaviorSubject<NewMovieInterface> = new BehaviorSubject<NewMovieInterface>(this._newMovie);
 
-  constructor(
-    private httpClient: HttpClient) { 
 
-    }
-    public get movie(): MovieInterface {
-      return this._movie;
-    }
+  constructor(private httpClient: HttpClient) {  }
+
+  public get movie(): MovieInterface {
+    return this._movie;
+  }
 
   public async allMovies() {
     const apiRoute: string=`${environment.apiRoot}movie`;
@@ -89,11 +88,8 @@ export class MovieService {
     const apiRoot: string = `${environment.apiRoot}movie/${id}`;
     return this.httpClient.get<any>(
       apiRoot, 
-      { 
-        observe: 'response'
-      }
-    )
-    .pipe(
+      { observe: 'response' }
+    ).pipe(
       take(1),
       map((response)=> {
         return response.body;
@@ -105,19 +101,22 @@ export class MovieService {
     );
   }
 
+  // TODO : persister l'update vers le Back
+  //(probleme de typage, on lui envoie un any 
+  // alors qu'il me faut un MovieFull tel que défini dans le Back) 
   public update(movie: any): Observable<HttpResponse<any>> {
     const apiRoot: string = `${environment.apiRoot}movie/modify`;
 
     return this.httpClient.put(
       apiRoot,
       movie,
-      {
-        observe: 'response' // c'est la reponse du back qui nous interesse
-      }
+      { observe: 'response' }
     ).pipe(
       take(1),
       map((response: HttpResponse<any>)=> {
-        return response;
+        if (response.status === 200) {
+          return response;
+        }
       })
     );
   }

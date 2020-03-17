@@ -14,7 +14,8 @@ import { DeleteComponent } from './delete/delete.component';
   styleUrls: ['./movie.component.scss']
 })
 export class MovieComponent implements OnInit {
-  public movie: any;
+  public movie: any; // créer un model FullMovie, c'est pas propre un any
+  public updateMode: boolean = false;
   public movieForm: FormGroup;
 
   constructor(
@@ -29,39 +30,91 @@ export class MovieComponent implements OnInit {
   ngOnInit(): void {
 
     this.movieForm = this.formBuilder.group({
-      synopsis: [
+      title: [
         '', // Default value for the control
         Validators.required
-      ]
+      ],
+      originalTitle: [''],
+      director: [''],
+      year: ['', Validators.required],
+      duration: [''],
+      genre: [''],
+      synopsis: ['', Validators.required]
     });
 
-
-     this.route.data.subscribe((data: {movie: any}) => {
+    this.route.data.subscribe((data: {movie: any}) => {
       this.movie = data.movie;
-      this.synopsis.setValue(this.movie.synopsis)
+
+      this.title.setValue(this.movie.title);
+      this.originalTitle.setValue(this.movie.originalTitle);
+      this.director.setValue(this.movie.director.name);
+      this.year.setValue(this.movie.year);
+      this.duration.setValue(this.movie.duration);
+      this.genre.setValue(this.movie.genre);
+      this.synopsis.setValue(this.movie.synopsis);
     })
   }
+  public get title(): AbstractControl {
+    return this.movieForm.controls.title;
+  }
 
-  public clearSynopsis() {
-    this.movieForm.controls.synopsis.setValue('');
-  }  
+  public get originalTitle(): AbstractControl {
+    return this.movieForm.controls.originalTitle;
+  }
 
+  public get director(): AbstractControl {
+    return this.movieForm.controls.director;
+  }
+  
+  public get year(): AbstractControl {
+    return this.movieForm.controls.year;
+  }
+  
+  public get duration(): AbstractControl {
+    return this.movieForm.controls.duration;
+  }
+  
+  public get genre(): AbstractControl {
+    return this.movieForm.controls.genre;
+  }
+  
   public get synopsis(): AbstractControl {
     return this.movieForm.controls.synopsis;
   }
 
-  public updateSynopsis(): void {
+
+  public showMovie(): void {
+    console.log(`${JSON.stringify(this.movie)}`);
+    console.log(`Title : ${JSON.stringify(this.movie.title)}`);
+    console.log(`Original Title : ${JSON.stringify(this.movie.originalTitle)}`);
+  }
+  public switchToUpdateMode(): void {
+    if (!this.updateMode) {
+      this.updateMode = true;
+    } else {
+      this.updateMode = false;
+    }
+    console.log(`updateMode is now : ${this.updateMode}`);
+  }
+
+  public clearSynopsis(): void {
+    this.movieForm.controls.synopsis.setValue('');
+  }  
+
+  
+  // TODO : persister l'update vers le Back
+  public updateMovie(): void {
+    this.movie.title = this.title;
+    this.movie.originalTitle = this.originalTitle;
+    this.movie.director = this.director;
+    this.movie.year = this.year;
+    this.movie.duration = this.duration;
+    this.movie.genre = this.genre;
     this.movie.synopsis = this.synopsis.value;
 
-    // Then call the service to update
-    this.movieService.update(this.movie)
-    .pipe(take(1))
-    .subscribe((response: HttpResponse<any>)=> {
-        return response;
-      });
-
-    this.router.navigate(['../','movie', this.movie.idMovie]);
-    this._snackBar.open('Congrats, you changed the synopsis :)', '', {duration: 5000});
+    this.movieService.update(this.movie); // Call the service to update
+    location.reload(); // Refresh the page
+    this._snackBar.open('Congrats, you updated this Movie ! :)', '', {duration: 5000});
   }
 
   public validateDelete(): void {

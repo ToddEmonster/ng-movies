@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/core/services/user.service';
-import { UserInterface } from 'src/app/core/models/user-interface';
 import { MatSnackBarRef, SimpleSnackBar, MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { CurrentUserInterface } from 'src/app/core/models/current-user-interface';
 
 @Component({
   selector: 'app-top-menu',
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./top-menu.component.scss']
 })
 export class TopMenuComponent implements OnInit {
-  public user: UserInterface;
+  public user: CurrentUserInterface;
 
   constructor(
     public userService: UserService,
@@ -19,13 +19,13 @@ export class TopMenuComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.userService.userSubject$.subscribe((user: UserInterface) => {
+    this.userService.currentUserSubject$.subscribe((user: CurrentUserInterface) => {
       this.user = user;
     });
   }
 
   public addMovie(): void {
-    if (this.userService.user && this.userService.user !== null) {
+    if (this.userService.currentUser.isAuthenticated) {
       this.router.navigate(['../../', 'add-movie']);
     } else {
       const snack: MatSnackBarRef<SimpleSnackBar> = this.snackBar.open(

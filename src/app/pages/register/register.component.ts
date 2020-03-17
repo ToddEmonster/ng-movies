@@ -93,18 +93,15 @@ export class RegisterComponent implements OnInit {
 
     this.userService.createNewAccount(this.registerForm.value).then((status: boolean) => {
       if (status) {
-        // Road to home
+        this.router.navigate(['login']);
         const snack: MatSnackBarRef<SimpleSnackBar> = this.snackBar.open(
-          'Voilaaa !You have created your own account !',
+          'You have created your own account ! You can login here now',
           '',
           {
             duration: 2500,
             verticalPosition: 'top'
           }
         );
-        snack.afterDismissed().subscribe((status: any) => {
-        this.router.navigate(['home']);
-        });
       } else {
         this.snackBar.open(
           'Sorry, the registration failed !',

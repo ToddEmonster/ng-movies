@@ -20,6 +20,7 @@ export class MovieResolver {
           const id: number = parseInt(route.paramMap.get('id'));
           console.log(`Hellooo resolver movie num ${id}`);
 
+
           return this.movieService.byId(id)
           .pipe(
               take(1),

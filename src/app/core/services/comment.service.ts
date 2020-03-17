@@ -16,13 +16,13 @@ import { MovieInterface } from '../models/movie-interface';
 })
 export class CommentService {
 
- public commentCounter: number = 0;
- private _movie: MovieInterface;
+  public commentCounter: number = 0;
+  private _movie: MovieInterface;
 
- private _newComment: NewCommentInterface = null;
+  private _newComment: NewCommentInterface = null;
   private _comment: CommentInterface = null;
 
-  public commentSubject$: BehaviorSubject<CommentInterface> = new BehaviorSubject<CommentInterface>(this._comment); 
+  public commentSubject$: BehaviorSubject<CommentInterface> = new BehaviorSubject<CommentInterface>(this._comment);
   public newCommentSubject$: BehaviorSubject<NewCommentInterface> = new BehaviorSubject<NewCommentInterface>(this._newComment);
 
 
@@ -30,19 +30,19 @@ export class CommentService {
     public movieService: MovieService,
     public userService: UserService) { }
 
-  
+
   public get movie(): MovieInterface {
     return this._movie;
   }
- 
+
   public get comment(): CommentInterface {
     return this._comment;
   }
 
   public get idAccount(): number {
-    return this.userService.user.idUser;
+    return this.userService.currentUser.idUser;
   }
- 
+
   public get idMovie(): number {
     return this.movieService.movie.idMovie;
   }
@@ -78,21 +78,17 @@ export class CommentService {
   public byMovieId(movieId: number): Observable<any> {
     const apiRoot: string = `${environment.apiRoot}comment/byMovieId?m=${movieId}`;
     return this.httpClient.get<any>(
-      apiRoot, 
-     
+      apiRoot,
+
     )
-    .pipe(
-      take(1),
-      map((response) => {
-        return response.map((item) => {
-          this.commentCounter = response.length;
-          return new Comment(this.httpClient).deserialize(item);
-        });
-      })
-      // catchError((error: any) => {
-      //   console.log(`Something went wrong: ${JSON.stringify(error)}`);
-      //   return throwError(error.status)
-      // })
+      .pipe(
+        take(1),
+        map((response) => {
+          return response.map((item) => {
+            this.commentCounter = response.length;
+            return new Comment(this.httpClient).deserialize(item);
+          });
+        })
       );
   }
 
@@ -102,7 +98,6 @@ export class CommentService {
       this.httpClient.post<any>(
         uri, // http://localhost:8080/api/comment
         {
-
           idAccount: newComment.idAccount,
           idMovie: newComment.idMovie,
           date: newComment.date,
