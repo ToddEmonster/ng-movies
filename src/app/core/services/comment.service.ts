@@ -10,13 +10,16 @@ import { CommentInterface } from '../models/comment-interface';
 import { MovieService } from './movie.service';
 import { UserService } from './user.service';
 import { MovieInterface } from '../models/movie-interface';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommentService {
+  private _now: Date = new Date;
+  public now$ : BehaviorSubject<Date> = new BehaviorSubject<Date>(this._now);
 
-  public commentCounter: number = 0;
+  public commentCounter: number;
   private _movie: MovieInterface;
 
   private _newComment: NewCommentInterface = null;
@@ -25,18 +28,17 @@ export class CommentService {
   public commentSubject$: BehaviorSubject<CommentInterface> = new BehaviorSubject<CommentInterface>(this._comment);
   public newCommentSubject$: BehaviorSubject<NewCommentInterface> = new BehaviorSubject<NewCommentInterface>(this._newComment);
 
+  private _idMovie: number;
 
-  constructor(private httpClient: HttpClient,
+  constructor(
+    private httpClient: HttpClient,
     public movieService: MovieService,
-    public userService: UserService) { }
-
+    public userService: UserService,
+    ) {
+    }
 
   public get movie(): MovieInterface {
     return this._movie;
-  }
-
-  public get comment(): CommentInterface {
-    return this._comment;
   }
 
   public get idAccount(): number {
@@ -44,7 +46,11 @@ export class CommentService {
   }
 
   public get idMovie(): number {
-    return this.movieService.movie.idMovie;
+    return this._idMovie;
+  }
+
+  public get now(): Date {
+    return this._now;
   }
 
   public async allComments() {
@@ -58,6 +64,12 @@ export class CommentService {
     }
   }
 
+  public getNowDate(): void {
+    const now = moment().toDate();
+    const type = typeof now;
+    console.log(`Current date is : ${now}`)
+    console.log(`The type is : ${type}`)
+  }
 
   public all(): Observable<Comment[]> {
     const apiRoute: string = `${environment.apiRoot}comment`;
@@ -75,33 +87,35 @@ export class CommentService {
       );
   }
 
+  // TODO : à modifier pour afficher le nombre dès le chargement de la page au lieu de 0
+  // alternative : montrer par défaut "Show comments..." comme ça on s'emmerde pas.
   public byMovieId(movieId: number): Observable<any> {
     const apiRoot: string = `${environment.apiRoot}comment/byMovieId?m=${movieId}`;
     return this.httpClient.get<any>(
-      apiRoot,
-
-    )
-      .pipe(
-        take(1),
-        map((response) => {
-          return response.map((item) => {
-            this.commentCounter = response.length;
-            return new Comment(this.httpClient).deserialize(item);
+      apiRoot
+    ).pipe(
+      take(1),
+      map((response) => {
+        return response.map((item) => {
+          this.commentCounter = response.length;
+          return new Comment(this.httpClient).deserialize(item);
           });
         })
       );
   }
 
-  public postComment(newComment: NewCommentInterface): Promise<boolean> {
+  public postComment(commentContent: Text): Promise<boolean> {
     const uri: string = `${environment.apiRoot}comment`;
+    // return null;
+    const now = moment().toDate();
     return new Promise<boolean>((resolve) => {
       this.httpClient.post<any>(
         uri, // http://localhost:8080/api/comment
         {
-          idAccount: newComment.idAccount,
-          idMovie: newComment.idMovie,
-          date: newComment.date,
-          comment: newComment.comment
+          idAccount: this.userService.currentUser.idUser,
+          idMovie: this.idMovie,
+          date: moment().toDate(),
+          comment: commentContent
         },
         {
           observe: 'response'
@@ -110,17 +124,12 @@ export class CommentService {
         take(1)
       ).subscribe((response: HttpResponse<any>) => {
         if (response.status === 200) {
-
-          console.log("comment uploaded");
-          this._newComment = newComment;
-          this.newCommentSubject$.next(this._newComment);
-
+          console.log("Comment uploaded");
           resolve(true); // Take your promise
+          location.reload(); // Refresh the page
         }
       }, (error) => {
-        console.log("error posting comment");
-        this._newComment = null;
-        this.newCommentSubject$.next(this._newComment);
+        console.log("Error while posting comment");
         resolve(false);
       });
     });

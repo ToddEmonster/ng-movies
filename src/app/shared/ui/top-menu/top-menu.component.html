@@ -9,13 +9,21 @@
                 </a>
             </li>
 
-            <!-- A supprimer -->
+            <!-- Boutons pour développement : à supprimer -->
             <li>
                 <a (click)="userService.checkIfUserIsConnected()">
                     <mat-icon>contact_support</mat-icon>
                     User connected ?
                 </a>
             </li>
+            <li>
+                <a (click)="commentService.getNowDate()">
+                    <mat-icon>access_time</mat-icon>
+                    What time is it ?
+                </a>
+            </li>
+
+
 
             <li *ngIf="!userService.currentUser.isAuthenticated">
                 <a [routerLink]="['login']">

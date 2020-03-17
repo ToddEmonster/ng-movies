@@ -14,6 +14,7 @@ import { resolve } from 'dns';
 import { FormBuilder, FormGroup, AbstractControl, Validators } from '@angular/forms';
 import { Movie } from 'src/app/core/models/movie';
 import { UserService } from 'src/app/core/services/user.service';
+import { LocationStrategy } from '@angular/common';
 
 @Component({
   selector: 'app-add-comment',
@@ -48,7 +49,7 @@ export class AddCommentComponent implements OnInit {
     return this.addCommentForm.controls.comment;
   }
 
-
+  // TODO : show comments DIRECTLY 
   ngOnInit(): void {
 
     // this.commentsOb = this.commentService.all();
@@ -65,7 +66,6 @@ export class AddCommentComponent implements OnInit {
     this.commentsOb = this.commentService.byMovieId(this.movie.idMovie);
 
     this.addCommentForm = this.formBuilder.group({
-
       comment: [
         '',
         Validators.compose(
@@ -83,7 +83,6 @@ export class AddCommentComponent implements OnInit {
   public sendComment(): void {
     this.commentService.postComment(this.addCommentForm.value).then((status: boolean) => {
       if (status) {
-        // Road to home
         const snack: MatSnackBarRef<SimpleSnackBar> = this.snackBar.open(
           'Coment was successfully posted !',
           '',
@@ -93,12 +92,11 @@ export class AddCommentComponent implements OnInit {
           }
         );
         snack.afterDismissed().subscribe((status: any) => {
-          // this.router.navigate(['home']);
-          //TODO : reload page maybe ??
+          location.reload();
         });
       } else {
         this.snackBar.open(
-          'Sorry,comment post failed !',
+          'Sorry, comment post failed !',
           '',
           {
             duration: 2500,

@@ -61,7 +61,6 @@ export class SearchComponent implements OnInit {
   }
 
   public searchByTitle() {
-   
     if (this.searchTerm.value.trim().length > 0) { 
       this.moviesEvent.emit(
         this.movieService.byTitle(this.searchTerm.value.trim())
