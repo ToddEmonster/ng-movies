@@ -1,6 +1,6 @@
 export interface NewCommentInterface {
     idAccount: number,
     idMovie: number,
-    date: Date,
+    date: string,
     comment: string
 }

@@ -18,11 +18,12 @@ export class MovieService {
   public years$ : BehaviorSubject<number[]> =
     new BehaviorSubject<number[]>(Array.from(this._years).sort());
   
-    public movieCounter: number = 0;
-    private _newMovie: MovieInterface = null;
-    private _movie: MovieInterface = null;
-    public movieSubject$: BehaviorSubject<MovieInterface> = new BehaviorSubject<MovieInterface>(this._movie); 
-    public newMovieSubject$: BehaviorSubject<MovieInterface> = new BehaviorSubject<MovieInterface>(this._newMovie);
+  public movieCounter: number = 0;
+  private _newMovie: MovieInterface = null;
+  private _movie: MovieInterface = null;
+  
+  public movieSubject$: BehaviorSubject<MovieInterface> = new BehaviorSubject<MovieInterface>(this._movie); 
+  public newMovieSubject$: BehaviorSubject<MovieInterface> = new BehaviorSubject<MovieInterface>(this._newMovie);
 
 
   constructor(private httpClient: HttpClient) {  }

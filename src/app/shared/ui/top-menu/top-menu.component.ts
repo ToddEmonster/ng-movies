@@ -3,6 +3,7 @@ import { UserService } from 'src/app/core/services/user.service';
 import { MatSnackBarRef, SimpleSnackBar, MatSnackBar } from '@angular/material/snack-bar';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CurrentUserInterface } from 'src/app/core/models/current-user-interface';
+import { CommentService } from 'src/app/core/services/comment.service';
 
 @Component({
   selector: 'app-top-menu',
@@ -13,6 +14,7 @@ export class TopMenuComponent implements OnInit {
   public user: CurrentUserInterface;
 
   constructor(
+    public commentService: CommentService,
     public userService: UserService,
     private snackBar: MatSnackBar,
     private router: Router,

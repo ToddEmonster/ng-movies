@@ -9,7 +9,6 @@ import { MovieService } from 'src/app/core/services/movie.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 
 import { environment } from 'src/environments/environment';
-import { ActivatedRouteSnapshot } from '@angular/router';
 import { MovieResolver } from 'src/app/core/resolver/movie-resolver';
 import { resolve } from 'dns';
 import { FormBuilder, FormGroup, AbstractControl, Validators } from '@angular/forms';
@@ -30,7 +29,9 @@ export class AddCommentComponent implements OnInit {
   public commentsOb: Observable<Comment[]>;
   public data: any;
   public movieId: number;
+
   public movie: Movie;
+
   public commentCounter: number = 0;
 
   constructor(
@@ -49,7 +50,7 @@ export class AddCommentComponent implements OnInit {
     return this.addCommentForm.controls.comment;
   }
 
-
+  // TODO : show comments DIRECTLY 
   ngOnInit(): void {
 
     // this.commentsOb = this.commentService.all();
@@ -66,7 +67,6 @@ export class AddCommentComponent implements OnInit {
     this.commentsOb = this.commentService.byMovieId(this.movie.idMovie);
 
     this.addCommentForm = this.formBuilder.group({
-
       comment: [
         '',
         Validators.compose(
@@ -82,9 +82,12 @@ export class AddCommentComponent implements OnInit {
   }
 
   public sendComment(): void {
-    this.commentService.postComment(this.addCommentForm.value).then((status: boolean) => {
+    console.log(`At this point the commentComment we send is : ${JSON.stringify(this.addCommentForm.value)}`);
+    this.commentService.postComment(
+      this.addCommentForm.value,
+      this.movie.idMovie
+      ).then((status: boolean) => {
       if (status) {
-        // Road to home
         const snack: MatSnackBarRef<SimpleSnackBar> = this.snackBar.open(
           'Coment was successfully posted !',
           '',
@@ -94,12 +97,11 @@ export class AddCommentComponent implements OnInit {
           }
         );
         snack.afterDismissed().subscribe((status: any) => {
-          // this.router.navigate(['home']);
-          //TODO : reload page maybe ??
+          location.reload();
         });
       } else {
         this.snackBar.open(
-          'Sorry,comment post failed !',
+          'Sorry, comment post failed !',
           '',
           {
             duration: 2500,
