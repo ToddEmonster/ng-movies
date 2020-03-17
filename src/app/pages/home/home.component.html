@@ -39,18 +39,14 @@
         <mat-card class="movie-card">
           <mat-card-header class="movie-header">
             <mat-card-title class="movie-title" [ngClass]="{'old': movie.year < 2000, 'title': true }">
-              <a [routerLink]="['../','movie', movie.idMovie]">
+              <a (click)="moveTo( movie.idMovie )">
                 {{ movie.title }}
               </a>
             </mat-card-title>
             <mat-card-subtitle>{{movie.year}} <br> 
               {{ movie.year | elapsedTime | async }}</mat-card-subtitle>
           </mat-card-header>
-<!-- 
-          <img mat-card-image src="{{ movie.imgSrc }}" alt="{{ movie.imgAlt }}">
-          <mat-card-content>
-            <p>{{ movie.synopsis}}</p>
-          </mat-card-content> -->
+
           <mat-card-actions>
             <button mat-stroked-button (click)="moveTo( movie.idMovie )">
               Details
