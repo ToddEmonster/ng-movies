@@ -104,7 +104,7 @@ export class CommentService {
       );
   }
 
-  public postComment(commentContent: Text): Promise<boolean> {
+  public postComment(commentContent: String): Promise<boolean> {
     const uri: string = `${environment.apiRoot}comment`;
     // return null;
     const now = moment().toDate();
