@@ -38,6 +38,9 @@
             <li *ngIf="userService.currentUser.isAuthenticated">
                 <em>Connected as <span> {{ user.username }} </span></em>
             </li>
+            <li *ngIf="!userService.currentUser.isAuthenticated">
+                <em>You are not connected</em>
+            </li>
 
             <li>
                 <a [routerLink]="['register']">
@@ -49,9 +52,6 @@
     </nav>
     <div class="infos">
         <div class="action">
-            <i class="material-icons" title="Log as admin">
-                verified_user
-            </i>
             <i class="material-icons" title="Add a movie" (click)=addMovie()>
                 slideshow
             </i>
