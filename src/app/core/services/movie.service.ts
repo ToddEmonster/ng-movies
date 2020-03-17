@@ -19,10 +19,10 @@ export class MovieService {
     new BehaviorSubject<number[]>(Array.from(this._years).sort());
   
     public movieCounter: number = 0;
-    private _newMovie: NewMovieInterface = null;
+    private _newMovie: MovieInterface = null;
     private _movie: MovieInterface = null;
     public movieSubject$: BehaviorSubject<MovieInterface> = new BehaviorSubject<MovieInterface>(this._movie); 
-    public newMovieSubject$: BehaviorSubject<NewMovieInterface> = new BehaviorSubject<NewMovieInterface>(this._newMovie);
+    public newMovieSubject$: BehaviorSubject<MovieInterface> = new BehaviorSubject<MovieInterface>(this._newMovie);
 
 
   constructor(private httpClient: HttpClient) {  }
@@ -138,7 +138,7 @@ export class MovieService {
     );
   } 
 
-  public createMovie(newMovie: NewMovieInterface): Promise<boolean>{
+  public createMovie(newMovie: MovieInterface): Promise<boolean>{
     const uri: string = `${environment.apiRoot}movie`;
     return new Promise<boolean>((resolve) => {
       this.httpClient.post<any>(

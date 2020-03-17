@@ -31,13 +31,9 @@ export class TopMenuComponent implements OnInit {
       const snack: MatSnackBarRef<SimpleSnackBar> = this.snackBar.open(
         'You have to login to add a movie',
         null,
-        {
-          duration: 2500
-        }
+        { duration: 2500 }
         );
-        snack.afterDismissed().subscribe((status: any) => {
-          this.router.navigate(['../', 'login']);
-      });
+      this.router.navigate(['../', 'login']);
   }
 }
 

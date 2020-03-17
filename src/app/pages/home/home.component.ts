@@ -233,22 +233,19 @@ export class HomeComponent implements OnInit {
 
   // Jean-luc version
   public moveTo(idMovie: number): void {
-    if (this.userService.currentUser.isAuthenticated && this.userService.currentUser.isAuthenticated !== null) {
+    if (this.userService.currentUser.isAuthenticated) {
       this.router.navigate(['../', 'movie', idMovie]);
     } else {
       // Load a toast and route to login
       const snack: MatSnackBarRef<SimpleSnackBar> = this.snackBar.open(
-        'You have to login or create an account before',
+        'You have to login or create an account to see a movie page',
         null,
         {
           duration: 2500
         }
       );
-      snack.afterDismissed().subscribe((status: any) => {
         const navigationExtras: NavigationExtras = { state: { movie: idMovie } };
         this.router.navigate(['../', 'login'], navigationExtras);
-      });
-
     }
   }
 

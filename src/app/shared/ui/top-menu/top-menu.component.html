@@ -38,6 +38,9 @@
             <li *ngIf="userService.currentUser.isAuthenticated">
                 <em>Connected as <span> {{ user.username }} </span></em>
             </li>
+            <li *ngIf="!userService.currentUser.isAuthenticated">
+                <em>You are not connected</em>
+            </li>
 
             <li>
                 <a [routerLink]="['register']">
@@ -49,7 +52,10 @@
     </nav>
     <div class="infos">
         <div class="action">
+<<<<<<< HEAD
          
+=======
+>>>>>>> d718b6eecda7167bc1bef489a1283b10f2194001
             <i class="material-icons" title="Add a movie" (click)=addMovie()>
                 slideshow
             </i>
