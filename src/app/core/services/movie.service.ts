@@ -7,6 +7,7 @@ import { take, map, catchError } from 'rxjs/operators';
 import { NewMovieInterface } from '../models/new-movie-interface';
 import { promise } from 'protractor';
 import { MovieInterface } from '../models/movie-interface';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,13 +24,13 @@ export class MovieService {
     public movieSubject$: BehaviorSubject<MovieInterface> = new BehaviorSubject<MovieInterface>(this._movie); 
     public newMovieSubject$: BehaviorSubject<NewMovieInterface> = new BehaviorSubject<NewMovieInterface>(this._newMovie);
 
-  constructor(private httpClient: HttpClient) { 
+  constructor(
+    private httpClient: HttpClient) { 
 
     }
-
-  public get movie(): MovieInterface {
-    return this._movie;
-  }
+    public get movie(): MovieInterface {
+      return this._movie;
+    }
 
   public async allMovies() {
     const apiRoute: string=`${environment.apiRoot}movie`;
@@ -121,7 +122,7 @@ export class MovieService {
     );
   }
   
-  // DOESN'T WORK. NEED WORK ON IT (given up in class)
+  
   public delete(id: number): Observable<HttpResponse<any>> {
     const apiRoot: string = `${environment.apiRoot}movie/${id}`;
 

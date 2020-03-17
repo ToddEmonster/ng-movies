@@ -1,8 +1,9 @@
 <span class="nb-comments" (click)="toggleShow()">{{commentService.commentCounter}} comments </span>
+
 <hr>
 <div class="comments" *ngIf="isShown">
     <div class="" *ngFor="let comment of commentsOb | async">
-        <div class="" >
+        <div class="">
 
             <p>{{comment.comment}} </p>
             <span class="from">By {{comment.idAccount}} , On {{comment.date | date:'mediumDate'}}</span>
@@ -12,8 +13,17 @@
     </div>
     <div class="view-more"><span> More +</span></div>
 </div>
-<form action="" class="add-comment">
+<form [formGroup]="addCommentForm" class="add-comment">
+    <mat-form-field class="">
 
-    <textarea cols="64" rows="4" type="text" placeholder="your comment"></textarea>
-    <button mat-raised-button (click)="sendComment()">Send</button>
+        <textarea cols="64" rows="4" type="text" 
+        matInput
+        formControlName="comment" placeholder="your comment"></textarea>
+        <mat-error *ngIf="comment.touched && comment.invalid">
+            Comment empty
+        </mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button (click)="sendComment()" [disabled]="addCommentForm.invalid">Send</button>
+
 </form>

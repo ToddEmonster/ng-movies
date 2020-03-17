@@ -1,4 +1,5 @@
 export interface MovieInterface {
+    idMovie: number,
     title: string,
     year: number,
     originalTitle?: string,

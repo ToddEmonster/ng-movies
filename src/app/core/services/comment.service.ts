@@ -1,10 +1,15 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { take, map, catchError } from 'rxjs/operators';
 import { Comment } from '../models/comment';
 import { Movie } from '../models/movie';
+import { NewCommentInterface } from '../models/new-comment-interface';
+import { CommentInterface } from '../models/comment-interface';
+import { MovieService } from './movie.service';
+import { UserService } from './user.service';
+import { MovieInterface } from '../models/movie-interface';
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +17,35 @@ import { Movie } from '../models/movie';
 export class CommentService {
 
  public commentCounter: number = 0;
- public movie: Movie;
+ private _movie: MovieInterface;
 
-  constructor(private httpClient: HttpClient) { }
+ private _newComment: NewCommentInterface = null;
+  private _comment: CommentInterface = null;
+
+  public commentSubject$: BehaviorSubject<CommentInterface> = new BehaviorSubject<CommentInterface>(this._comment); 
+  public newCommentSubject$: BehaviorSubject<NewCommentInterface> = new BehaviorSubject<NewCommentInterface>(this._newComment);
+
+
+  constructor(private httpClient: HttpClient,
+    public movieService: MovieService,
+    public userService: UserService) { }
+
+  
+  public get movie(): MovieInterface {
+    return this._movie;
+  }
+ 
+  public get comment(): CommentInterface {
+    return this._comment;
+  }
+
+  public get idAccount(): number {
+    return this.userService.user.idUser;
+  }
+ 
+  public get idMovie(): number {
+    return this.movieService.movie.idMovie;
+  }
 
   public async allComments() {
     const apiRoute: string = `${environment.apiRoot}comment`;
@@ -37,7 +68,7 @@ export class CommentService {
         take(1),
         map((response) => {
           return response.map((item) => {
-            this.commentCounter = response.length;
+            // this.commentCounter = response.length;
             return new Comment(this.httpClient).deserialize(item);
           });
         })
@@ -48,19 +79,56 @@ export class CommentService {
     const apiRoot: string = `${environment.apiRoot}comment/byMovieId?m=${movieId}`;
     return this.httpClient.get<any>(
       apiRoot, 
-      { 
-        observe: 'response'
-      }
+     
     )
     .pipe(
       take(1),
-      map((response)=> {
-        return response.body;
-      }),
-      catchError((error: any) => {
-        console.log(`Something went wrong: ${JSON.stringify(error)}`);
-        return throwError(error.status)
+      map((response) => {
+        return response.map((item) => {
+          this.commentCounter = response.length;
+          return new Comment(this.httpClient).deserialize(item);
+        });
       })
+      // catchError((error: any) => {
+      //   console.log(`Something went wrong: ${JSON.stringify(error)}`);
+      //   return throwError(error.status)
+      // })
       );
   }
+
+  public postComment(newComment: NewCommentInterface): Promise<boolean> {
+    const uri: string = `${environment.apiRoot}comment`;
+    return new Promise<boolean>((resolve) => {
+      this.httpClient.post<any>(
+        uri, // http://localhost:8080/api/comment
+        {
+
+          idAccount: newComment.idAccount,
+          idMovie: newComment.idMovie,
+          date: newComment.date,
+          comment: newComment.comment
+        },
+        {
+          observe: 'response'
+        }
+      ).pipe(
+        take(1)
+      ).subscribe((response: HttpResponse<any>) => {
+        if (response.status === 200) {
+
+          console.log("comment uploaded");
+          this._newComment = newComment;
+          this.newCommentSubject$.next(this._newComment);
+
+          resolve(true); // Take your promise
+        }
+      }, (error) => {
+        console.log("error posting comment");
+        this._newComment = null;
+        this.newCommentSubject$.next(this._newComment);
+        resolve(false);
+      });
+    });
+  }
+
 }

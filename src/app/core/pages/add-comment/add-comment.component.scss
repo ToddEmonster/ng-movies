@@ -52,6 +52,11 @@ hr{
     display: flex;
     flex-direction: column;
     align-items: center;
+    mat-form-field{
+      background-color: #fff;
+      width: 400px;
+      padding-left: 20px;
+    }
     button{
       width: 200px;
     }
