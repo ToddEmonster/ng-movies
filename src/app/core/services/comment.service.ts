@@ -104,18 +104,25 @@ export class CommentService {
       );
   }
 
-  public postComment(commentContent: String): Promise<boolean> {
+  public postComment(commentContent: string, idMovie: number): Promise<boolean> {
     const uri: string = `${environment.apiRoot}comment`;
-    // return null;
-    const now = moment().toDate();
+    const commentToSend: NewCommentInterface = 
+    {
+      idAccount: this.userService.currentUser.idUser,
+      idMovie: idMovie,
+      date: moment().format(),
+      comment: JSON.stringify(commentContent)
+    };
+    console.log(`The request we're sending looks like this: ${JSON.stringify(commentToSend)}`)
+
     return new Promise<boolean>((resolve) => {
       this.httpClient.post<any>(
         uri, // http://localhost:8080/api/comment
         {
-          idAccount: this.userService.currentUser.idUser,
-          idMovie: this.idMovie,
-          date: moment().toDate(),
-          comment: commentContent
+          idAccount: commentToSend.idAccount,
+          idMovie: commentToSend.idMovie,
+          date: commentToSend.date,
+          comment: commentToSend.comment
         },
         {
           observe: 'response'

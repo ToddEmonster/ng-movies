@@ -88,6 +88,7 @@ export class MovieComponent implements OnInit {
     console.log(`Title : ${JSON.stringify(this.movie.title)}`);
     console.log(`Original Title : ${JSON.stringify(this.movie.originalTitle)}`);
   }
+  
   public switchToUpdateMode(): void {
     if (!this.updateMode) {
       this.updateMode = true;
