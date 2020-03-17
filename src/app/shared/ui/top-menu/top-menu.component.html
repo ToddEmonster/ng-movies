@@ -10,12 +10,12 @@
             </li>
 
             <!-- A supprimer -->
-            <li>
+            <!-- <li>
                 <a (click)="userService.checkIfUserIsConnected()">
                     <mat-icon>contact_support</mat-icon>
                     User connected ?
                 </a>
-            </li>
+            </li> -->
 
             <li *ngIf="!userService.currentUser.isAuthenticated">
                 <a [routerLink]="['login']">
@@ -49,9 +49,7 @@
     </nav>
     <div class="infos">
         <div class="action">
-            <i class="material-icons" title="Log as admin">
-                verified_user
-            </i>
+         
             <i class="material-icons" title="Add a movie" (click)=addMovie()>
                 slideshow
             </i>

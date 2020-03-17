@@ -28,7 +28,7 @@ import { RegisterComponent } from './pages/register/register.component';
 
 import { MyAccountComponent } from './pages/my-account/my-account.component'; 
 
-import { AddCommentComponent } from './core/pages/add-comment/add-comment.component'; 
+import { AddCommentComponent } from './pages/add-comment/add-comment.component'; 
 import { AddMovieComponent } from './pages/add-movie/add-movie.component'; 
 
 

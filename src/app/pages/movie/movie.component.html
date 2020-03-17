@@ -1,7 +1,6 @@
 <h1>Movie Detail</h1>
 
-<button mat-raised-button (click)="switchToUpdateMode()">updateMode : {{ updateMode}}</button>
-<button mat-raised-button (click)="showMovie()">showMovie</button>
+
 
 <div class="movie-detail">
     <div class="view-mode" *ngIf="!updateMode">
@@ -11,6 +10,8 @@
         <h3 *ngIf="movie.duration !== null">{{movie.duration}} min</h3>
         <h4 *ngIf="movie.genre !== null"> Genre : <br> {{movie.genre}}</h4>
         <h4>Synopsis : <br> {{movie.synopsis}}</h4>
+        <button mat-raised-button (click)="switchToUpdateMode()">Update Movie</button>
+        <button mat-raised-button (click)="showMovie()">showMovie</button>
     </div>
 
     <div class="update-mode" *ngIf="updateMode">
@@ -25,7 +26,7 @@
                 <mat-label>Original title</mat-label>
                 <input matInput type="originalTitle" formControlName="originalTitle">
             </mat-form-field>
-            
+
             <mat-form-field class="form-field">
                 <mat-label>Director</mat-label>
                 <input matInput type="director" formControlName="director">
@@ -46,19 +47,21 @@
                 <input matInput type="genre" formControlName="genre">
             </mat-form-field>
 
-            <mat-form-field  class="form-field">
+            <mat-form-field class="form-field">
                 <mat-label>Synopsis</mat-label>
                 <textarea rows="8" cols="60" class="synopsis-input" matInput type="synopsis"
                     placeholder="Type the synopsis here..." formControlName="synopsis">
                 </textarea>
-                <button mat-button *ngIf="synopsis" matSuffix mat-icon-button aria-label="Clear" (click)="clearSynopsis()">
+                <button mat-button *ngIf="synopsis" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="clearSynopsis()">
                     <mat-icon>close</mat-icon>
                 </button>
             </mat-form-field>
-            <button mat-raised-button (click)="updateMovie()" [disabled]="movieForm.invalid">Update Movie</button>
+            <button mat-raised-button (click)="updateMovie()" [disabled]="movieForm.invalid">Validate</button>
 
             <button mat-raised-button (click)="validateDelete()">Delete movie</button>
         </form>
+
     </div>
 
     <app-add-comment></app-add-comment>

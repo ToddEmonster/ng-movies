@@ -7,16 +7,16 @@ import { map, take, catchError } from 'rxjs/operators';
 import { CommentService } from 'src/app/core/services/comment.service';
 import { MovieService } from 'src/app/core/services/movie.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { MovieInterface } from '../../models/movie-interface';
+import { MovieInterface } from '../../core/models/movie-interface';
 import { environment } from 'src/environments/environment';
 import { ActivatedRouteSnapshot } from '@angular/router';
 import { MovieResolver } from 'src/app/core/resolver/movie-resolver';
-import { Movie } from '../../models/movie';
+import { Movie } from '../../core/models/movie';
 import { resolve } from 'dns';
-import { NewCommentInterface } from '../../models/new-comment-interface';
-import { CommentInterface } from '../../models/comment-interface';
+import { NewCommentInterface } from '../../core/models/new-comment-interface';
+import { CommentInterface } from '../../core/models/comment-interface';
 import { FormBuilder, FormGroup, AbstractControl, Validators } from '@angular/forms';
-import { UserService } from '../../services/user.service';
+import { UserService } from '../../core/services/user.service';
 
 @Component({
   selector: 'app-add-comment',

@@ -1,5 +1,9 @@
-<span class="nb-comments" (click)="toggleShow()">{{commentService.commentCounter}} comments </span>
 
+
+<span class="nb-comments" (click)="toggleShow()">
+    {{commentService.commentCounter}} comments </span>
+
+   
 <hr>
 <div class="comments" *ngIf="isShown">
     <div class="" *ngFor="let comment of commentsOb | async">
