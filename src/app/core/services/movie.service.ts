@@ -138,7 +138,7 @@ export class MovieService {
     );
   } 
 
-  public createMovie(newMovie: NewMovieInterface): Promise<boolean>{
+  public createMovie(newMovie: MovieInterface): Promise<boolean>{
     const uri: string = `${environment.apiRoot}movie`;
     return new Promise<boolean>((resolve) => {
       this.httpClient.post<any>(
