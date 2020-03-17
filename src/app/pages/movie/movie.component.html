@@ -4,14 +4,15 @@
 
 <div class="movie-detail">
     <div class="view-mode" *ngIf="!updateMode">
-        <h2> {{movie.title}} <span>[{{movie.originalTitle}}]</span> </h2>
-        <h3 *ngIf="movie.director !== null"> {{movie.director.name}}</h3>
+        <h2 >{{movie.title}}
+             <span>[{{movie.originalTitle}}]</span> </h2>
+        <h3 *ngIf="movie.director !== null">{{'movieDetail.director' | translate}} {{movie.director.name}}</h3>
         <h3>({{movie.year}})</h3>
-        <h3 *ngIf="movie.duration !== null">{{movie.duration}} min</h3>
-        <h4 *ngIf="movie.genre !== null"> Genre : <br> {{movie.genre}}</h4>
+        <h3 *ngIf="movie.duration !== null">{{'movieDetail.duration' | translate}}{{movie.duration}} min</h3>
+        <h4 *ngIf="movie.genre !== null"><br> {{'movieDetail.genre' | translate}}</h4>
         <h4>Synopsis : <br> {{movie.synopsis}}</h4>
-        <button mat-raised-button (click)="switchToUpdateMode()">Update Movie</button>
-        <button mat-raised-button (click)="showMovie()">showMovie</button>
+        <button mat-raised-button (click)="switchToUpdateMode()">{{'movieDetail.update' | translate}}</button>
+        <!-- <button mat-raised-button (click)="showMovie()">showMovie</button> -->
     </div>
 
     <div class="update-mode" *ngIf="updateMode">
@@ -57,9 +58,9 @@
                     <mat-icon>close</mat-icon>
                 </button>
             </mat-form-field>
-            <button mat-raised-button (click)="updateMovie()" [disabled]="movieForm.invalid">Validate</button>
+            <button mat-raised-button (click)="updateMovie()" [disabled]="movieForm.invalid">{{'movieDetail.validate' | translate}}</button>
 
-            <button mat-raised-button (click)="validateDelete()">Delete movie</button>
+            <button mat-raised-button (click)="validateDelete()">{{'movieDetail.delete' | translate}}</button>
         </form>
 
     </div>

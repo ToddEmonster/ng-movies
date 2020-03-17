@@ -10,15 +10,14 @@
     "moviesListing": {
         "moviesResult": "`movieService.movieCounter`, plural, =0 {Aucun film} =1 {Un film} many { movieService.movieCounter }",
         "movieNull": "Pas de résultat",
-        "movieSingle" : "film",
-        "moviePlural" : "films",
+        "movieSingle": "film",
+        "moviePlural": "films",
         "lessOne": "Il y a moins d'un an",
         "lessTwo": "Il y a moins de 2 ans",
         "twoAndFive": "Entre 2 et 5 ans",
         "betweenFiveAndTen": "Entre 5 et 10 ans",
         "moreTen": "Il y a plus de 10 ans"
     },
-    
     "registerForm": {
         "title": "Créer un nouveau compte",
         "firstName": {
@@ -29,26 +28,25 @@
         "lastName": {
             "fieldTitle": "Nom de famille :",
             "placeholder": "Votre nom de famille",
-            "fieldRequired" : "Ce champ est obligatoire."
+            "fieldRequired": "Ce champ est obligatoire."
         },
         "email": {
             "fieldTitle": "Adresse email :",
             "placeholder": "Votre adresse email",
-            "fieldRequired" : "Ce champ est obligatoire et doit être une adresse mail valide"
+            "fieldRequired": "Ce champ est obligatoire et doit être une adresse mail valide"
         },
         "username": {
             "fieldTitle": "Nouveau nom d'utilisateur :",
             "placeholder": "Nouveau nom d'utilisateur",
-            "fieldRequired" : "Un nom d'utilisateur est obligatoire et doit comporter au minimum 5 caractères"
+            "fieldRequired": "Un nom d'utilisateur est obligatoire et doit comporter au minimum 5 caractères"
         },
         "password": {
             "fieldTitle": "Nouveau mot de passe :",
             "placeholder": "Nouveau mot de passe",
-            "fieldRequired" : "Un mot de passe est obligatoire et doit comporter au minimum 8 caractères"
+            "fieldRequired": "Un mot de passe est obligatoire et doit comporter au minimum 8 caractères"
         },
         "createAccount": "Créer un compte"
     },
-    
     "myAccountForm": {
         "title": "Mon compte",
         "id": "Mon id :",
@@ -61,23 +59,31 @@
         "lastName": {
             "fieldTitle": "Nom de famille :",
             "placeholder": "Votre nom de famille",
-            "fieldRequired" : "Ce champ est obligatoire."
+            "fieldRequired": "Ce champ est obligatoire."
         },
         "email": {
             "fieldTitle": "Adresse email :",
             "placeholder": "Votre adresse email",
-            "fieldRequired" : "Ce champ est obligatoire et doit être une adresse mail valide"
+            "fieldRequired": "Ce champ est obligatoire et doit être une adresse mail valide"
         },
         "password": {
             "fieldTitle": "Mon mot de passe :",
             "placeholder": "Mon mot de passe",
-            "fieldRequired" : "Un mot de passe est obligatoire et doit comporter au minimum 8 caractères"
+            "fieldRequired": "Un mot de passe est obligatoire et doit comporter au minimum 8 caractères"
         },
         "isAdmin": "Suis-je admin :",
         "becomeAdmin": "Devenir un admin",
         "giveUpAdmin": "Abandonner rôle administrateur",
         "modifyAccount": "Modifier mon compte",
         "cancelChanges": "Annuler les changements"
+    },
+    "movieDetail": {
+        "director": "De: ",
+        "duration": "Durée: ",
+        "genre": "Genres: ",
+        "update": "Modifier",
+        "delete": "Supprimer ce film",
+        "validate": "Valider"
     }
 
 }

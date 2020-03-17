@@ -7,6 +7,9 @@ import { take } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { DeleteComponent } from './delete/delete.component';
+import { lang } from 'moment';
+import { LangChangeEvent } from '@ngx-translate/core';
+import { LanguageSwitcherComponent } from 'src/app/shared/ui/language-switcher/language-switcher.component';
 
 @Component({
   selector: 'app-movie',
@@ -17,6 +20,7 @@ export class MovieComponent implements OnInit {
   public movie: any; // créer un model FullMovie, c'est pas propre un any
   public updateMode: boolean = false;
   public movieForm: FormGroup;
+  public langue : LanguageSwitcherComponent;
 
   constructor(
     private route: ActivatedRoute,
@@ -53,6 +57,7 @@ export class MovieComponent implements OnInit {
       this.genre.setValue(this.movie.genre);
       this.synopsis.setValue(this.movie.synopsis);
     })
+
   }
   public get title(): AbstractControl {
     return this.movieForm.controls.title;

@@ -78,5 +78,13 @@
         "giveUpAdmin": "Give up admin role",
         "modifyAccount": "Create account",
         "cancelChanges": "Cancel changes"
+    },
+    "movieDetail": {
+        "director": "By: ",
+        "duration": "Duration: ",
+        "genre": "Genres: ",
+        "update": "Update",
+        "delete": "Delete this movie",
+        "validate": "Confirm"
     }
 }
