@@ -1,0 +1,58 @@
+.content {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+    text-align: center;
+
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div {
+    position: relative;
+}
+
+#search-component {
+    background-color: cadetblue;
+}
+
+.movie {
+    margin: inherit;
+    position: inherit;
+    width: inherit;
+    // width: 50%;
+    // position: relative;
+    background-color: darkturquoise;
+
+    & .movie-card {
+        // position: inherit;
+        max-width: 300px;
+        max-height: 200px;
+        background-color: lightblue;
+        margin-left: auto;
+        margin-right: auto;
+    
+        & .movie-header {
+            // background-color: yellow;
+            margin-left: auto;
+            margin-right: auto;
+
+            & .movie-title {
+                // background-color: green;
+                text-align: center;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+
+    }
+}
+
+
+
+
+
+#filter {
+    position: relative; 
+}

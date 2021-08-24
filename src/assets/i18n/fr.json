@@ -1,0 +1,43 @@
+{
+    "global": {
+        "title": "Films qui détestent le Front"
+    },
+    "home": {
+        "yearsSelectorLabel": "Par année",
+        "allYears": "Toutes",
+        "searchTerm": "Trouve un film, un·e acteurice, un·e réalisateurice..."
+    },
+    "moviesListing": {
+        "moviesResult": "`movieService.movieCounter`, plural, =0 {Aucun film} =1 {Un film} many { movieService.movieCounter }"
+    },
+    
+    "registerForm": {
+        "title": "Créer un nouveau compte",
+        "firstName": {
+            "fieldTitle": "Prénom :",
+            "placeholder": "Votre prénom",
+            "fieldRequired": "Ce champ est obligatoire."
+        },
+        "lastName": {
+            "fieldTitle": "Nom de famille :",
+            "placeholder": "Votre nom de famille",
+            "fieldRequired" : "Ce champ est obligatoire."
+        },
+        "email": {
+            "fieldTitle": "Adresse email :",
+            "placeholder": "Votre adresse email",
+            "fieldRequired" : "Ce champ est obligatoire et doit être une adresse mail valide"
+        },
+        "username": {
+            "fieldTitle": "Nouveau nom d'utilisateur :",
+            "placeholder": "Nouveau nom d'utilisateur",
+            "fieldRequired" : "Un nom d'utilisateur est obligatoire et doit comporter au minimum 5 caractères"
+        },
+        "password": {
+            "fieldTitle": "Nouveau mot de passe :",
+            "placeholder": "Nouveau mot de passe",
+            "fieldRequired" : "Un mot de passe est obligatoire et doit comporter au minimum 8 caractères"
+        },
+        "createAccount": "Créer un compte"
+    }
+}

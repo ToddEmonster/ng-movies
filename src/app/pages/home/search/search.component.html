@@ -1,0 +1,30 @@
+<form [formGroup]="searchForm">
+    <mat-form-field class="form-field">
+        <mat-label>{{ 'home.searchTerm' | translate }}</mat-label>
+        <input 
+            matInput 
+            type="search"
+            placeholder="Ex. Joker"
+            formControlName="searchTerm"
+            (ngModelChange)="reload()"
+        >
+        <button 
+            mat-button 
+            *ngIf="searchTerm" 
+            matSuffix 
+            mat-icon-button 
+            aria-label="Clear" 
+            (click)="clearSearchTerm()"
+        >
+        <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+
+    <!-- Bouton de validation -->
+    <!-- <button 
+    mat-raised-button 
+    (click)="searchByTitle()"
+    [disabled]="searchForm.invalid"
+    >OK</button>     -->
+
+</form>

@@ -3,7 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiRoot: 'http://localhost:8080/api/',
+  authenticate: 'http://localhost:8080/authenticate',
+  wssAddress: 'ws://127.0.0.1:9090',
+  register: 'http://localhost:8080/register',
 };
 
 /*
